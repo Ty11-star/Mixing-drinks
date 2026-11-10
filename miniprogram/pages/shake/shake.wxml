@@ -1,0 +1,57 @@
+<view class="page-wrap shake">
+  <!-- 顶部固定区：标题 + 酒杯（不随原料滑动） -->
+  <view class="shake__head">
+    <view class="shake__title">调一杯</view>
+    <view class="shake__sub">点选材料倒入杯中，再摇出专属配方 🍸</view>
+  </view>
+
+  <view class="stage">
+    <view class="glass {{shaking ? 'glass--shake' : ''}} {{pouring ? 'glass--pour' : ''}}">
+      <view class="glass__stream" wx:if="{{pouring}}" style="background:{{pourColor}};"></view>
+      <view class="glass__liquid" style="height:{{fill}}%;background:{{gradient}};">
+        <view class="bubble" wx:for="{{bubbles}}" wx:key="index" style="left:{{item.l}}%;animation-delay:{{item.d}}s;width:{{item.s}}rpx;height:{{item.s}}rpx;"></view>
+      </view>
+      <view class="glass__shine"></view>
+      <view class="glass__rim"></view>
+      <view class="glass__spark" wx:if="{{shaking}}">✨</view>
+      <view class="glass__pourtag" wx:if="{{pouring}}">+{{pourTag}}</view>
+    </view>
+    <view class="stage__hint" wx:if="{{selected.length === 0}}">杯子空空，点下方材料倒入 👇</view>
+  </view>
+
+  <!-- 已倒入的材料 -->
+  <view class="picked" wx:if="{{selected.length}}">
+    <view class="picked__item" wx:for="{{selected}}" wx:key="id" data-id="{{item.id}}" bindtap="remove">
+      <text>{{item.name}}</text>
+      <text class="picked__x">✕</text>
+    </view>
+    <view class="picked__clear" bindtap="clearAll">清空</view>
+  </view>
+
+  <!-- 可滚动区：只有材料列表滑动 -->
+  <view class="groups-label">选择材料</view>
+  <scroll-view class="groups-scroll" scroll-y enable-flex>
+    <view class="groups">
+      <view class="group" wx:for="{{groups}}" wx:key="key">
+        <view class="group__title">{{item.label}}</view>
+        <view class="chips">
+          <view
+            class="chip {{selectedIds[ing.id] ? 'on' : ''}}"
+            wx:for="{{item.items}}" wx:for-item="ing" wx:key="id"
+            data-id="{{ing.id}}" bindtap="toggle"
+          >{{ing.name}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="safe-bottom" style="height: calc(240rpx + env(safe-area-inset-bottom));"></view>
+  </scroll-view>
+
+  <!-- 底部摇酒栏（抬到自定义 tabBar 上方） -->
+  <view class="shake-bar">
+    <view class="shake-bar__count">杯中 <text class="text-amber fw-600">{{selected.length}}</text> 种</view>
+    <view class="shake-bar__btns">
+      <view class="shake-bar__btn shake-bar__btn--ghost {{selected.length ? '' : 'disabled'}}" bindtap="findMatch">找找能调啥</view>
+      <view class="shake-bar__btn {{selected.length ? '' : 'disabled'}}" bindtap="shake">🍸 调一杯</view>
+    </view>
+  </view>
+</view>

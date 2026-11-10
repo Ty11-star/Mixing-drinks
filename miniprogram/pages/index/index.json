@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "cocktail-card": "/components/cocktail-card/index",
+    "empty-state": "/components/empty-state/index",
+    "pour-loading": "/components/pour-loading/index"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "调一杯"
+}

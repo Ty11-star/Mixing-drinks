@@ -1,0 +1,71 @@
+<view class="page-wrap search">
+  <!-- 搜索框 -->
+  <view class="search-bar">
+    <view class="search-bar__input-wrap">
+      <text class="search-bar__icon">🔍</text>
+      <input
+        class="search-bar__input"
+        value="{{keyword}}"
+        placeholder="搜鸡尾酒 / 基酒 / 口味"
+        placeholder-class="search-bar__ph"
+        confirm-type="search"
+        bindinput="onInput"
+        bindconfirm="doSearch"
+      />
+      <text wx:if="{{keyword}}" class="search-bar__clear" bindtap="clearInput">✕</text>
+    </view>
+    <text class="search-bar__cancel" bindtap="doSearch">搜索</text>
+  </view>
+
+  <!-- 未搜索：热搜 + 历史 -->
+  <block wx:if="{{!searched}}">
+    <view class="block" wx:if="{{history.length}}">
+      <view class="block__head">
+        <text class="block__title">搜索历史</text>
+        <text class="block__clear" bindtap="clearHistory">清空</text>
+      </view>
+      <view class="tag-wrap">
+        <view class="tag-item" wx:for="{{history}}" wx:key="*this" bindtap="doSearch" data-kw="{{item}}">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="block">
+      <view class="block__head">
+        <text class="block__title">热门搜索</text>
+      </view>
+      <view class="tag-wrap">
+        <view class="tag-item tag-item--hot" wx:for="{{hot}}" wx:key="*this" bindtap="doSearch" data-kw="{{item}}">{{item}}</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 搜索中/结果 -->
+  <block wx:else>
+    <pour-loading wx:if="{{loading && list.length === 0}}" text="搜索中…"></pour-loading>
+
+    <empty-state
+      wx:elif="{{!loading && list.length === 0}}"
+      icon="🔍"
+      title="没有找到「{{keyword}}」"
+      description="换个关键词试试"
+    ></empty-state>
+
+    <view class="result-info" wx:else>
+      <text>关于「{{keyword}}」找到 <text class="text-amber fw-600">{{total}}</text> 款</text>
+    </view>
+
+    <view class="grid" wx:if="{{list.length}}">
+      <view class="grid__col" wx:for="{{list}}" wx:key="id">
+        <cocktail-card cocktail="{{item}}"></cocktail-card>
+      </view>
+    </view>
+
+    <view class="load-more" wx:if="{{list.length > 0}}">
+      <text wx:if="{{loading}}">加载中…</text>
+      <text wx:elif="{{finished}}">— 到底啦 —</text>
+      <text wx:else>上拉加载更多</text>
+    </view>
+  </block>
+
+  <view class="safe-bottom"></view>
+</view>

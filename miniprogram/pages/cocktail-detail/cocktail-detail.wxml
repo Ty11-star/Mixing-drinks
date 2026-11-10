@@ -1,0 +1,83 @@
+<view class="page-wrap detail">
+
+  <pour-loading wx:if="{{loading}}" text="正在倒酒…"></pour-loading>
+
+  <block wx:elif="{{detail}}">
+    <!-- 视差 Hero -->
+    <view class="hero" style="background:{{gradient}}">
+      <view class="hero__bg" style="transform:translateY({{scrollTop * 0.3}}px);opacity:{{1 - scrollTop / 320 > 0.2 ? 1 - scrollTop / 320 : 0.2}}">
+        <image wx:if="{{image}}" class="hero__photo" src="{{image}}" mode="aspectFill"></image>
+        <text wx:else class="hero__watermark">{{icon}}</text>
+      </view>
+      <view class="hero__content" style="transform:translateY({{scrollTop * 0.12}}px)">
+        <view class="hero__name">{{detail.name}}</view>
+        <view class="hero__en" wx:if="{{detail.nameEn}}">{{detail.nameEn}}</view>
+        <view class="hero__meta">
+          <text class="hero__spirit">{{detail.baseSpirit}}</text>
+          <difficulty-tag level="{{detail.difficulty}}" show-label="{{true}}"></difficulty-tag>
+        </view>
+        <view class="hero__taste" wx:if="{{taste.length}}">
+          <text wx:for="{{taste}}" wx:key="*this" wx:for-item="t" class="hero__taste-item">{{t}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 描述 -->
+    <view class="card block">
+      <text class="block__text">{{detail.description}}</text>
+    </view>
+
+    <!-- 基础信息 -->
+    <view class="meta-row">
+      <view class="meta-item"><text class="meta-item__k">调制</text><text class="meta-item__v">{{methodLabel}}</text></view>
+      <view class="meta-item" wx:if="{{detail.glassType}}"><text class="meta-item__k">杯型</text><text class="meta-item__v">{{detail.glassType}}</text></view>
+      <view class="meta-item" wx:if="{{detail.alcoholContent}}"><text class="meta-item__k">酒精</text><text class="meta-item__v">{{detail.alcoholContent}}</text></view>
+      <view class="meta-item" wx:if="{{detail.iceType}}"><text class="meta-item__k">冰型</text><text class="meta-item__v">{{detail.iceType}}</text></view>
+    </view>
+
+    <!-- 材料清单 + 量杯刻度条 -->
+    <view class="card block">
+      <view class="block__title">材料清单</view>
+      <view class="ing" wx:for="{{ingredients}}" wx:key="id">
+        <view class="ing__top">
+          <text class="ing__name">{{item.name}}</text>
+          <text class="ing__amount text-mono">{{item.amount}}</text>
+        </view>
+        <view class="ing__bar">
+          <view class="ing__fill" style="width:{{item._ratio * 100}}%"></view>
+        </view>
+        <text class="ing__opt" wx:if="{{item._optional}}">可省略</text>
+      </view>
+    </view>
+
+    <!-- 调制步骤 -->
+    <view class="card block">
+      <view class="block__title">调制步骤</view>
+      <view class="step" wx:for="{{detail.steps}}" wx:key="stepNumber">
+        <view class="step__num"><text class="step__num-text">{{item.stepNumber}}</text></view>
+        <view class="step__body">
+          <text class="step__desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 小贴士 -->
+    <view class="card block tip" wx:if="{{detail.tips}}">
+      <view class="block__title">💡 小贴士</view>
+      <text class="block__text">{{detail.tips}}</text>
+    </view>
+
+    <view class="safe-bottom"></view>
+  </block>
+
+  <empty-state wx:else icon="🥺" title="找不到这款酒" description="它可能已下架或链接有误"></empty-state>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar" wx:if="{{detail && !loading}}">
+    <view class="action-bar__fav {{isFav ? 'on' : ''}} {{favRipple ? 'ripple' : ''}}" bindtap="toggleFav">
+      <text class="action-bar__heart">{{isFav ? '♥' : '♡'}}</text>
+      <text class="action-bar__fav-text">{{isFav ? '已收藏' : '收藏'}}</text>
+    </view>
+    <button class="action-bar__share" open-type="share">分享给朋友</button>
+  </view>
+</view>

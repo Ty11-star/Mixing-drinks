@@ -1,0 +1,56 @@
+.pour-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+  gap: 28rpx;
+}
+
+.pour-loading__glass {
+  position: relative;
+  width: 96rpx;
+  height: 120rpx;
+  border: 4rpx solid var(--slate-blue, #3D5A7B);
+  border-top: none;
+  border-radius: 0 0 40rpx 40rpx;
+  overflow: hidden;
+}
+
+/* 杯中液面上升 */
+.pour-loading__liquid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: linear-gradient(180deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  animation: liquid-rise 1.4s ease-in-out infinite;
+}
+@keyframes liquid-rise {
+  0% { height: 10%; opacity: 0.8; }
+  50% { height: 80%; opacity: 1; }
+  100% { height: 10%; opacity: 0.8; }
+}
+
+/* 顶部倒入的酒液细流 */
+.pour-loading__stream {
+  position: absolute;
+  top: -20rpx;
+  left: 50%;
+  width: 4rpx;
+  height: 24rpx;
+  background: linear-gradient(180deg, transparent, var(--primary-amber, #D4A574));
+  transform: translateX(-50%);
+  animation: stream-fall 1.4s ease-in-out infinite;
+}
+@keyframes stream-fall {
+  0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-6rpx); }
+  40%, 60% { opacity: 1; transform: translateX(-50%) translateY(6rpx); }
+}
+
+.pour-loading__text {
+  font-size: 26rpx;
+  color: var(--slate-blue, #3D5A7B);
+  letter-spacing: 0.04em;
+}

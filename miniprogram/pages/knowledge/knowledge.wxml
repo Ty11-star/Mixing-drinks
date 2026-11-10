@@ -1,0 +1,25 @@
+<view class="page-wrap knowledge">
+  <view class="know-hero">
+    <view class="know-hero__title">调酒小知识</view>
+    <view class="know-hero__sub">读懂基酒、方法与术语，调酒更得心应手</view>
+  </view>
+
+  <view class="tabs">
+    <scroll-view scroll-x class="tabs__scroll" enhanced show-scrollbar="{{false}}">
+      <view
+        class="tab {{active === item.key ? 'on' : ''}}"
+        wx:for="{{tabs}}" wx:key="key"
+        data-key="{{item.key}}" bindtap="switchTab"
+      >{{item.label}}</view>
+    </scroll-view>
+  </view>
+
+  <view class="know-list">
+    <view class="know-item card" wx:for="{{items}}" wx:key="name">
+      <view class="know-item__name">{{item.name}}</view>
+      <view class="know-item__desc">{{item.desc}}</view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

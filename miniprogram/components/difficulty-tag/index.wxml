@@ -1,0 +1,4 @@
+<view class="difficulty" style="color:{{meta.color}};background:{{meta.bg}}">
+  <text class="difficulty__glass">{{meta.glass}}</text>
+  <text class="difficulty__label" wx:if="{{showLabel}}">{{meta.label}}</text>
+</view>

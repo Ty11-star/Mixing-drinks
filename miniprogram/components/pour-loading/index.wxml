@@ -1,0 +1,7 @@
+<view class="pour-loading">
+  <view class="pour-loading__glass">
+    <view class="pour-loading__liquid"></view>
+    <view class="pour-loading__stream"></view>
+  </view>
+  <text class="pour-loading__text" wx:if="{{showText}}">{{text}}</text>
+</view>

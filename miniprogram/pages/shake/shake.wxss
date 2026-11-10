@@ -1,0 +1,164 @@
+.shake {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.shake__head {
+  flex: none;
+  background: linear-gradient(160deg, var(--midnight-blue, #1A2332), var(--slate-blue, #3D5A7B));
+  padding: 36rpx 32rpx 32rpx;
+  border-radius: 0 0 40rpx 40rpx;
+}
+.shake__title { font-family: var(--font-display, serif); font-size: 48rpx; font-weight: 700; color: #FFFFFF; }
+.shake__sub { font-size: 24rpx; color: rgba(255, 255, 255, 0.75); margin-top: 8rpx; }
+
+/* 酒杯舞台（固定，不随原料滑动） */
+.stage { flex: none; display: flex; flex-direction: column; align-items: center; padding: 32rpx 0 8rpx; }
+.glass {
+  width: 280rpx; height: 340rpx;
+  position: relative;
+  border: 6rpx solid rgba(255, 255, 255, 0.65);
+  border-top: none;
+  border-radius: 24rpx 24rpx 90rpx 90rpx;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 30rpx rgba(255, 255, 255, 0.15), 0 10rpx 30rpx rgba(26, 35, 50, 0.18);
+}
+/* 酒柱：倒入时从顶部落下的材料色细流 */
+.glass__stream {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 8rpx; height: 100%; opacity: 0.85;
+  animation: stream 0.6s ease forwards;
+  z-index: 3;
+}
+@keyframes stream {
+  0% { height: 0; opacity: 0; }
+  25% { height: 100%; opacity: 0.85; }
+  100% { height: 100%; opacity: 0; }
+}
+.glass__liquid {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 0;
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.6s;
+  z-index: 1;
+}
+/* 液面波纹（顶部高光弯月面） */
+.glass__liquid::after {
+  content: ''; position: absolute; top: -8rpx; left: 0; right: 0; height: 16rpx;
+  background: rgba(255, 255, 255, 0.4); border-radius: 50%; filter: blur(2rpx);
+}
+.glass__shine {
+  position: absolute; top: 8rpx; left: 24rpx; width: 36rpx; height: 70%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  border-radius: 20rpx; opacity: 0.5; z-index: 2;
+}
+.glass__rim {
+  position: absolute; top: 0; left: -6rpx; right: -6rpx; height: 14rpx;
+  background: rgba(255, 255, 255, 0.5); border-radius: 8rpx; z-index: 4;
+}
+.glass__pourtag {
+  position: absolute; top: -46rpx; left: 50%; transform: translateX(-50%);
+  background: var(--primary-amber, #D4A574); color: #FFFFFF;
+  font-size: 22rpx; padding: 4rpx 18rpx; border-radius: 9999rpx;
+  animation: pourpop 0.65s ease; z-index: 5;
+}
+@keyframes pourpop {
+  0% { opacity: 0; transform: translate(-50%, 10rpx); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -20rpx); }
+}
+.glass__spark {
+  position: absolute; top: 30rpx; right: 30rpx;
+  font-size: 44rpx; z-index: 6;
+  animation: spark 0.9s ease;
+}
+@keyframes spark {
+  0% { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+  100% { opacity: 0; transform: scale(1) rotate(0); }
+}
+.glass--pour { animation: glasspop 0.4s ease; box-shadow: inset 0 0 30rpx rgba(255,255,255,0.15), 0 0 26rpx var(--primary-amber-glow, rgba(212,165,116,0.5)); }
+@keyframes glasspop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.glass--shake { animation: glassshake 0.9s ease; }
+@keyframes glassshake {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-8deg) translateX(-10rpx); }
+  30% { transform: rotate(8deg) translateX(10rpx); }
+  45% { transform: rotate(-8deg) translateX(-10rpx); }
+  60% { transform: rotate(8deg) translateX(10rpx); }
+  75% { transform: rotate(-4deg); }
+  90% { transform: rotate(4deg); }
+}
+.bubble {
+  position: absolute; bottom: 10rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: rise 2.4s linear infinite;
+}
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(-250rpx); opacity: 0; }
+}
+.stage__hint { font-size: 24rpx; color: var(--slate-blue, #3D5A7B); opacity: 0.7; margin-top: 20rpx; }
+
+/* 已选 */
+.picked { flex: none; display: flex; flex-wrap: wrap; gap: 14rpx; padding: 0 32rpx 10rpx; }
+.picked__item {
+  display: flex; align-items: center; gap: 8rpx;
+  padding: 10rpx 20rpx; background: #FFFFFF;
+  border: 1rpx solid var(--ice-blue, #E8F1F5); border-radius: 9999rpx;
+  font-size: 24rpx; color: var(--midnight-blue, #1A2332);
+}
+.picked__x { color: var(--bloody-mary-red, #C54B3D); font-size: 20rpx; }
+.picked__clear { padding: 10rpx 20rpx; font-size: 24rpx; color: var(--slate-blue, #3D5A7B); }
+
+/* 可滚动材料区 */
+.groups-label { flex: none; font-family: var(--font-display, serif); font-size: 30rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); padding: 16rpx 32rpx 4rpx; }
+.groups-scroll { flex: 1; height: 0; }
+.groups { padding: 8rpx 32rpx 4rpx; }
+.group__title { font-family: var(--font-display, serif); font-size: 28rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); margin: 16rpx 0 14rpx; }
+.chips { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.chip {
+  padding: 14rpx 30rpx; background: #FFFFFF;
+  border: 1rpx solid var(--ice-blue, #E8F1F5); border-radius: 9999rpx;
+  font-size: 27rpx; color: var(--slate-blue, #3D5A7B); transition: all 0.2s;
+}
+.chip.on {
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF; border-color: transparent;
+  box-shadow: 0 6rpx 16rpx var(--primary-amber-glow, rgba(212, 165, 116, 0.25));
+  transform: scale(1.03);
+}
+
+/* 底部摇酒栏 */
+.shake-bar {
+  position: fixed; left: 0; right: 0;
+  bottom: calc(110rpx + env(safe-area-inset-bottom));
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16rpx 32rpx;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 -4rpx 24rpx rgba(26, 35, 50, 0.1);
+  z-index: 60;
+}
+.shake-bar__count { font-size: 26rpx; color: var(--slate-blue, #3D5A7B); }
+.shake-bar__btns { display: flex; gap: 16rpx; }
+.shake-bar__btn {
+  padding: 20rpx 36rpx;
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF; font-size: 28rpx; font-weight: 600;
+  border-radius: 12rpx;
+  box-shadow: 0 8rpx 20rpx var(--primary-amber-glow, rgba(212, 165, 116, 0.25));
+}
+.shake-bar__btn--ghost {
+  background: #FFFFFF; color: var(--slate-blue, #3D5A7B);
+  border: 1rpx solid var(--ice-blue, #E8F1F5); box-shadow: none;
+}
+.shake-bar__btn.disabled { background: var(--ice-blue, #E8F1F5); color: var(--slate-blue, #3D5A7B); opacity: 0.7; box-shadow: none; }
+.shake-bar__btn:active { transform: scale(0.97); }

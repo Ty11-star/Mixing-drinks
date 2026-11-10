@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "AI 调酒师",
+  "usingComponents": {
+    "pour-loading": "/components/pour-loading/index",
+    "empty-state": "/components/empty-state/index"
+  }
+}

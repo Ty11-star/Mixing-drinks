@@ -1,0 +1,107 @@
+.cocktail-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg, 24rpx);
+  overflow: hidden;
+  box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26,35,50,0.08));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+.cocktail-card--hover {
+  transform: translateY(-6rpx);
+  box-shadow: var(--shadow-lifted, 0 12rpx 32rpx rgba(26,35,50,0.15));
+}
+
+/* 杯垫式占位图 */
+.cocktail-card__image {
+  position: relative;
+  height: 240rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.cocktail-card__shimmer {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+  animation: card-shimmer 3.2s ease-in-out infinite;
+}
+@keyframes card-shimmer {
+  0% { left: -60%; }
+  60%, 100% { left: 120%; }
+}
+.cocktail-card__icon {
+  font-size: 110rpx;
+  line-height: 1;
+  text-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.15);
+  user-select: none;
+}
+.cocktail-card__photo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cocktail-card__diff {
+  position: absolute;
+  top: 14rpx;
+  right: 14rpx;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 26rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
+}
+
+.cocktail-card__body {
+  padding: var(--coaster-padding, 24rpx);
+}
+.cocktail-card__title {
+  font-family: var(--font-display, serif);
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--midnight-blue, #1A2332);
+}
+.cocktail-card__subtitle {
+  font-size: 22rpx;
+  color: var(--slate-blue, #3D5A7B);
+  margin-top: 2rpx;
+  opacity: 0.8;
+}
+.cocktail-card__divider {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, var(--primary-amber-light, #E5C4A0), transparent);
+  opacity: 0.4;
+  margin: 14rpx 0;
+}
+.cocktail-card__spirit {
+  display: inline-block;
+  font-size: 22rpx;
+  color: var(--primary-amber-dark, #B8935E);
+  background: var(--primary-amber-glow, rgba(212,165,116,0.2));
+  padding: 4rpx 14rpx;
+  border-radius: var(--radius-xs, 8rpx);
+  font-weight: 500;
+}
+.cocktail-card__taste {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: var(--slate-blue, #3D5A7B);
+}
+/* WXSS 不支持 :not()，用 :first-child 反向覆盖实现 */
+.cocktail-card__taste text::before {
+  content: '·';
+  margin: 0 8rpx;
+  color: var(--ice-blue, #E8F1F5);
+}
+.cocktail-card__taste text:first-child::before {
+  content: '';
+  margin: 0;
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cocktail-card": "/components/cocktail-card/index",
+    "empty-state": "/components/empty-state/index"
+  },
+  "navigationBarTitleText": "我的"
+}

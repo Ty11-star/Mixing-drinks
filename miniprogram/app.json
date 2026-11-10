@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/cocktail-detail/cocktail-detail",
+    "pages/category/category",
+    "pages/search/search",
+    "pages/match-result/match-result",
+    "pages/ai-recipe/ai-recipe",
+    "pages/shake/shake",
+    "pages/lottery/lottery",
+    "pages/knowledge/knowledge",
+    "pages/user/user"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#1A2332",
+    "navigationBarTitleText": "调一杯",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F8FAFB",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#3D5A7B",
+    "selectedColor": "#D4A574",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/shake/shake", "text": "调一杯" },
+      { "pagePath": "pages/lottery/lottery", "text": "抽卡" },
+      { "pagePath": "pages/knowledge/knowledge", "text": "知识" },
+      { "pagePath": "pages/user/user", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

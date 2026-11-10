@@ -1,0 +1,228 @@
+/* ============================================================
+   调酒小程序 · 全局设计系统 (Design Tokens)
+   设计理念：精确、流动、分层、仪式感、玻璃质感
+   ============================================================ */
+
+page {
+  /* —— 主色：琥珀金 —— */
+  --primary-amber: #D4A574;
+  --primary-amber-light: #E5C4A0;
+  --primary-amber-dark: #B8935E;
+  --primary-amber-glow: rgba(212, 165, 116, 0.2);
+
+  /* —— 辅助：午夜蓝 —— */
+  --midnight-blue: #1A2332;
+  --midnight-blue-light: #2D3E50;
+  --slate-blue: #3D5A7B;
+
+  /* —— 点缀色 —— */
+  --mojito-mint: #7ECFA0;
+  --bloody-mary-red: #C54B3D;
+  --blue-lagoon: #4FB3D9;
+  --cosmopolitan-pink: #E889A4;
+
+  /* —— 中性：玻璃与冰 —— */
+  --glass-white: #F8FAFB;
+  --frosted-glass: rgba(248, 250, 251, 0.85);
+  --ice-blue: #E8F1F5;
+  --shadow-glass: rgba(26, 35, 50, 0.08);
+
+  /* —— 功能色 —— */
+  --success: #7ECFA0;
+  --warning: #F5C77E;
+  --error: #C54B3D;
+
+  /* —— 间距（8rpx 网格）—— */
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+  --spacing-xxl: 64rpx;
+  --coaster-padding: 24rpx;
+  --content-margin: 32rpx;
+
+  /* —— 圆角 —— */
+  --radius-xs: 8rpx;
+  --radius-sm: 12rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+  --radius-round: 9999rpx;
+
+  /* —— 阴影 —— */
+  --shadow-glass-light: 0 4rpx 12rpx var(--shadow-glass);
+  --shadow-glass-medium: 0 8rpx 24rpx var(--shadow-glass);
+  --shadow-lifted: 0 12rpx 32rpx rgba(26, 35, 50, 0.15);
+  --glow-amber: 0 0 24rpx var(--primary-amber-glow);
+
+  /* —— 字体 —— */
+  --font-display: 'Songti SC', 'STSong', 'Noto Serif SC', serif;
+  --font-body: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  --font-mono: 'Courier New', 'SF Mono', monospace;
+
+  background-color: var(--glass-white);
+  color: var(--midnight-blue);
+  font-family: var(--font-body);
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+view, text, scroll-view, button, input, textarea, navigator {
+  box-sizing: border-box;
+}
+
+/* —— 通用容器 —— */
+.page-wrap {
+  min-height: 100vh;
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, #FBFCFD 0%, var(--glass-white) 100%);
+}
+
+.container {
+  padding: var(--content-margin);
+}
+
+/* —— 区块标题 —— */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--midnight-blue);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+.section-sub {
+  font-size: 24rpx;
+  color: var(--slate-blue);
+  margin-top: 4rpx;
+}
+
+/* —— 玻璃卡片 —— */
+.card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glass-light);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+.card--hover {
+  transform: translateY(-6rpx);
+  box-shadow: var(--shadow-lifted);
+}
+
+/* —— 细分割线（酒液渐隐）—— */
+.divider {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, var(--primary-amber-light), transparent);
+  opacity: 0.35;
+  margin: var(--spacing-sm) 0;
+}
+
+/* —— 标签 —— */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4rpx;
+  padding: 4rpx 14rpx;
+  border-radius: var(--radius-xs);
+  font-size: 20rpx;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.tag--spirit {
+  background: var(--primary-amber-glow);
+  color: var(--primary-amber-dark);
+}
+.tag--taste {
+  background: var(--ice-blue);
+  color: var(--slate-blue);
+}
+.tag--ghost {
+  background: transparent;
+  border: 1rpx solid var(--ice-blue);
+  color: var(--slate-blue);
+}
+
+/* —— 主按钮（琥珀金）—— */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-amber) 0%, var(--primary-amber-dark) 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-sm);
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+  padding: 24rpx 0;
+  box-shadow: 0 8rpx 20rpx var(--primary-amber-glow);
+  transition: transform 0.1s, opacity 0.2s;
+}
+.btn-primary--hover { transform: scale(0.98); opacity: 0.92; }
+
+.btn-ghost {
+  background: #FFFFFF;
+  color: var(--slate-blue);
+  border: 1rpx solid var(--ice-blue);
+  border-radius: var(--radius-sm);
+  font-size: 28rpx;
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+/* —— 文本工具 —— */
+.text-mono { font-family: var(--font-mono); }
+.text-amber { color: var(--primary-amber); }
+.text-muted { color: var(--slate-blue); }
+.text-sm { font-size: 24rpx; }
+.text-xs { font-size: 20rpx; }
+.text-display { font-family: var(--font-display); }
+.fw-600 { font-weight: 600; }
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* —— 底部安全区占位（须大于自定义 tabBar 高度 110rpx，否则内容被盖）—— */
+.safe-bottom {
+  height: calc(160rpx + env(safe-area-inset-bottom));
+}
+
+/* —— 涟漪按钮（点击水波）—— */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-dot {
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.ripple-btn.rippling .ripple-dot {
+  animation: ripple 0.6s ease-out;
+}
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(20); opacity: 0; }
+}
+
+/* —— 减弱动效（可访问性）—— */
+/* 注意：WXSS 不支持 `*` 通配符选择器，需逐个列出元素 */
+@media (prefers-reduced-motion: reduce) {
+  view, text, scroll-view, button, input, textarea, image, navigator, swiper {
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
+  }
+}

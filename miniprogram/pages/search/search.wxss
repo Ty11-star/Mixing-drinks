@@ -1,0 +1,60 @@
+.search { padding: 0; }
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 32rpx;
+  background: #FFFFFF;
+  box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26,35,50,0.06));
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.search-bar__input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: var(--glass-white, #F8FAFB);
+  border: 1rpx solid var(--ice-blue, #E8F1F5);
+  border-radius: var(--radius-round, 9999rpx);
+  padding: 14rpx 24rpx;
+}
+.search-bar__icon { font-size: 26rpx; }
+.search-bar__input { flex: 1; font-size: 28rpx; color: var(--midnight-blue, #1A2332); }
+.search-bar__ph { color: var(--slate-blue, #3D5A7B); opacity: 0.6; }
+.search-bar__clear {
+  font-size: 26rpx;
+  color: var(--slate-blue, #3D5A7B);
+  width: 36rpx; height: 36rpx;
+  text-align: center;
+}
+.search-bar__cancel { font-size: 28rpx; color: var(--primary-amber-dark, #B8935E); }
+
+.block { padding: 28rpx 32rpx 0; }
+.block__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18rpx; }
+.block__title { font-family: var(--font-display, serif); font-size: 30rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); }
+.block__clear { font-size: 24rpx; color: var(--slate-blue, #3D5A7B); }
+.tag-wrap { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.tag-item {
+  padding: 12rpx 28rpx;
+  background: #FFFFFF;
+  border: 1rpx solid var(--ice-blue, #E8F1F5);
+  border-radius: var(--radius-round, 9999rpx);
+  font-size: 26rpx;
+  color: var(--slate-blue, #3D5A7B);
+}
+.tag-item--hot { background: var(--primary-amber-glow, rgba(212,165,116,0.18)); color: var(--primary-amber-dark, #B8935E); border-color: transparent; }
+
+.result-info { padding: 24rpx 32rpx 4rpx; font-size: 26rpx; color: var(--slate-blue, #3D5A7B); }
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16rpx 20rpx;
+  gap: 16rpx;
+}
+.grid__col { width: calc(50% - 8rpx); }
+
+.load-more { text-align: center; color: var(--slate-blue, #3D5A7B); font-size: 24rpx; padding: 28rpx 0; }

@@ -1,0 +1,280 @@
+/* =====================================================================
+ * 调酒·酒吧风 暗调主题 (Bar Lounge · Glassmorphism)
+ * 氛围：暖琥珀吊灯环境光 + 冰蓝冷调 + 磨砂玻璃面板 + 暗角
+ * ===================================================================== */
+:root {
+  /* —— 主色 / 威士忌琥珀（在暗底上提亮）—— */
+  --whisky-100: #f3e4cf;
+  --whisky-200: #e6c79c;
+  --whisky-300: #e0b079; /* 主强调（亮琥珀）*/
+  --whisky-400: #c08e57;
+  --whisky-500: #a8743d;
+  --whisky-600: #8a5a2c;
+
+  /* —— 辅助 / 冰透浅蓝（冷调对比）—— */
+  --ice-100: #d4ecf6;
+  --ice-200: #9ccce0;
+  --ice-300: #6fb3d6;
+  --ice-400: #4a98c0;
+
+  /* —— 暗调吧台底色 —— */
+  --bar-0: #100b06; /* 最暗 */
+  --bar-1: #18110a;
+  --bar-2: #211810;
+  --bar-3: #2a1f15;
+
+  /* —— 玻璃面板 —— */
+  --glass-fill: rgba(255, 244, 230, 0.045);
+  --glass-fill-strong: rgba(255, 244, 230, 0.07);
+  --glass-border: rgba(224, 176, 121, 0.20);
+  --glass-border-top: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  --glow-amber: 0 0 0 1px rgba(224, 176, 121, 0.35), 0 10px 36px rgba(192, 142, 87, 0.16);
+
+  /* —— 文本（确保对比度 ≥ 4.5:1）—— */
+  --text-strong: #f6ecdd;
+  --text: #e7dccb;
+  --text-muted: #a99884;
+  --text-faint: #7e7160;
+
+  /* —— 语义 —— */
+  --success: #5bc08a;
+  --warning: #e0b073;
+  --error: #e07a6f;
+  --info: var(--ice-300);
+
+  /* —— 侧边栏 —— */
+  --sider-bg: #130d07;
+  --sider-text: #cdbfa9;
+
+  /* —— 间距 / 圆角（8pt 基准）—— */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+  --radius-sm: 8px; --radius-md: 10px; --radius-lg: 14px; --radius-xl: 18px;
+
+  /* —— 动效 —— */
+  --dur-fast: 160ms; --dur-base: 260ms; --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* —— 图表（暗调）—— */
+  --chart-text: #d8cdbe;
+  --chart-axis: #6f6555;
+  --chart-split: rgba(224, 176, 121, 0.08);
+}
+
+/* ===================== 全局背景：暖琥珀吊灯环境光 + 冰蓝 + 冷凝纹理 + 暗角 ===================== */
+body, .app-root {
+  background-color: var(--bar-0);
+  background-image:
+    /* 暖琥珀吊灯（左上 + 右中）*/
+    radial-gradient(60% 50% at 18% 0%, rgba(224, 176, 121, 0.22) 0%, transparent 60%),
+    radial-gradient(50% 45% at 88% 18%, rgba(192, 142, 87, 0.16) 0%, transparent 55%),
+    /* 冰蓝冷调（左下）*/
+    radial-gradient(55% 55% at 8% 92%, rgba(79, 152, 192, 0.12) 0%, transparent 55%),
+    /* 冷凝冰粒点阵 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23E0B079' stroke-width='1' opacity='0.05'%3E%3Ccircle cx='30' cy='40' r='2.5'/%3E%3Ccircle cx='150' cy='90' r='2'/%3E%3Ccircle cx='90' cy='160' r='2.5'/%3E%3Ccircle cx='180' cy='30' r='1.8'/%3E%3Cpath d='M60 60h30l-15 18v12'/%3E%3Cpath d='M130 120l8-6 8 6-8 18z'/%3E%3C/g%3E%3C/svg%3E"),
+    /* 基础渐变 */
+    linear-gradient(160deg, var(--bar-1) 0%, var(--bar-0) 60%, #0b0805 100%);
+  background-attachment: fixed;
+}
+
+/* 暗角 vignette：聚焦中心，强化氛围 */
+.app-body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: inset 0 0 200px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* ===================== 布局透出背景 ===================== */
+.ant-layout { background: transparent !important; }
+
+/* ===================== 玻璃卡片 ===================== */
+.ant-card {
+  background: var(--glass-fill) !important;
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--glass-border) !important;
+  border-top-color: var(--glass-border-top) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--glass-shadow);
+}
+.ant-card .ant-card-head {
+  border-bottom: 1px solid var(--glass-border) !important;
+  color: var(--text-strong);
+}
+
+/* ===================== 表格（玻璃 + 琥珀 hover/选中）===================== */
+.ant-table-wrapper, .ant-table {
+  background: transparent !important;
+}
+.ant-table-thead > tr > th {
+  background: rgba(224, 176, 121, 0.08) !important;
+  color: var(--whisky-200) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+}
+.ant-table-tbody > tr > td {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(224, 176, 121, 0.07) !important;
+  color: var(--text);
+}
+.ant-table-tbody > tr:hover > td {
+  background: rgba(224, 176, 121, 0.06) !important;
+}
+.ant-table-tbody > tr.ant-table-row-selected > td {
+  background: rgba(224, 176, 121, 0.12) !important;
+}
+.ant-table-wrapper .ant-table-pagination { color: var(--text-muted); }
+
+/* ===================== 选中高亮：酒渍渐变光晕（暗底版）===================== */
+.is-selected::after, [data-selected='true']::after {
+  content: ''; position: absolute; inset: -1px; border-radius: inherit;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(224, 176, 121, 0.30) 0%, rgba(224, 176, 121, 0.06) 55%, transparent 80%);
+  box-shadow: 0 0 0 2px rgba(224, 176, 121, 0.4);
+  pointer-events: none; animation: spirit-glow 420ms var(--ease);
+}
+
+/* ===================== 按钮：玻璃 + 琥珀光晕 hover ===================== */
+.ant-btn:not(.ant-btn-primary):not([disabled]) {
+  background: var(--glass-fill-strong) !important;
+  border-color: var(--glass-border) !important;
+  color: var(--text-strong) !important;
+  backdrop-filter: blur(6px);
+  transition: all var(--dur-fast) var(--ease);
+}
+.ant-btn:not(.ant-btn-primary):not([disabled]):hover {
+  border-color: var(--whisky-300) !important;
+  color: var(--whisky-200) !important;
+  box-shadow: 0 0 0 1px rgba(224, 176, 121, 0.25), 0 6px 20px rgba(192, 142, 87, 0.18);
+  background: linear-gradient(180deg, rgba(255, 250, 242, 0.10), rgba(224, 176, 121, 0.06)) !important;
+}
+.ant-btn-primary {
+  background: linear-gradient(135deg, #e6c79c 0%, #c08e57 55%, #a8743d 100%) !important;
+  border: none !important;
+  color: #1a120a !important;
+  font-weight: 600;
+  box-shadow: 0 6px 22px rgba(192, 142, 87, 0.30);
+  transition: filter var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.ant-btn-primary:hover {
+  filter: brightness(1.06) saturate(1.05);
+  box-shadow: 0 8px 28px rgba(224, 176, 121, 0.42);
+}
+
+/* ===================== 输入 / 下拉（暗调玻璃）===================== */
+.ant-input, .ant-input-affix-wrapper, .ant-input-number, .ant-select-selector,
+.ant-input-password, .ant-picker {
+  background: rgba(255, 244, 230, 0.04) !important;
+  border-color: var(--glass-border) !important;
+  color: var(--text) !important;
+}
+.ant-input::placeholder, .ant-input-affix-wrapper input::placeholder { color: var(--text-faint) !important; }
+.ant-select:not(.ant-select-customize-input) .ant-select-selector { background: rgba(255, 244, 230, 0.04) !important; }
+.ant-select-dropdown, .ant-picker-dropdown .ant-picker-panel-container {
+  background: #1d1510 !important; border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(14px);
+}
+
+/* ===================== 弹窗遮罩：冰粒虚化 + 暗化 ===================== */
+.ant-modal-mask, .ant-drawer-mask {
+  backdrop-filter: blur(6px);
+  background-color: rgba(10, 7, 4, 0.62) !important;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(2px 2px at 70% 60%, rgba(255, 255, 255, 0.30), transparent),
+    radial-gradient(1.5px 1.5px at 45% 80%, rgba(255, 255, 255, 0.35), transparent);
+}
+.ant-modal-content, .ant-drawer-content {
+  background: rgba(28, 20, 13, 0.92) !important;
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border) !important;
+  border-top-color: var(--glass-border-top) !important;
+  box-shadow: var(--glass-shadow);
+}
+.ant-modal-header, .ant-drawer-header { background: transparent !important; border-bottom: 1px solid var(--glass-border) !important; }
+.ant-modal-title, .ant-drawer-title { color: var(--text-strong) !important; }
+
+/* ===================== 滑块 / 进度条：量酒器刻度 ===================== */
+.ant-slider-rail { background: rgba(224, 176, 121, 0.12) !important;
+  background-image: repeating-linear-gradient(90deg, transparent 0 9px, rgba(224,176,121,0.20) 9px 10px) !important; }
+.ant-slider-track { background: linear-gradient(90deg, var(--whisky-200), var(--whisky-300)) !important; }
+.ant-progress-bg { background: linear-gradient(90deg, var(--whisky-200), var(--whisky-300)) !important; }
+
+/* ===================== 切换 Tab：液体缓缓倒入 ===================== */
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn { color: var(--whisky-200) !important; }
+.ant-tabs-ink-bar { background: var(--whisky-300) !important; height: 3px !important; border-radius: 3px; }
+@keyframes liquid-pour { from { clip-path: inset(100% 0 0 0); opacity: 0.4; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+.ant-tabs-content-holder .ant-tabs-content { animation: liquid-pour var(--dur-base) var(--ease); }
+
+/* ===================== 侧边栏（深咖 + 琥珀高亮）===================== */
+.ant-menu-dark.ant-menu-inline .ant-menu-item-selected {
+  background: linear-gradient(90deg, rgba(192,142,87,0.28), rgba(192,142,87,0.06)) !important;
+  box-shadow: inset 3px 0 0 var(--whisky-300), 0 0 22px rgba(192,142,87,0.18);
+}
+.ant-menu-dark .ant-menu-item:hover:not(.ant-menu-item-selected) { background: var(--bar-3) !important; }
+.ant-layout-sider { background: var(--sider-bg) !important; border-right: 1px solid rgba(224,176,121,0.10) !important; }
+
+/* ===================== 顶栏：吧台环境光 ===================== */
+.bar-topbar {
+  position: relative;
+  background: linear-gradient(100deg, rgba(28,20,13,0.85) 0%, rgba(40,28,17,0.7) 50%, rgba(28,20,13,0.85) 100%) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+/* 顶部环境光 + 酒杯线稿水印 */
+.bar-topbar::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(40% 140% at 12% 0%, rgba(224,176,121,0.30), transparent 60%),
+    radial-gradient(30% 120% at 90% 0%, rgba(79,152,192,0.16), transparent 60%);
+  pointer-events: none;
+}
+.bar-topbar::after {
+  content: ''; position: absolute; right: -10px; top: -20px;
+  width: 220px; height: 120px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' fill='none' stroke='%23E0B079' stroke-width='1.4' opacity='0.10'%3E%3Cpath d='M30 8h60l-30 36v22'/%3E%3Cpath d='M60 66v8M48 74h24'/%3E%3Cpath d='M95 20c6 8 6 16 0 24'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / contain;
+  pointer-events: none;
+}
+/* 吧台边缘高光（像被灯照亮的台面）*/
+.bar-topbar .bar-edge {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,247,237,0.45), transparent);
+}
+
+/* 营业中状态点 */
+.bar-status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: bar-pulse 2.4s ease-in-out infinite;
+}
+@keyframes bar-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* 品牌字（优雅衬线，带琥珀暖光）*/
+.bar-brand-name {
+  font-family: Georgia, 'Times New Roman', 'Songti SC', 'STSong', serif;
+  letter-spacing: 1px;
+  color: var(--whisky-100);
+  text-shadow: 0 0 18px rgba(224, 176, 121, 0.45);
+}
+
+/* ===================== 滚动条 ===================== */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(224,176,121,0.25); border-radius: 9px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: rgba(224,176,121,0.45); background-clip: padding-box; }
+
+/* ===================== 摇酒壶加载动画 ===================== */
+@keyframes shaker-shake { 0% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } 100% { transform: rotate(-12deg); } }
+@keyframes shaker-drip { 0%,100% { transform: translateY(0); opacity: 0.7; } 50% { transform: translateY(3px); opacity: 0.3; } }
+@keyframes spirit-glow { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+/* ===================== 减弱动效（必带）===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  .ant-tabs-content-holder .ant-tabs-content { animation: none !important; }
+  .app-body::before { display: none; }
+}

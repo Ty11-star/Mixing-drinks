@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "difficulty-tag": "/components/difficulty-tag/index",
+    "empty-state": "/components/empty-state/index",
+    "pour-loading": "/components/pour-loading/index"
+  },
+  "navigationBarTitleText": "酒谱详情"
+}

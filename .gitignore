@@ -1,0 +1,49 @@
+# ===================== 依赖 =====================
+node_modules/
+.pnpm-store/
+.npm/
+
+# ===================== 构建产物 =====================
+dist/
+dist-ssr/
+build/
+.vite/
+*.tsbuildinfo
+coverage/
+
+# ===================== 环境变量与密钥 =====================
+# 只提交 .env.example 模板，真实配置一律不入库
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# ===================== 日志 =====================
+*.log
+logs/
+
+# ===================== 运行时上传的文件 =====================
+# 忽略用户上传内容，用 .gitkeep 保留空目录
+server/public/uploads/*
+!server/public/uploads/.gitkeep
+manage/public/images/upload/*
+!manage/public/images/upload/.gitkeep
+
+# ===================== 微信开发者工具 =====================
+# 个人本地设置，不应共享；project.config.json 需提交
+project.private.config.json
+
+# ===================== 编辑器 / 操作系统 =====================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

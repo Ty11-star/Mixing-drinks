@@ -1,0 +1,19 @@
+<view class="cocktail-card" bindtap="goDetail" hover-class="cocktail-card--hover">
+  <view class="cocktail-card__image" style="background:{{gradient}}">
+    <view class="cocktail-card__shimmer"></view>
+    <image wx:if="{{image}}" class="cocktail-card__photo" src="{{image}}" mode="aspectFill" lazy-load="{{true}}"></image>
+    <text wx:else class="cocktail-card__icon">{{icon}}</text>
+    <view class="cocktail-card__diff">
+      <text>{{diffMeta.glass}}</text>
+    </view>
+  </view>
+  <view class="cocktail-card__body">
+    <view class="cocktail-card__title ellipsis">{{cocktail.name}}</view>
+    <view class="cocktail-card__subtitle ellipsis" wx:if="{{cocktail.nameEn}}">{{cocktail.nameEn}}</view>
+    <view class="cocktail-card__divider"></view>
+    <view class="cocktail-card__spirit">{{cocktail.baseSpirit}}</view>
+    <view class="cocktail-card__taste" wx:if="{{taste.length}}">
+      <text wx:for="{{taste}}" wx:key="*this" wx:for-item="t">{{t}}</text>
+    </view>
+  </view>
+</view>

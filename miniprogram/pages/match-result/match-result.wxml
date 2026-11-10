@@ -1,0 +1,57 @@
+<view class="page-wrap match">
+  <pour-loading wx:if="{{loading}}" text="正在为你调酒…"></pour-loading>
+
+  <block wx:elif="{{total > 0}}">
+    <view class="match__head">
+      <text class="match__title">根据你的材料</text>
+      <text class="match__sub">为你找到 <text class="text-amber fw-600">{{total}}</text> 款可以调的酒</text>
+    </view>
+
+    <view
+      class="match-card tier-{{item._tier}}"
+      wx:for="{{results}}"
+      wx:key="cocktail.id"
+      data-id="{{item.cocktail.id}}"
+      bindtap="goDetail"
+    >
+      <view class="match-card__rate">
+        <view class="match-card__pct-wrap">
+          <text class="match-card__pct">{{item.matchRate}}</text>
+          <text class="match-card__sym">%</text>
+        </view>
+        <text class="match-card__tier">{{item._tierLabel}}</text>
+      </view>
+
+      <view class="match-card__info">
+        <view class="match-card__name">{{item.cocktail.name}}</view>
+        <view class="match-card__en">{{item.cocktail.nameEn}}</view>
+        <view class="match-card__ai" wx:if="{{item.cocktail.source === 'ai'}}">AI 生成</view>
+        <view class="match-card__tags">
+          <text class="tag tag--spirit">{{item.cocktail.baseSpirit}}</text>
+          <text class="match-card__glass">{{item._diff.glass}} {{item._diff.label}}</text>
+        </view>
+        <view class="match-card__taste" wx:if="{{item._taste.length}}">
+          <text wx:for="{{item._taste}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+        </view>
+        <view class="match-card__missing" wx:if="{{item.missingIngredients.length}}">
+          <text class="match-card__missing-label">还差：</text>
+          <text wx:for="{{item.missingIngredients}}" wx:for-item="m" wx:key="id" class="match-card__missing-item">
+            {{m.name}}<text wx:if="{{m.amount}}">{{m.amount}}</text><text wx:if="{{index < item.missingIngredients.length - 1}}">、</text>
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <view class="safe-bottom"></view>
+  </block>
+
+  <empty-state
+    wx:else
+    icon="🧐"
+    title="没找到能调的酒"
+    description="试着多选几种基酒或常见辅料，比如朗姆酒、柠檬、苏打水"
+    show-action="{{true}}"
+    action-text="再去挑材料"
+    bind:action="goSelect"
+  ></empty-state>
+</view>

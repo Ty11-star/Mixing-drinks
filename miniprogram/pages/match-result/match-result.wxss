@@ -1,0 +1,79 @@
+.match { padding: 0; }
+
+.match__head {
+  padding: 36rpx 32rpx 12rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+.match__title { font-family: var(--font-display, serif); font-size: 44rpx; font-weight: 700; color: var(--midnight-blue, #1A2332); }
+.match__sub { font-size: 26rpx; color: var(--slate-blue, #3D5A7B); }
+
+.match-card {
+  display: flex;
+  gap: 24rpx;
+  margin: 20rpx 32rpx;
+  padding: 28rpx;
+  background: #FFFFFF;
+  border-radius: var(--radius-lg, 24rpx);
+  box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26,35,50,0.08));
+  border-left: 8rpx solid var(--primary-amber, #D4A574);
+  transition: transform 0.2s;
+}
+.match-card:active { transform: scale(0.99); }
+
+/* 分层质感：匹配度越高，金色越浓 */
+.match-card.tier-perfect { border-left-color: #D4A574; background: linear-gradient(135deg, rgba(212,165,116,0.16), #FFFFFF 60%); }
+.match-card.tier-high { border-left-color: var(--primary-amber-light, #E5C4A0); background: linear-gradient(135deg, rgba(229,196,160,0.12), #FFFFFF 65%); }
+.match-card.tier-mid { border-left-color: var(--ice-blue, #E8F1F5); }
+.match-card.tier-low { border-left-color: var(--ice-blue, #E8F1F5); opacity: 0.92; }
+
+.match-card__rate {
+  flex: 0 0 150rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1rpx dashed var(--ice-blue, #E8F1F5);
+  padding-right: 12rpx;
+}
+.match-card__pct-wrap { display: flex; align-items: baseline; }
+.match-card__pct {
+  font-family: var(--font-mono, monospace);
+  font-size: 60rpx;
+  font-weight: 700;
+  color: var(--primary-amber-dark, #B8935E);
+  line-height: 1;
+}
+.match-card__sym { font-size: 28rpx; color: var(--primary-amber-dark, #B8935E); }
+.match-card__tier { font-size: 22rpx; color: var(--slate-blue, #3D5A7B); margin-top: 10rpx; }
+
+.match-card__info { flex: 1; min-width: 0; }
+.match-card__name { font-family: var(--font-display, serif); font-size: 34rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); }
+.match-card__en { font-size: 22rpx; color: var(--slate-blue, #3D5A7B); opacity: 0.8; margin-bottom: 10rpx; }
+.match-card__ai {
+  align-self: flex-start;
+  margin-bottom: 10rpx;
+  padding: 4rpx 14rpx;
+  border-radius: var(--radius-round, 9999rpx);
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF;
+  font-size: 20rpx;
+}
+.match-card__tags { display: flex; align-items: center; gap: 14rpx; }
+.match-card__glass { font-size: 22rpx; color: var(--slate-blue, #3D5A7B); }
+.match-card__taste { margin-top: 12rpx; font-size: 22rpx; color: var(--slate-blue, #3D5A7B); }
+/* WXSS 不支持 :not()，用 :first-child 反向覆盖实现 */
+.match-card__taste text::before { content: '·'; margin: 0 8rpx; color: var(--ice-blue, #E8F1F5); }
+.match-card__taste text:first-child::before { content: ''; margin: 0; }
+
+.match-card__missing {
+  margin-top: 16rpx;
+  padding: 12rpx 16rpx;
+  background: var(--ice-blue, #E8F1F5);
+  border-radius: var(--radius-sm, 12rpx);
+  font-size: 23rpx;
+  color: var(--slate-blue, #3D5A7B);
+}
+.match-card__missing-label { font-weight: 600; color: var(--bloody-mary-red, #C54B3D); }
+.match-card__missing-item { color: var(--midnight-blue, #1A2332); }

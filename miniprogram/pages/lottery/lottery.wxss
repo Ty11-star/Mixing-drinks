@@ -1,0 +1,197 @@
+.lottery { padding: 0; }
+
+.lottery__head {
+  background: linear-gradient(160deg, var(--midnight-blue, #1A2332), var(--slate-blue, #3D5A7B));
+  padding: 40rpx 32rpx 36rpx;
+  border-radius: 0 0 44rpx 44rpx;
+}
+.lottery__title { font-family: var(--font-display, serif); font-size: 48rpx; font-weight: 700; color: #FFFFFF; }
+.lottery__sub { font-size: 24rpx; color: rgba(255, 255, 255, 0.75); margin-top: 8rpx; }
+
+/* —— 酒杯舞台 —— */
+.stage { display: flex; flex-direction: column; align-items: center; padding: 48rpx 0 8rpx; }
+
+.glass {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  animation: floaty 5s ease-in-out infinite;
+}
+.glass:active { transform: scale(0.97); }
+.glass.is-shaking { animation: glassshake 0.9s ease-in-out; }
+
+/* 杯碗：碟形杯，上宽下圆 */
+.glass__bowl {
+  position: relative; z-index: 2;
+  width: 290rpx; height: 190rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.85);
+  border-radius: 12rpx 12rpx 148rpx 148rpx / 12rpx 12rpx 128rpx 128rpx;
+  overflow: hidden;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03) 55%);
+  box-shadow: inset 0 2rpx 14rpx rgba(255, 255, 255, 0.22), 0 16rpx 34rpx rgba(26, 35, 50, 0.14);
+}
+/* 杯口沿高光 */
+.glass__bowl::before {
+  content: ''; position: absolute; top: 0; left: 3%; right: 3%; height: 8rpx;
+  background: rgba(255, 255, 255, 0.7); border-radius: 8rpx; z-index: 4;
+}
+
+/* 酒液：不满杯（82%），微透，注入时带回弹升起 */
+.glass__liquid {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 0;
+  transition: height 0.9s cubic-bezier(0.3, 1.2, 0.4, 1);
+  opacity: 0.95;
+  box-shadow: inset 0 10rpx 22rpx rgba(255, 255, 255, 0.25);
+}
+/* 液面高光 */
+.glass__surface {
+  position: absolute; top: -7rpx; left: 4%; right: 4%; height: 14rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  filter: blur(2rpx);
+}
+
+/* 注酒流：摇晃结束后从杯口落下的一道细流 */
+.glass__stream {
+  position: absolute; top: 0; left: 50%; width: 10rpx; height: 70rpx;
+  margin-left: -5rpx; border-radius: 6rpx;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+  transform-origin: top center;
+  animation: streamFlow 1s ease-in-out both;
+  z-index: 3;
+}
+@keyframes streamFlow {
+  0% { opacity: 0; transform: scaleY(0.25); }
+  15% { opacity: 0.95; transform: scaleY(1); }
+  78% { opacity: 0.85; }
+  100% { opacity: 0; transform: scaleY(0.5); }
+}
+
+/* 气泡：酒液内缓慢上浮 */
+.glass__bubbles { position: absolute; inset: 0; overflow: hidden; }
+.bubble {
+  position: absolute; bottom: 4rpx; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  animation-name: rise; animation-timing-function: ease-in; animation-iteration-count: infinite;
+}
+@keyframes rise {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateY(-160rpx) scale(1); opacity: 0; }
+}
+
+/* 杯壁反光 */
+.glass__shine {
+  position: absolute; top: 10rpx; left: 24rpx; width: 26rpx; height: 56%;
+  border-radius: 20rpx;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+  z-index: 3; pointer-events: none;
+}
+.glass__shine--2 { left: auto; right: 20rpx; width: 12rpx; height: 38%; opacity: 0.5; }
+
+/* 杯柄 / 杯底 / 地面投影 */
+.glass__stem {
+  width: 10rpx; height: 86rpx;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.75) 50%, rgba(255, 255, 255, 0.25));
+  z-index: 1;
+}
+.glass__foot {
+  width: 190rpx; height: 24rpx; border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.25));
+  box-shadow: 0 6rpx 14rpx rgba(26, 35, 50, 0.12);
+  z-index: 1;
+}
+.glass__shadow {
+  margin-top: 6rpx; width: 240rpx; height: 26rpx; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(26, 35, 50, 0.16), rgba(26, 35, 50, 0) 70%);
+}
+
+/* 揭晓后杯沿弹出的柠檬片装饰 */
+.glass__garnish {
+  position: absolute; top: -10rpx; right: 22rpx; width: 58rpx; height: 58rpx;
+  border-radius: 50%; z-index: 5;
+  background: radial-gradient(circle, #FBF3C9 0 26%, #F5D76E 26% 52%, #EDBE4A 52% 100%);
+  border: 5rpx solid #FFFFFF;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.14);
+  animation: garnishIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes garnishIn {
+  0% { opacity: 0; transform: scale(0.3) rotate(-40deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes glassshake {
+  0% { transform: rotate(0); }
+  12% { transform: rotate(-9deg) translateY(-6rpx); }
+  25% { transform: rotate(8deg); }
+  38% { transform: rotate(-7deg); }
+  50% { transform: rotate(6deg); }
+  62% { transform: rotate(-4deg); }
+  74% { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+.stage__hint { font-size: 24rpx; color: var(--slate-blue, #3D5A7B); opacity: 0.78; margin-top: 26rpx; }
+
+/* 抽卡按钮（抬到 tabBar 上方） */
+.draw-bar {
+  position: fixed; left: 0; right: 0;
+  bottom: calc(110rpx + env(safe-area-inset-bottom));
+  padding: 16rpx 32rpx;
+  z-index: 60;
+}
+.draw-bar__btn {
+  text-align: center;
+  padding: 24rpx;
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF; font-size: 30rpx; font-weight: 600;
+  border-radius: 16rpx;
+  box-shadow: 0 8rpx 20rpx var(--primary-amber-glow, rgba(212, 165, 116, 0.25));
+}
+.draw-bar__btn:active { transform: scale(0.98); }
+.draw-bar__tip { text-align: center; font-size: 22rpx; color: var(--slate-blue, #3D5A7B); opacity: 0.7; margin-top: 12rpx; }
+
+/* 结果卡 */
+.result { padding: 8rpx 32rpx 0; }
+.result__name { font-family: var(--font-display, serif); font-size: 44rpx; font-weight: 700; color: var(--midnight-blue, #1A2332); text-align: center; }
+.result__en { font-size: 24rpx; color: var(--slate-blue, #3D5A7B); text-align: center; margin-top: 4rpx; }
+.result__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12rpx; margin: 20rpx 0; }
+.result__tag { font-size: 22rpx; padding: 6rpx 18rpx; background: #FFFFFF; border: 1rpx solid var(--ice-blue, #E8F1F5); border-radius: 9999rpx; color: var(--slate-blue, #3D5A7B); }
+.result__tag--ai { background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E)); color: #FFFFFF; border-color: transparent; }
+.result__taste { display: flex; flex-wrap: wrap; justify-content: center; gap: 12rpx; margin-bottom: 16rpx; }
+.result__taste-item { font-size: 22rpx; padding: 6rpx 18rpx; background: var(--ice-blue, #E8F1F5); border-radius: 9999rpx; color: var(--midnight-blue, #1A2332); }
+.result__desc { font-size: 27rpx; color: var(--slate-blue, #3D5A7B); line-height: 1.7; text-align: center; margin-bottom: 20rpx; }
+
+.result__sec { background: #FFFFFF; border-radius: 20rpx; padding: 24rpx; margin-bottom: 18rpx; box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26, 35, 50, 0.06)); }
+.result__sec-title { font-family: var(--font-display, serif); font-size: 28rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); margin-bottom: 14rpx; }
+.result__ing { display: flex; justify-content: space-between; padding: 8rpx 0; font-size: 26rpx; color: var(--slate-blue, #3D5A7B); border-bottom: 1rpx dashed var(--ice-blue, #E8F1F5); }
+.result__ing:last-child { border-bottom: none; }
+.result__ing-amt { color: var(--midnight-blue, #1A2332); }
+.result__step { display: flex; gap: 14rpx; padding: 8rpx 0; font-size: 26rpx; color: var(--slate-blue, #3D5A7B); line-height: 1.6; }
+.result__step-no { flex: none; width: 38rpx; height: 38rpx; line-height: 38rpx; text-align: center; background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E)); color: #FFFFFF; border-radius: 50%; font-size: 22rpx; }
+.result__tips { font-size: 25rpx; color: var(--slate-blue, #3D5A7B); background: var(--ice-blue, #E8F1F5); border-radius: 16rpx; padding: 18rpx; margin-bottom: 20rpx; line-height: 1.6; }
+
+.result__actions { margin: 8rpx 0 8rpx; }
+.result__btn {
+  text-align: center; padding: 22rpx; border-radius: 14rpx;
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF; font-size: 30rpx; font-weight: 600;
+  box-shadow: 0 8rpx 20rpx var(--primary-amber-glow, rgba(212, 165, 116, 0.25));
+}
+.result__btn--ghost { background: #FFFFFF; color: var(--slate-blue, #3D5A7B); border: 1rpx solid var(--ice-blue, #E8F1F5); box-shadow: none; }
+.result__btn.is-done { background: var(--ice-blue, #E8F1F5); color: var(--slate-blue, #3D5A7B); box-shadow: none; }
+.result__btn:active { transform: scale(0.98); }
+
+.result__reset {
+  text-align: center; margin: 12rpx 0 4rpx;
+  padding: 18rpx; border-radius: 14rpx;
+  background: #FFFFFF; color: var(--slate-blue, #3D5A7B);
+  border: 1rpx solid var(--ice-blue, #E8F1F5);
+  font-size: 26rpx;
+}
+.result__reset:active { transform: scale(0.98); }
+
+.dev-reset { text-align: center; font-size: 22rpx; color: #B0B8C0; padding: 28rpx 0 8rpx; }

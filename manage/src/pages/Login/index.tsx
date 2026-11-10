@@ -1,0 +1,101 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, Card, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { login } from '../../api/auth';
+import { useAuthStore } from '../../store/useAuthStore';
+import { BrandLogo } from '../../theme/icons/SpiritIcons';
+import './index.css';
+
+const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { setAuth } = useAuthStore();
+
+  const onFinish = async (values: { username: string; password: string }) => {
+    try {
+      setLoading(true);
+      const res = await login(values);
+
+      if (res.data) {
+        setAuth(res.data.token, res.data.admin);
+        message.success('登录成功');
+        navigate('/dashboard');
+      }
+    } catch (error: any) {
+      message.error(error.message || '登录失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <Card
+        className="login-card"
+        title={
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              justifyContent: 'center',
+            }}
+          >
+            <span style={{ color: '#E0B079' }}>
+              <BrandLogo size={22} />
+            </span>
+            <span className="bar-brand-name">调酒管理系统</span>
+          </span>
+        }
+      >
+        <Form
+          name="login"
+          initialValues={{ username: 'admin', password: '123456' }}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: '请输入用户名' }]}
+          >
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="用户名"
+              size="large"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: '请输入密码' }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="密码"
+              size="large"
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              block
+              size="large"
+            >
+              登录
+            </Button>
+          </Form.Item>
+        </Form>
+        <div className="login-tips">
+          <p>默认账号：admin</p>
+          <p>默认密码：123456</p>
+        </div>
+      </Card>
+    </div>
+  );
+};
+
+export default Login;

@@ -1,0 +1,92 @@
+<view class="page-wrap ai">
+  <!-- 生成中 -->
+  <pour-loading wx:if="{{loading}}" text="AI 调酒师正在构思…"></pour-loading>
+
+  <!-- 失败 -->
+  <empty-state
+    wx:elif="{{failed}}"
+    icon="🤖"
+    title="生成失败"
+    description="{{errMsg}}"
+    show-action="{{true}}"
+    action-text="重新生成"
+    bind:action="generate"
+  ></empty-state>
+
+  <!-- 结果 -->
+  <block wx:elif="{{recipe}}">
+    <view class="ai__head">
+      <view class="ai__badge">✨ AI 为你定制</view>
+      <view class="ai__summary" wx:if="{{summary}}">{{summary}}</view>
+      <view class="ai__used" wx:if="{{recipe.usedIngredients.length}}">
+        用到了你选的：<text wx:for="{{recipe.usedIngredients}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="ai__missing" wx:if="{{recipe.missingIngredients.length}}">
+        还缺：<text wx:for="{{recipe.missingIngredients}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="ai-card">
+      <view class="ai-card__top">
+        <view class="ai-card__name">{{recipe.name}}</view>
+        <view class="ai-card__en" wx:if="{{recipe.nameEn}}">{{recipe.nameEn}}</view>
+        <view class="ai-card__meta">
+          <text class="tag tag--spirit" wx:if="{{recipe.baseSpirit}}">{{recipe.baseSpirit}}</text>
+          <text class="tag tag--ghost" wx:if="{{recipe.glassType}}">{{recipe.glassType}}</text>
+          <text class="tag tag--taste" wx:if="{{recipe.alcoholLevel}}">{{recipe.alcoholLevel}}</text>
+          <text class="tag tag--taste">{{diffMeta.label}}</text>
+        </view>
+      </view>
+
+      <view class="divider"></view>
+
+      <view class="ai-card__section-title">材料</view>
+      <view class="ai-ings">
+        <view class="ai-ing" wx:for="{{recipe.ingredients}}" wx:key="name">
+          <text class="ai-ing__name">{{item.name}}</text>
+          <text class="ai-ing__amt">{{item.amount}}</text>
+        </view>
+      </view>
+
+      <view class="ai-card__section-title">做法</view>
+      <view class="ai-steps">
+        <view class="ai-step" wx:for="{{recipe.steps}}" wx:key="*this">
+          <view class="ai-step__dot"><text>{{index + 1}}</text></view>
+          <text class="ai-step__text">{{item}}</text>
+        </view>
+      </view>
+
+      <view class="ai-tips" wx:if="{{recipe.tips}}">
+        <text class="ai-tips__label">💡 小贴士</text>
+        <text class="ai-tips__text">{{recipe.tips}}</text>
+      </view>
+    </view>
+
+    <block wx:if="{{alternatives.length}}">
+      <view class="ai-alt-title">同样的材料，还可以试试</view>
+      <view class="ai-alt" wx:for="{{alternatives}}" wx:key="name">
+        <view class="ai-alt__name">{{item.name}}</view>
+        <view class="ai-alt__idea">{{item.idea}}</view>
+      </view>
+    </block>
+
+    <view class="ai-actions">
+      <view class="btn-ghost" bindtap="generate">🔄 再来一杯</view>
+      <view class="btn-ghost" bindtap="copyRecipe">📋 复制配方</view>
+      <view class="btn-primary {{saveState === 'saving' || saveState === 'saved' || saveState === 'exists' ? 'is-done' : ''}}" bindtap="saveRecipe">
+        <block wx:if="{{saveState === 'saving'}}">保存中…</block>
+        <block wx:elif="{{saveState === 'saved'}}">✓ 已存酒谱库</block>
+        <block wx:elif="{{saveState === 'exists'}}">已在酒谱库</block>
+        <block wx:else>💾 存到酒谱库</block>
+      </view>
+    </view>
+
+    <view class="ai-saved-hint" wx:if="{{saveState === 'saved' || saveState === 'exists'}}" bindtap="goSavedDetail">
+      已入库，下次勾同样材料可在「找找能调什么」直接找到 →
+    </view>
+
+    <view class="ai-disclaimer">AI 生成内容仅供参考 · 未成年人请选择无酒精配方 · 理性饮酒</view>
+  </block>
+
+  <view class="safe-bottom"></view>
+</view>

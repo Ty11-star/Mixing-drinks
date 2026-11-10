@@ -1,0 +1,65 @@
+<view class="page-wrap user">
+  <!-- 个人资料 -->
+  <view class="profile">
+    <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image wx:if="{{avatarUrl}}" src="{{avatarUrl}}" class="avatar-img" mode="aspectFill"></image>
+      <view wx:else class="avatar-ph">{{nickname ? nickname[0] : '客'}}</view>
+    </button>
+    <view class="profile__info">
+      <input
+        class="profile__nick"
+        type="nickname"
+        placeholder="点击设置昵称"
+        placeholder-class="profile__ph"
+        value="{{nickname}}"
+        bindinput="onNicknameInput"
+        bindblur="saveProfile"
+      />
+      <view class="profile__status">{{userInfo ? '已完善资料' : '游客模式'}}</view>
+    </view>
+  </view>
+
+  <view class="login-row">
+    <button class="login-btn ripple-btn" bindtap="doLogin">{{token ? '重新登录' : '微信一键登录'}}</button>
+  </view>
+
+  <!-- 我的收藏 -->
+  <view class="section">
+    <view class="section__head">
+      <text class="section__title">我的收藏</text>
+      <text class="section__count">{{favorites.length}}</text>
+    </view>
+    <empty-state
+      wx:if="{{favorites.length === 0}}"
+      icon="♡"
+      title="还没有收藏"
+      description="在酒谱详情页点击收藏，就会出现在这里"
+    ></empty-state>
+    <view class="grid" wx:else>
+      <view class="grid__col" wx:for="{{favorites}}" wx:key="id">
+        <cocktail-card cocktail="{{item}}"></cocktail-card>
+      </view>
+    </view>
+  </view>
+
+  <!-- 浏览历史 -->
+  <view class="section">
+    <view class="section__head">
+      <text class="section__title">浏览历史</text>
+      <text class="section__clear" wx:if="{{history.length}}" bindtap="clearHistory">清空</text>
+    </view>
+    <empty-state
+      wx:if="{{history.length === 0}}"
+      icon="🕒"
+      title="还没有记录"
+      description="看看首页，调一杯试试"
+    ></empty-state>
+    <view class="grid" wx:else>
+      <view class="grid__col" wx:for="{{history}}" wx:key="id">
+        <cocktail-card cocktail="{{item}}"></cocktail-card>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

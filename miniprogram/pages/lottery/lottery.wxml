@@ -1,0 +1,81 @@
+<view class="page-wrap lottery">
+  <view class="lottery__head">
+    <view class="lottery__title">今日特调</view>
+    <view class="lottery__sub">{{today}} · 每天一杯，抽签定今日心情</view>
+  </view>
+
+  <!-- 酒杯舞台：干净玻璃杯，无 emoji，无光晕圆盘 -->
+  <view class="stage">
+    <view class="glass {{shaking ? 'is-shaking' : ''}}" bindtap="onGlassTap">
+      <view class="glass__bowl">
+        <view class="glass__liquid" style="height:{{reveal ? 82 : 0}}%;background:{{gradient}};">
+          <view class="glass__surface"></view>
+          <view class="glass__bubbles">
+            <view wx:for="{{bubbles}}" wx:key="idx" class="bubble"
+                  style="left:{{item.l}}%;width:{{item.s}}rpx;height:{{item.s}}rpx;animation-delay:{{item.d}}s;animation-duration:{{item.dur}}s;"></view>
+          </view>
+        </view>
+        <view wx:if="{{pouring}}" class="glass__stream" style="background:{{gradient}};"></view>
+        <view class="glass__shine"></view>
+        <view class="glass__shine glass__shine--2"></view>
+      </view>
+      <view class="glass__stem"></view>
+      <view class="glass__foot"></view>
+      <view class="glass__shadow"></view>
+      <view wx:if="{{reveal}}" class="glass__garnish"></view>
+    </view>
+
+    <view class="stage__hint" wx:if="{{!drawn}}">点一下酒杯，摇出今日专属特调</view>
+    <view class="stage__hint" wx:if="{{drawn}}">今日已抽 · 明天再来</view>
+  </view>
+
+  <!-- 抽卡按钮（未抽时显示，抬到 tabBar 上方） -->
+  <view class="draw-bar" wx:if="{{!drawn}}">
+    <view class="draw-bar__btn" bindtap="draw">🎲 摇一摇抽今日特调</view>
+    <view class="draw-bar__tip">也可以直接摇一摇手机</view>
+  </view>
+
+  <!-- 抽到的结果 -->
+  <view class="result" wx:if="{{drawn && reveal}}">
+    <view class="result__name">{{drink.name}}</view>
+    <view class="result__en" wx:if="{{drink.nameEn}}">{{drink.nameEn}}</view>
+    <view class="result__meta">
+      <text class="result__tag" wx:if="{{drink.baseSpirit}}">{{drink.baseSpirit}}</text>
+      <text class="result__tag" wx:if="{{drink.glassType}}">{{drink.glassType}}</text>
+      <text class="result__tag" wx:if="{{drink.difficulty}}">难度 {{drink.difficulty}}/3</text>
+      <text class="result__tag result__tag--ai" wx:if="{{drink.source === 'ai'}}">AI 创作</text>
+    </view>
+    <view class="result__taste" wx:if="{{drink.tasteTags.length}}">
+      <text wx:for="{{drink.tasteTags}}" wx:key="*this" class="result__taste-item">{{item}}</text>
+    </view>
+    <view class="result__desc" wx:if="{{drink.description}}">{{drink.description}}</view>
+
+    <view class="result__sec" wx:if="{{drink.ingredients.length}}">
+      <view class="result__sec-title">配方</view>
+      <view class="result__ing" wx:for="{{drink.ingredients}}" wx:key="name">
+        <text class="result__ing-name">{{item.name}}</text>
+        <text class="result__ing-amt">{{item.amount}}</text>
+      </view>
+    </view>
+
+    <view class="result__sec" wx:if="{{drink.steps.length}}">
+      <view class="result__sec-title">步骤</view>
+      <view class="result__step" wx:for="{{drink.steps}}" wx:key="index">
+        <text class="result__step-no">{{index + 1}}</text>
+        <text class="result__step-txt">{{item}}</text>
+      </view>
+    </view>
+    <view class="result__tips" wx:if="{{drink.tips}}">💡 {{drink.tips}}</view>
+
+    <view class="result__actions">
+      <view wx:if="{{drink.source === 'official'}}" class="result__btn result__btn--ghost" bindtap="goDetail">查看完整酒谱</view>
+      <view wx:if="{{drink.source === 'ai'}}" class="result__btn {{saveState === 'saved' ? 'is-done' : ''}}" bindtap="saveRecipe">
+        {{saveState === 'saved' ? '✓ 已存到酒谱库' : '💾 好喝！存到酒谱库'}}
+      </view>
+    </view>
+    <view class="result__reset" bindtap="resetToday">🔄 清除记录，再摇一次</view>
+  </view>
+
+  <view class="safe-bottom" style="height: calc(240rpx + env(safe-area-inset-bottom));"></view>
+  <view class="dev-reset" bindtap="resetToday">测试：清除今日记录</view>
+</view>

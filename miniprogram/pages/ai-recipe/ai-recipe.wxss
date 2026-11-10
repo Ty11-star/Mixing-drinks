@@ -1,0 +1,154 @@
+.ai {
+  padding: var(--content-margin, 32rpx);
+}
+
+/* 头部 */
+.ai__head { margin-bottom: 28rpx; }
+.ai__badge {
+  display: inline-flex;
+  padding: 8rpx 20rpx;
+  border-radius: var(--radius-round, 9999rpx);
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF;
+  font-size: 24rpx;
+  font-weight: 600;
+  box-shadow: 0 6rpx 16rpx var(--primary-amber-glow, rgba(212,165,116,0.3));
+}
+.ai__summary {
+  margin-top: 20rpx;
+  font-size: 26rpx;
+  color: var(--slate-blue, #3D5A7B);
+  line-height: 1.7;
+}
+.ai__used, .ai__missing {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: var(--slate-blue, #3D5A7B);
+}
+.ai__used text { color: var(--mojito-mint, #7ECFA0); font-weight: 500; }
+.ai__missing text { color: var(--bloody-mary-red, #C54B3D); font-weight: 500; }
+
+/* 配方卡片 */
+.ai-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg, 24rpx);
+  padding: var(--coaster-padding, 24rpx);
+  box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26,35,50,0.08));
+}
+.ai-card__name {
+  font-family: var(--font-display, serif);
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--midnight-blue, #1A2332);
+}
+.ai-card__en {
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  color: var(--slate-blue, #3D5A7B);
+  letter-spacing: 0.04em;
+}
+.ai-card__meta {
+  margin-top: 16rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+.ai-card__section-title {
+  margin: 24rpx 0 14rpx;
+  font-family: var(--font-display, serif);
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--midnight-blue, #1A2332);
+}
+
+/* 材料行 */
+.ai-ings { display: flex; flex-direction: column; }
+.ai-ing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14rpx 4rpx;
+  border-bottom: 1rpx dashed var(--ice-blue, #E8F1F5);
+}
+.ai-ing__name { font-size: 26rpx; color: var(--midnight-blue, #1A2332); }
+.ai-ing__amt { font-size: 24rpx; color: var(--primary-amber-dark, #B8935E); font-weight: 600; }
+
+/* 步骤 */
+.ai-steps { display: flex; flex-direction: column; gap: 18rpx; }
+.ai-step { display: flex; gap: 16rpx; align-items: flex-start; }
+.ai-step__dot {
+  flex: 0 0 40rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF;
+  font-size: 22rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ai-step__text { flex: 1; font-size: 26rpx; color: var(--midnight-blue, #1A2332); line-height: 1.7; }
+
+/* 小贴士 */
+.ai-tips {
+  margin-top: 24rpx;
+  padding: 18rpx 20rpx;
+  background: var(--ice-blue, #E8F1F5);
+  border-radius: var(--radius-md, 16rpx);
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+.ai-tips__label { font-size: 24rpx; font-weight: 600; color: var(--slate-blue, #3D5A7B); }
+.ai-tips__text { font-size: 24rpx; color: var(--slate-blue, #3D5A7B); line-height: 1.7; }
+
+/* 其他玩法 */
+.ai-alt-title {
+  margin: 32rpx 0 16rpx;
+  font-family: var(--font-display, serif);
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--midnight-blue, #1A2332);
+}
+.ai-alt {
+  background: #FFFFFF;
+  border-radius: var(--radius-md, 16rpx);
+  padding: 20rpx 24rpx;
+  margin-bottom: 14rpx;
+  box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26,35,50,0.08));
+}
+.ai-alt__name { font-size: 28rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); }
+.ai-alt__idea { margin-top: 6rpx; font-size: 24rpx; color: var(--slate-blue, #3D5A7B); line-height: 1.6; }
+
+/* 操作按钮 */
+.ai-actions {
+  margin-top: 36rpx;
+  display: flex;
+  gap: 16rpx;
+}
+.ai-actions .btn-ghost,
+.ai-actions .btn-primary {
+  flex: 1;
+  border-radius: var(--radius-sm, 12rpx);
+}
+.ai-actions .btn-primary.is-done {
+  background: var(--ice-blue, #E8F1F5);
+  color: var(--primary-amber-dark, #B8935E);
+  box-shadow: none;
+}
+.ai-saved-hint {
+  margin-top: 18rpx;
+  font-size: 22rpx;
+  color: var(--primary-amber-dark, #B8935E);
+  text-align: center;
+}
+
+.ai-disclaimer {
+  margin-top: 28rpx;
+  text-align: center;
+  font-size: 20rpx;
+  color: var(--slate-blue, #3D5A7B);
+  opacity: 0.7;
+}

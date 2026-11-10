@@ -1,0 +1,65 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #100b06;
+  background-image:
+    radial-gradient(55% 50% at 20% 10%, rgba(224, 176, 121, 0.22), transparent 60%),
+    radial-gradient(50% 45% at 85% 25%, rgba(192, 142, 87, 0.16), transparent 55%),
+    radial-gradient(55% 55% at 10% 95%, rgba(79, 152, 192, 0.12), transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23E0B079' stroke-width='1' opacity='0.05'%3E%3Ccircle cx='30' cy='40' r='2.5'/%3E%3Ccircle cx='150' cy='90' r='2'/%3E%3Ccircle cx='90' cy='160' r='2.5'/%3E%3Cpath d='M60 60h30l-15 18v12'/%3E%3Cpath d='M130 120l8-6 8 6-8 18z'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(160deg, #18110a 0%, #100b06 60%, #0b0805 100%);
+}
+
+/* 暗角 vignette */
+.login-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 200px 60px rgba(0, 0, 0, 0.55);
+}
+
+.login-card {
+  width: 400px;
+  position: relative;
+  z-index: 1;
+  border-radius: 16px !important;
+  background: rgba(28, 20, 13, 0.55) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(224, 176, 121, 0.20) !important;
+  border-top-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+}
+
+.login-card .ant-card-head {
+  border-bottom: 1px solid rgba(224, 176, 121, 0.18) !important;
+}
+
+.login-card .ant-card-head-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f6ecdd;
+  font-family: Georgia, 'Times New Roman', 'Songti SC', 'STSong', serif;
+  letter-spacing: 1px;
+}
+
+.login-tips {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255, 244, 230, 0.05);
+  border: 1px solid rgba(224, 176, 121, 0.15);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #a99884;
+}
+
+.login-tips p {
+  margin: 4px 0;
+}
