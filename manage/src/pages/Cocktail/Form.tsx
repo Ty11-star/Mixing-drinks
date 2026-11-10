@@ -13,7 +13,6 @@ import {
   Row,
   Col,
   Upload,
-  Image,
 } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import {
