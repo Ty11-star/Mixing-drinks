@@ -1,0 +1,18 @@
+[Unit]
+Description=Mixing Drinks API (Node.js + Express)
+After=network.target mysql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/mixing-drinks/server
+# 环境变量由 app.js 中的 dotenv 从 server/.env 读取
+ExecStart=/usr/bin/node src/app.js
+Restart=always
+RestartSec=5
+User=www-data
+Group=www-data
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 # 🍸 调一杯 · 调酒小程序
 
-「调一杯」是一套面向调酒爱好者与初学者的轻量级鸡尾酒学习与工具应用，采用 **微信小程序 + Web 管理后台 + REST 后端** 三端结构：用户端可以浏览酒谱、按手头材料匹配能调的酒、让 AI 生成配方、摇一摇或抽卡决定「今天喝什么」，并学习基酒、器具、术语等基础知识；运营方通过管理后台维护酒谱、材料、分类与用户；后端统一提供数据、JWT 认证、图片上传和 DeepSeek AI 能力。
+
 
 ### 一眼看懂
 
@@ -305,7 +305,8 @@ npm run lint       # 代码检查
 - 图片由后端 `/uploads` 与 `/images` 静态目录提供，部署时需一并迁移 `server/public/uploads/` 与 `manage/public/images/`
 
 ### 5. 部署到服务器
-- 在 `manage/.env.production` 设置线上 API 地址后重新构建，由 Nginx 托管 `manage/dist`、反代 `/api/v1` 到 `127.0.0.1:3000`，用 systemd 或 pm2 守护 `npm start`
+- 仓库 `deploy/` 提供 Nginx 站点配置（`nginx.mixing.conf`）与 systemd 单元（`mixing.service`）模板，`manage/.env.production.example` 为生产环境变量模板
+- 生产环境把 API 地址设为同源相对路径 `/api/v1`，由 Nginx 托管 `manage/dist`、反代 `/api/v1` 到 `127.0.0.1:3000`，systemd 守护 `node src/app.js`；域名 `myty11.com` / IP `8.134.248.177` 已写入模板
 - 不要用 `npm run init-db` 初始化已有数据的生产库；先导出本地数据，再用新库名导入
 
 ## 贡献指南
