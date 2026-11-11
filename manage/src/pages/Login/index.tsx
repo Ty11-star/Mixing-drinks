@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Card, message } from 'antd';
+import { Form, Input, Button, Card, Alert, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { login } from '../../api/auth';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -11,6 +11,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setAuth } = useAuthStore();
+  const sessionExpired = new URLSearchParams(window.location.search).has('expired');
 
   const onFinish = async (values: { username: string; password: string }) => {
     try {
@@ -49,9 +50,16 @@ const Login = () => {
           </span>
         }
       >
+        {sessionExpired && (
+          <Alert
+            message="登录已过期，请重新登录"
+            type="warning"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
         <Form
           name="login"
-          initialValues={{ username: 'admin', password: '123456' }}
           onFinish={onFinish}
           autoComplete="off"
         >
@@ -63,6 +71,7 @@ const Login = () => {
               prefix={<UserOutlined />}
               placeholder="用户名"
               size="large"
+              autoComplete="off"
             />
           </Form.Item>
 
@@ -74,6 +83,7 @@ const Login = () => {
               prefix={<LockOutlined />}
               placeholder="密码"
               size="large"
+              autoComplete="new-password"
             />
           </Form.Item>
 
@@ -89,10 +99,6 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>
-        <div className="login-tips">
-          <p>默认账号：admin</p>
-          <p>默认密码：123456</p>
-        </div>
       </Card>
     </div>
   );

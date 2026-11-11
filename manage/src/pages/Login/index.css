@@ -48,18 +48,3 @@
   font-family: Georgia, 'Times New Roman', 'Songti SC', 'STSong', serif;
   letter-spacing: 1px;
 }
-
-.login-tips {
-  margin-top: 16px;
-  padding: 12px;
-  background: rgba(255, 244, 230, 0.05);
-  border: 1px solid rgba(224, 176, 121, 0.15);
-  border-radius: 10px;
-  text-align: center;
-  font-size: 13px;
-  color: #a99884;
-}
-
-.login-tips p {
-  margin: 4px 0;
-}
