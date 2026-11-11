@@ -1,0 +1,41 @@
+# 调一杯 · fail2ban 配置模板
+# 部署：sudo cp deploy/fail2ban/jail.local /etc/fail2ban/jail.d/mixing.local
+#       sudo systemctl enable --now fail2ban
+#       sudo fail2ban-client status
+# 详见指南「5.1 上线后的安全加固」第 4 步
+#
+# 说明：项目后端登录失败返回的是统一 JSON（HTTP 200），access.log 里看不出业务失败，
+# 所以「登录爆破」主要靠 Nginx 的 limit_req + 强密码 + Basic Auth，
+# 这里只用 fail2ban 自带的 sshd / nginx-http-auth / nginx-botsearch 做兜底，避免误封正常请求。
+
+[DEFAULT]
+# 建议把自己常用的公网 IP 加进 ignoreip，避免把自己锁在外面
+ignoreip = 127.0.0.1/8 ::1
+bantime  = 1h
+findtime = 10m
+maxretry = 5
+
+# SSH 爆破（Ubuntu 24.04 日志路径由 fail2ban 自带变量决定）
+[sshd]
+enabled = true
+port    = ssh
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+
+# Basic Auth 失败会以 401 写进 error.log；启用 Basic Auth 后这个 jail 才真正有效。
+# 用 glob 一次覆盖 B 块的 manage.error.log 与 C 块的 mixing.error.log ——
+# 备案期恰恰用的是 C 块，只盯 manage.error.log 等于备案期没防。
+[nginx-http-auth]
+enabled  = true
+port     = http,https
+logpath  = /var/log/nginx/*.error.log
+maxretry = 5
+
+# 主域欢迎页只有根路径，其余全是 404；扫描器会留下大量 404。
+# 注意：不同 fail2ban 版本的 nginx-botsearch filter 期望的日志格式不同，
+# 部署后用 fail2ban-regex 自检（见指南 5.1 第 4 步）；若始终 0 匹配可换 /var/log/nginx/*.error.log 或停用本 jail。
+[nginx-botsearch]
+enabled  = true
+port     = http,https
+logpath  = /var/log/nginx/*.access.log
+maxretry = 10

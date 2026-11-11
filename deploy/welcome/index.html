@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>调一杯 · Mixing Drinks</title>
+<!--
+  纯展示欢迎页：无任何脚本、链接、按钮或表单，不提供跳转到后台或其他界面的入口。
+  备案信息按接入商要求填写；若需要提供工信部备案链接，请按当地备案要求单独确认。
+-->
+<style>
+  :root {
+    --navy: #1A2332;
+    --navy-deep: #101A27;
+    --gold: #D4A574;
+    --text: #F3F6FA;
+    --muted: #94A6BC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 40px 20px;
+    color: var(--text);
+    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background:
+      radial-gradient(circle at 18% 22%, rgba(212, 165, 116, .14), transparent 38%),
+      radial-gradient(circle at 82% 78%, rgba(61, 90, 123, .30), transparent 42%),
+      linear-gradient(150deg, var(--navy-deep), var(--navy));
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+  .glass {
+    position: relative;
+    width: 92px;
+    height: 108px;
+    filter: drop-shadow(0 14px 24px rgba(0, 0, 0, .35));
+  }
+  .bowl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 92px;
+    height: 66px;
+    background: linear-gradient(160deg, rgba(212, 165, 116, .38), rgba(212, 165, 116, .10) 55%, rgba(255, 255, 255, .04));
+    border: 2px solid var(--gold);
+    border-top: none;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .liquid {
+    position: absolute;
+    top: 20px;
+    left: 8px;
+    width: 76px;
+    height: 20px;
+    background: rgba(212, 165, 116, .55);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .stem {
+    position: absolute;
+    top: 66px;
+    left: 45px;
+    width: 2px;
+    height: 32px;
+    background: var(--gold);
+  }
+  .base {
+    position: absolute;
+    top: 98px;
+    left: 22px;
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .olive {
+    position: absolute;
+    top: 34px;
+    left: 58px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #8FA36B;
+    border: 1px solid rgba(255, 255, 255, .25);
+  }
+  h1 {
+    font-size: clamp(30px, 6vw, 46px);
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-indent: .18em;
+  }
+  .en {
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: .42em;
+    text-indent: .42em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .line {
+    width: 64px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .sub {
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: .12em;
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: .08em;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #7FBF8A;
+    box-shadow: 0 0 0 4px rgba(127, 191, 138, .14);
+  }
+  footer {
+    position: absolute;
+    bottom: 24px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.9;
+    color: rgba(148, 166, 188, .65);
+    letter-spacing: .04em;
+  }
+  @media (max-width: 480px) {
+    h1 { font-size: 30px; }
+    .sub { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="glass" aria-hidden="true">
+    <div class="bowl"></div>
+    <div class="liquid"></div>
+    <div class="olive"></div>
+    <div class="stem"></div>
+    <div class="base"></div>
+  </div>
+
+  <h1>调一杯</h1>
+  <div class="en">Mixing Drinks</div>
+  <div class="line" aria-hidden="true"></div>
+  <div class="sub">鸡尾酒学习与调酒工具</div>
+  <div class="status"><span class="dot" aria-hidden="true"></span>服务运行中 · API Service</div>
+
+  <footer>
+    <div>粤ICP备XXXXXXXX号</div>
+    <div>调一杯 · Mixing Drinks</div>
+  </footer>
+</body>
+</html>
