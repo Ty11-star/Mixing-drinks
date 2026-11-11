@@ -56,20 +56,34 @@ fi
 mkdir -p "$APP/server/public/uploads" "$APP/manage/public/images/upload"
 sudo chown -R www-data:www-data "$APP/server/public/uploads" "$APP/manage/public/images"
 
-# 5. 网关与进程配置变化才更新
-if changed deploy/nginx.mixing.conf; then
-  sudo cp "$APP/deploy/nginx.mixing.conf" /etc/nginx/sites-available/mixing
-  sudo ln -sf /etc/nginx/sites-available/mixing /etc/nginx/sites-enabled/mixing
+# 5. 网关与进程配置：只要与线上生效副本内容不一致就同步
+# 不能只看本次 pull 是否有新提交——代码已同步但系统配置未应用时，
+# git pull 显示 "Already up to date"，旧的 changed() 判断会把安装整个跳过。
+NGINX_CONF=/etc/nginx/sites-available/mixing
+SERVICE_UNIT=/etc/systemd/system/mixing.service
+if ! sudo cmp -s "$APP/deploy/nginx.mixing.conf" "$NGINX_CONF"; then
+  sudo cp "$APP/deploy/nginx.mixing.conf" "$NGINX_CONF"
+  sudo ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/mixing
+  sudo rm -f /etc/nginx/sites-enabled/default
   sudo nginx -t && sudo systemctl reload nginx
 fi
-if changed deploy/mixing.service; then
-  sudo cp "$APP/deploy/mixing.service" /etc/systemd/system/mixing.service
+if ! sudo cmp -s "$APP/deploy/mixing.service" "$SERVICE_UNIT"; then
+  sudo cp "$APP/deploy/mixing.service" "$SERVICE_UNIT"
   sudo systemctl daemon-reload
 fi
 
-# 6. 重启后端并验证
+# 6. 重启后端并等待 health 就绪
+# Node + Sequelize 连接 MySQL 需要几秒，restart 后立刻 curl 会误报失败
 sudo systemctl restart mixing
 systemctl is-active mixing
-curl -fsS http://127.0.0.1:3000/api/v1/health
-echo
-echo "更新完成：$OLD -> $NEW"
+for i in {1..15}; do
+  if HEALTH=$(curl -fs http://127.0.0.1:3000/api/v1/health 2>/dev/null); then
+    echo "$HEALTH"
+    echo "更新完成：$OLD -> $NEW"
+    exit 0
+  fi
+  sleep 2
+done
+echo "ERROR: 后端重启后 30 秒内 health 仍不可用，最近日志：" >&2
+sudo journalctl -u mixing -n 30 --no-pager >&2
+exit 1
