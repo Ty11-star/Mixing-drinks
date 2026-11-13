@@ -17,7 +17,7 @@ import {
   BrandLogo,
 } from '../theme/icons/SpiritIcons';
 
-const { Header, Sider, Content } = AntLayout;
+const { Header, Sider, Content, Footer } = AntLayout;
 
 const Layout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -169,6 +169,26 @@ const Layout = () => {
         >
           <Outlet />
         </Content>
+        <Footer
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            textAlign: 'center',
+            padding: '12px 16px',
+            background: 'transparent',
+            color: 'rgba(231, 220, 203, 0.55)',
+            fontSize: 12,
+          }}
+        >
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'rgba(224, 176, 121, 0.8)', textDecoration: 'none' }}
+          >
+            粤ICP备2026181317号
+          </a>
+        </Footer>
       </AntLayout>
     </AntLayout>
   );

@@ -48,3 +48,25 @@
   font-family: Georgia, 'Times New Roman', 'Songti SC', 'STSong', serif;
   letter-spacing: 1px;
 }
+
+.login-icp {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: rgba(231, 220, 203, .55);
+}
+
+.login-icp a {
+  color: rgba(224, 176, 121, .78);
+  text-decoration: none;
+}
+
+.login-icp a:hover {
+  color: #E0B079;
+  text-decoration: underline;
+}
