@@ -6,8 +6,10 @@
 <meta name="robots" content="noindex, nofollow">
 <title>调一杯 · Mixing Drinks</title>
 <!--
-  纯展示欢迎页：无任何脚本、链接、按钮或表单，不提供跳转到后台或其他界面的入口。
-  备案信息按接入商要求填写；若需要提供工信部备案链接，请按当地备案要求单独确认。
+  对外首页：除工信部 ICP 备案号这一法定链接外，无任何脚本、链接、按钮或表单，
+  不提供跳转到后台或其他界面的入口。
+  ICP 备案号：粤ICP备2026181317号（2026-11-13 审核通过）
+  法定链接指向 https://beian.miit.gov.cn/ ，不属于站内跳转。
 -->
 <style>
   :root {
@@ -139,6 +141,14 @@
     color: rgba(148, 166, 188, .65);
     letter-spacing: .04em;
   }
+  footer a {
+    color: rgba(212, 165, 116, .88);
+    text-decoration: none;
+  }
+  footer a:hover, footer a:focus-visible {
+    color: var(--gold);
+    text-decoration: underline;
+  }
   @media (max-width: 480px) {
     h1 { font-size: 30px; }
     .sub { font-size: 13px; }
@@ -161,7 +171,9 @@
   <div class="status"><span class="dot" aria-hidden="true"></span>服务运行中 · API Service</div>
 
   <footer>
-    <div>粤ICP备XXXXXXXX号</div>
+    <div>
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026181317号</a>
+    </div>
     <div>调一杯 · Mixing Drinks</div>
   </footer>
 </body>

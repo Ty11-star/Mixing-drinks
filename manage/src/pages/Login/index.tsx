@@ -100,6 +100,11 @@ const Login = () => {
           </Form.Item>
         </Form>
       </Card>
+      <footer className="login-icp">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+          粤ICP备2026181317号
+        </a>
+      </footer>
     </div>
   );
 };
