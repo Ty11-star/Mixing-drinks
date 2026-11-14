@@ -48,7 +48,23 @@ if [ ! -f "$APP/manage/.env.production" ]; then
   cp "$APP/manage/.env.production.example" "$APP/manage/.env.production"
   echo "已从模板生成 manage/.env.production"
 fi
-if [ ! -f "$APP/manage/dist/index.html" ] || changed manage/src manage/public manage/.env.production.example manage/vite.config.ts manage/index.html manage/package.json; then
+# 构建条件：本次 pull 有前端改动，或 dist 比源码旧。
+# 只看 pull 差异会漏掉「代码早已 pull、但那次构建被跳过或失败」的情况，
+# 导致 dist 一直是旧版（例如新增的备案号始终不出现在页面上）。
+NEED_BUILD=0
+if [ ! -f "$APP/manage/dist/index.html" ]; then
+  NEED_BUILD=1
+elif changed manage/src manage/public manage/.env.production.example manage/vite.config.ts manage/index.html manage/package.json; then
+  NEED_BUILD=1
+else
+  NEWER_SRC=$(find "$APP/manage/src" "$APP/manage/index.html" "$APP/manage/vite.config.ts" "$APP/manage/.env.production.example" \
+    -type f -newer "$APP/manage/dist/index.html" -print -quit 2>/dev/null || true)
+  if [ -n "$NEWER_SRC" ]; then
+    NEED_BUILD=1
+    echo "检测到前端源码比 dist 新，补充构建（本次 pull 无新提交）"
+  fi
+fi
+if [ "$NEED_BUILD" -eq 1 ]; then
   (cd "$APP/manage" && npm run build)
 fi
 
