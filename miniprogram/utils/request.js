@@ -24,10 +24,11 @@ function request(options) {
   }
 
   // 真实请求
+  const fullUrl = config.baseUrl + url;
   return new Promise((resolve, reject) => {
     const token = storage.get('token', '');
     wx.request({
-      url: config.baseUrl + url,
+      url: fullUrl,
       method,
       data,
       timeout: options.timeout || config.timeout,
@@ -41,12 +42,14 @@ function request(options) {
           resolve(body.data);
         } else {
           const msg = body && body.message ? body.message : ('网络错误 ' + res.statusCode);
+          console.error('[request] 响应异常', fullUrl, res.statusCode, body);
           wx.showToast({ title: msg, icon: 'none' });
           reject(new Error(msg));
         }
       },
       fail(err) {
         const msg = (err && err.errMsg) ? err.errMsg : '网络请求失败';
+        console.error('[request] 请求失败', fullUrl, err);
         wx.showToast({ title: msg, icon: 'none' });
         reject(new Error(msg));
       }

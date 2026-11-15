@@ -78,10 +78,18 @@ sudo chown -R www-data:www-data "$APP/server/public/uploads" "$APP/manage/public
 NGINX_CONF=/etc/nginx/sites-available/mixing
 SERVICE_UNIT=/etc/systemd/system/mixing.service
 if ! sudo cmp -s "$APP/deploy/nginx.mixing.conf" "$NGINX_CONF"; then
+  # 仓库配置已包含 443 与证书路径；先备份线上版，校验失败立即回滚，
+  # 避免把无法 reload 的配置留在 sites-available（下次重启会连带 HTTP 也不可用）。
+  sudo cp "$NGINX_CONF" /tmp/mixing.nginx.bak
   sudo cp "$APP/deploy/nginx.mixing.conf" "$NGINX_CONF"
   sudo ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/mixing
   sudo rm -f /etc/nginx/sites-enabled/default
-  sudo nginx -t && sudo systemctl reload nginx
+  if ! sudo nginx -t; then
+    sudo cp /tmp/mixing.nginx.bak "$NGINX_CONF"
+    echo "ERROR: 新 Nginx 配置校验失败，已回滚到上一版；检查证书路径是否存在。" >&2
+    exit 1
+  fi
+  sudo systemctl reload nginx
 fi
 if ! sudo cmp -s "$APP/deploy/mixing.service" "$SERVICE_UNIT"; then
   sudo cp "$APP/deploy/mixing.service" "$SERVICE_UNIT"
