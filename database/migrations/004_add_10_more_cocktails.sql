@@ -27,12 +27,12 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@manhattan_id, 32, '2滴', 0, 3),   -- 安格斯图拉苦精
 (@manhattan_id, 49, '适量', 0, 4);  -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@manhattan_id, 1, '在调酒杯中加入冰块', NOW(), NOW()),
-(@manhattan_id, 2, '倒入威士忌、甜味美思和安格斯图拉苦精', NOW(), NOW()),
-(@manhattan_id, 3, '用吧匙顺时针搅拌约30秒,充分冰镇', NOW(), NOW()),
-(@manhattan_id, 4, '滤掉冰块,倒入冰镇的鸡尾酒杯中', NOW(), NOW()),
-(@manhattan_id, 5, '用樱桃和橙皮装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@manhattan_id, 1, '在调酒杯中加入冰块', NOW()),
+(@manhattan_id, 2, '倒入威士忌、甜味美思和安格斯图拉苦精', NOW()),
+(@manhattan_id, 3, '用吧匙顺时针搅拌约30秒,充分冰镇', NOW()),
+(@manhattan_id, 4, '滤掉冰块,倒入冰镇的鸡尾酒杯中', NOW()),
+(@manhattan_id, 5, '用樱桃和橙皮装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@manhattan_id, 5),  -- 威士忌
@@ -53,12 +53,12 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@martini_id, 61, '1颗', 0, 3),    -- 橄榄
 (@martini_id, 49, '适量', 0, 4);   -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@martini_id, 1, '在调酒杯中加满冰块', NOW(), NOW()),
-(@martini_id, 2, '倒入金酒和干味美思', NOW(), NOW()),
-(@martini_id, 3, '用吧匙轻柔搅拌30-40秒', NOW(), NOW()),
-(@martini_id, 4, '滤入冰镇的马天尼杯中', NOW(), NOW()),
-(@martini_id, 5, '用橄榄或柠檬皮装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@martini_id, 1, '在调酒杯中加满冰块', NOW()),
+(@martini_id, 2, '倒入金酒和干味美思', NOW()),
+(@martini_id, 3, '用吧匙轻柔搅拌30-40秒', NOW()),
+(@martini_id, 4, '滤入冰镇的马天尼杯中', NOW()),
+(@martini_id, 5, '用橄榄或柠檬皮装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@martini_id, 3),  -- 金酒
@@ -79,12 +79,12 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@white_russian_id, 16, '30ml', 0, 3),  -- 鲜奶油
 (@white_russian_id, 49, '适量', 0, 4);  -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@white_russian_id, 1, '在古典杯中加入冰块', NOW(), NOW()),
-(@white_russian_id, 2, '倒入伏特加和咖啡利口酒', NOW(), NOW()),
-(@white_russian_id, 3, '轻轻搅拌均匀', NOW(), NOW()),
-(@white_russian_id, 4, '慢慢倒入鲜奶油,制作分层效果', NOW(), NOW()),
-(@white_russian_id, 5, '可搅拌后饮用,也可直接品尝分层口感', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@white_russian_id, 1, '在古典杯中加入冰块', NOW()),
+(@white_russian_id, 2, '倒入伏特加和咖啡利口酒', NOW()),
+(@white_russian_id, 3, '轻轻搅拌均匀', NOW()),
+(@white_russian_id, 4, '慢慢倒入鲜奶油,制作分层效果', NOW()),
+(@white_russian_id, 5, '可搅拌后饮用,也可直接品尝分层口感', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@white_russian_id, 1),  -- 伏特加
@@ -106,12 +106,12 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@sidecar_id, 43, '适量', 0, 4),   -- 白糖（糖边用）
 (@sidecar_id, 49, '适量', 0, 5);   -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@sidecar_id, 1, '用柠檬片擦拭鸡尾酒杯口,蘸取细砂糖制作糖边', NOW(), NOW()),
-(@sidecar_id, 2, '在调酒壶中加入冰块', NOW(), NOW()),
-(@sidecar_id, 3, '倒入白兰地、橙味利口酒和柠檬汁', NOW(), NOW()),
-(@sidecar_id, 4, '用力摇匀约15秒', NOW(), NOW()),
-(@sidecar_id, 5, '双重过滤倒入准备好的杯中,用橙皮装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@sidecar_id, 1, '用柠檬片擦拭鸡尾酒杯口,蘸取细砂糖制作糖边', NOW()),
+(@sidecar_id, 2, '在调酒壶中加入冰块', NOW()),
+(@sidecar_id, 3, '倒入白兰地、橙味利口酒和柠檬汁', NOW()),
+(@sidecar_id, 4, '用力摇匀约15秒', NOW()),
+(@sidecar_id, 5, '双重过滤倒入准备好的杯中,用橙皮装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@sidecar_id, 6),  -- 白兰地
@@ -132,13 +132,13 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@julep_id, 54, '8-10片', 0, 3),   -- 薄荷叶
 (@julep_id, 49, '适量', 0, 4);     -- 碎冰
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@julep_id, 1, '在朱利普杯中放入薄荷叶和糖浆', NOW(), NOW()),
-(@julep_id, 2, '用捣棒轻轻按压薄荷叶释放香气,不要捣碎', NOW(), NOW()),
-(@julep_id, 3, '加满碎冰至杯口', NOW(), NOW()),
-(@julep_id, 4, '倒入波本威士忌', NOW(), NOW()),
-(@julep_id, 5, '用吧匙充分搅拌至杯外结霜', NOW(), NOW()),
-(@julep_id, 6, '再加碎冰至杯口溢出,插入薄荷枝装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@julep_id, 1, '在朱利普杯中放入薄荷叶和糖浆', NOW()),
+(@julep_id, 2, '用捣棒轻轻按压薄荷叶释放香气,不要捣碎', NOW()),
+(@julep_id, 3, '加满碎冰至杯口', NOW()),
+(@julep_id, 4, '倒入波本威士忌', NOW()),
+(@julep_id, 5, '用吧匙充分搅拌至杯外结霜', NOW()),
+(@julep_id, 6, '再加碎冰至杯口溢出,插入薄荷枝装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@julep_id, 5),  -- 威士忌
@@ -158,11 +158,11 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@black_russian_id, 7, '30ml', 0, 2),   -- 咖啡利口酒
 (@black_russian_id, 49, '适量', 0, 3);  -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@black_russian_id, 1, '在古典杯中加入冰块', NOW(), NOW()),
-(@black_russian_id, 2, '倒入伏特加', NOW(), NOW()),
-(@black_russian_id, 3, '加入咖啡利口酒', NOW(), NOW()),
-(@black_russian_id, 4, '轻轻搅拌均匀即可', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@black_russian_id, 1, '在古典杯中加入冰块', NOW()),
+(@black_russian_id, 2, '倒入伏特加', NOW()),
+(@black_russian_id, 3, '加入咖啡利口酒', NOW()),
+(@black_russian_id, 4, '轻轻搅拌均匀即可', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@black_russian_id, 1),  -- 伏特加
@@ -187,14 +187,14 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@sling_id, 32, '1滴', 0, 7),      -- 安格斯图拉苦精
 (@sling_id, 49, '适量', 0, 8);     -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@sling_id, 1, '在调酒壶中加入冰块', NOW(), NOW()),
-(@sling_id, 2, '倒入金酒、樱桃白兰地、橙味利口酒、柠檬汁和菠萝汁', NOW(), NOW()),
-(@sling_id, 3, '充分摇匀约10秒', NOW(), NOW()),
-(@sling_id, 4, '滤入装有冰块的高球杯中', NOW(), NOW()),
-(@sling_id, 5, '慢慢倒入石榴糖浆制作渐变效果', NOW(), NOW()),
-(@sling_id, 6, '在顶部加一滴安格斯图拉苦精', NOW(), NOW()),
-(@sling_id, 7, '用樱桃、菠萝片和橙片装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@sling_id, 1, '在调酒壶中加入冰块', NOW()),
+(@sling_id, 2, '倒入金酒、樱桃白兰地、橙味利口酒、柠檬汁和菠萝汁', NOW()),
+(@sling_id, 3, '充分摇匀约10秒', NOW()),
+(@sling_id, 4, '滤入装有冰块的高球杯中', NOW()),
+(@sling_id, 5, '慢慢倒入石榴糖浆制作渐变效果', NOW()),
+(@sling_id, 6, '在顶部加一滴安格斯图拉苦精', NOW()),
+(@sling_id, 7, '用樱桃、菠萝片和橙片装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@sling_id, 3),  -- 金酒
@@ -215,12 +215,12 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@grasshopper_id, 16, '30ml', 0, 3),   -- 鲜奶油
 (@grasshopper_id, 49, '适量', 0, 4);   -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@grasshopper_id, 1, '在调酒壶中加入冰块', NOW(), NOW()),
-(@grasshopper_id, 2, '倒入绿薄荷利口酒、白可可利口酒和鲜奶油', NOW(), NOW()),
-(@grasshopper_id, 3, '用力摇匀约20秒,让奶油充分乳化', NOW(), NOW()),
-(@grasshopper_id, 4, '双重过滤倒入冰镇的鸡尾酒杯中', NOW(), NOW()),
-(@grasshopper_id, 5, '用薄荷叶和巧克力碎装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@grasshopper_id, 1, '在调酒壶中加入冰块', NOW()),
+(@grasshopper_id, 2, '倒入绿薄荷利口酒、白可可利口酒和鲜奶油', NOW()),
+(@grasshopper_id, 3, '用力摇匀约20秒,让奶油充分乳化', NOW()),
+(@grasshopper_id, 4, '双重过滤倒入冰镇的鸡尾酒杯中', NOW()),
+(@grasshopper_id, 5, '用薄荷叶和巧克力碎装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@grasshopper_id, 12), -- 其他
@@ -240,12 +240,12 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@godfather_id, 64, '30ml', 0, 2),     -- 杏仁利口酒（Amaretto）
 (@godfather_id, 49, '适量', 0, 3);     -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@godfather_id, 1, '在古典杯中加入大冰块', NOW(), NOW()),
-(@godfather_id, 2, '倒入苏格兰威士忌', NOW(), NOW()),
-(@godfather_id, 3, '加入杏仁利口酒', NOW(), NOW()),
-(@godfather_id, 4, '轻轻搅拌均匀', NOW(), NOW()),
-(@godfather_id, 5, '用橙皮装饰,或挤压橙皮喷出精油', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@godfather_id, 1, '在古典杯中加入大冰块', NOW()),
+(@godfather_id, 2, '倒入苏格兰威士忌', NOW()),
+(@godfather_id, 3, '加入杏仁利口酒', NOW()),
+(@godfather_id, 4, '轻轻搅拌均匀', NOW()),
+(@godfather_id, 5, '用橙皮装饰,或挤压橙皮喷出精油', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@godfather_id, 5),  -- 威士忌
@@ -268,13 +268,13 @@ INSERT INTO `cocktail_ingredients` (`cocktail_id`, `ingredient_id`, `amount`, `i
 (@paloma_id, 44, '少许', 1, 5),    -- 盐（盐边，可选）
 (@paloma_id, 49, '适量', 0, 6);    -- 冰块
 
-INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`, `update_time`) VALUES
-(@paloma_id, 1, '可选:用青柠片擦拭杯口后蘸盐制作盐边', NOW(), NOW()),
-(@paloma_id, 2, '在高球杯中加入冰块', NOW(), NOW()),
-(@paloma_id, 3, '倒入龙舌兰和青柠汁', NOW(), NOW()),
-(@paloma_id, 4, '加入西柚汁(或气泡西柚汽水)', NOW(), NOW()),
-(@paloma_id, 5, '根据口味加入少许糖浆', NOW(), NOW()),
-(@paloma_id, 6, '轻轻搅拌,用西柚片装饰', NOW(), NOW());
+INSERT INTO `cocktail_steps` (`cocktail_id`, `step_number`, `description`, `create_time`) VALUES
+(@paloma_id, 1, '可选:用青柠片擦拭杯口后蘸盐制作盐边', NOW()),
+(@paloma_id, 2, '在高球杯中加入冰块', NOW()),
+(@paloma_id, 3, '倒入龙舌兰和青柠汁', NOW()),
+(@paloma_id, 4, '加入西柚汁(或气泡西柚汽水)', NOW()),
+(@paloma_id, 5, '根据口味加入少许糖浆', NOW()),
+(@paloma_id, 6, '轻轻搅拌,用西柚片装饰', NOW());
 
 INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 (@paloma_id, 4),  -- 龙舌兰
