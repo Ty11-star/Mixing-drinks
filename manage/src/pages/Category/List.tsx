@@ -22,6 +22,8 @@ import {
 import type { Category } from '../../api/category';
 import IconPicker from '../../theme/IconPicker';
 
+const { Search } = Input;
+
 const CategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState<Category[]>([]);
@@ -29,16 +31,21 @@ const CategoryList = () => {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState('base_spirit');
   const [statusFilter, setStatusFilter] = useState<number | string>('all');
+  const [keyword, setKeyword] = useState('');
   const [form] = Form.useForm();
 
   useEffect(() => {
     loadData();
-  }, [activeTab, statusFilter]);
+  }, [activeTab, statusFilter, keyword]);
 
   const loadData = async () => {
     try {
       setLoading(true);
-      const res = await getCategoryList({ type: activeTab, status: statusFilter });
+      const res = await getCategoryList({
+        type: activeTab,
+        status: statusFilter,
+        keyword: keyword.trim() || undefined,
+      });
       setDataSource(res.data || []);
     } catch (error: any) {
       message.error(error.message || '加载数据失败');
@@ -201,6 +208,12 @@ const CategoryList = () => {
             <Select.Option value={1}>启用</Select.Option>
             <Select.Option value={0}>禁用</Select.Option>
           </Select>
+          <Search
+            placeholder="搜索分类名称"
+            allowClear
+            onSearch={(value) => setKeyword(value.trim())}
+            style={{ width: 200 }}
+          />
         </Space>
         <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
           添加分类

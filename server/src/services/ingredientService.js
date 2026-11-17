@@ -11,7 +11,7 @@ class IngredientService {
    * 获取材料列表
    */
   async getIngredients(params = {}) {
-    const { category, page, pageSize, status } = params;
+    const { category, page, pageSize, status, keyword } = params;
     const where = {};
 
     // 状态过滤：默认只返回启用（小程序端）；管理端可传 status=all 或 0/1
@@ -25,6 +25,14 @@ class IngredientService {
 
     if (category) {
       where.category = category;
+    }
+
+    // 名称搜索：中文名、英文名都可命中
+    if (keyword) {
+      where[Op.or] = [
+        { name: { [Op.like]: `%${keyword}%` } },
+        { nameEn: { [Op.like]: `%${keyword}%` } }
+      ];
     }
 
     // 如果有分页参数

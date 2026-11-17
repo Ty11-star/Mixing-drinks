@@ -1,15 +1,18 @@
 -- ============================================
 -- 新增10款经典鸡尾酒数据
 -- 执行日期: 2026-11-17
+-- 注意：生产库名为 mixing_drinks（与 deploy/update.sh 的 DB 变量一致），
+--   不能使用旧库名 cocktail_db；status 采用 1=启用（与 Sequelize Model/service 一致，
+--   后端列表只显示 status=1 的酒谱，写 0 会导致数据入库但前台不可见）
 -- ============================================
 
-USE `cocktail_db`;
+USE `mixing_drinks`;
 
 -- ============================================
 -- 18. 曼哈顿 (Manhattan)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('曼哈顿', 'Manhattan', '被誉为"鸡尾酒之王"，以威士忌为基酒，搭配甜味美思酒和安格斯图拉苦精，口感醇厚复杂。', 2, '威士忌', '醇厚,微苦,甜', '鸡尾酒杯', 'stir', '使用黑麦威士忌风味更佳，搅拌时要充分冰镇但不要过度稀释。樱桃要用maraschino樱桃。', '冰块', '樱桃,橙皮', '高度', '美国', 95, 0);
+('曼哈顿', 'Manhattan', '被誉为"鸡尾酒之王"，以威士忌为基酒，搭配甜味美思酒和安格斯图拉苦精，口感醇厚复杂。', 2, '威士忌', '醇厚,微苦,甜', '鸡尾酒杯', 'stir', '使用黑麦威士忌风味更佳，搅拌时要充分冰镇但不要过度稀释。樱桃要用maraschino樱桃。', '冰块', '樱桃,橙皮', '高度', '美国', 95, 1);
 
 SET @manhattan_id = LAST_INSERT_ID();
 
@@ -35,7 +38,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 19. 马天尼 (Martini)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('马天尼', 'Martini', '最经典的鸡尾酒，被誉为"鸡尾酒之王"。金酒与干味美思的完美比例，优雅而纯粹。', 3, '金酒', '干爽,清冽', '马天尼杯', 'stir', '金酒与干味美思的比例可根据喜好调整，传统为2:1到6:1。搅拌要轻柔但充分，保持酒体清澈。', '冰块', '橄榄,柠檬皮', '高度', '美国', 94, 0);
+('马天尼', 'Martini', '最经典的鸡尾酒，被誉为"鸡尾酒之王"。金酒与干味美思的完美比例，优雅而纯粹。', 3, '金酒', '干爽,清冽', '马天尼杯', 'stir', '金酒与干味美思的比例可根据喜好调整，传统为2:1到6:1。搅拌要轻柔但充分，保持酒体清澈。', '冰块', '橄榄,柠檬皮', '高度', '美国', 94, 1);
 
 SET @martini_id = LAST_INSERT_ID();
 
@@ -61,7 +64,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 20. 白俄罗斯 (White Russian)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('白俄罗斯', 'White Russian', '电影《谋杀绿脚趾》中主角最爱的鸡尾酒，奶油般丝滑的口感，带有咖啡和伏特加的完美平衡。', 1, '伏特加', '香甜,奶香,咖啡', '古典杯', 'build', '可以用鲜奶油代替奶油利口酒，口感会更清爽。也可在上层浮一层奶油，不搅拌饮用。', '冰块', '无', '中度', '美国', 93, 0);
+('白俄罗斯', 'White Russian', '电影《谋杀绿脚趾》中主角最爱的鸡尾酒，奶油般丝滑的口感，带有咖啡和伏特加的完美平衡。', 1, '伏特加', '香甜,奶香,咖啡', '古典杯', 'build', '可以用鲜奶油代替奶油利口酒，口感会更清爽。也可在上层浮一层奶油，不搅拌饮用。', '冰块', '无', '中度', '美国', 93, 1);
 
 SET @white_russian_id = LAST_INSERT_ID();
 
@@ -87,7 +90,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 21. 侧车 (Sidecar)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('侧车', 'Sidecar', '诞生于一战后巴黎的经典酒款，以白兰地为基底，酸甜平衡，杯口糖边是其特色。', 2, '白兰地', '酸甜,果香', '鸡尾酒杯', 'shake', '糖边制作与玛格丽特类似，可用白砂糖或细砂糖。白兰地推荐使用干邑。', '冰块', '橙皮,糖边', '中度', '法国', 92, 0);
+('侧车', 'Sidecar', '诞生于一战后巴黎的经典酒款，以白兰地为基底，酸甜平衡，杯口糖边是其特色。', 2, '白兰地', '酸甜,果香', '鸡尾酒杯', 'shake', '糖边制作与玛格丽特类似，可用白砂糖或细砂糖。白兰地推荐使用干邑。', '冰块', '橙皮,糖边', '中度', '法国', 92, 1);
 
 SET @sidecar_id = LAST_INSERT_ID();
 
@@ -114,7 +117,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 22. 薄荷朱利普 (Mint Julep)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('薄荷朱利普', 'Mint Julep', '肯塔基赛马会的官方鸡尾酒，波本威士忌与新鲜薄荷的完美融合，清凉提神。', 2, '威士忌', '清爽,薄荷,微甜', '朱利普杯', 'muddle', '使用银制朱利普杯效果最佳，碎冰要尽量细碎。薄荷叶要用手掌拍打释放香气。', '碎冰', '薄荷枝', '中度', '美国', 91, 0);
+('薄荷朱利普', 'Mint Julep', '肯塔基赛马会的官方鸡尾酒，波本威士忌与新鲜薄荷的完美融合，清凉提神。', 2, '威士忌', '清爽,薄荷,微甜', '朱利普杯', 'muddle', '使用银制朱利普杯效果最佳，碎冰要尽量细碎。薄荷叶要用手掌拍打释放香气。', '碎冰', '薄荷枝', '中度', '美国', 91, 1);
 
 SET @julep_id = LAST_INSERT_ID();
 
@@ -141,7 +144,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 23. 黑俄罗斯 (Black Russian)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('黑俄罗斯', 'Black Russian', '白俄罗斯的前身，更简单直接的配方，伏特加与咖啡利口酒的经典组合。', 1, '伏特加', '香甜,咖啡', '古典杯', 'build', '选用优质咖啡利口酒（如Kahlúa）会让口感更佳。可根据喜好调整两者比例。', '冰块', '无', '中度', '比利时', 90, 0);
+('黑俄罗斯', 'Black Russian', '白俄罗斯的前身，更简单直接的配方，伏特加与咖啡利口酒的经典组合。', 1, '伏特加', '香甜,咖啡', '古典杯', 'build', '选用优质咖啡利口酒（如Kahlúa）会让口感更佳。可根据喜好调整两者比例。', '冰块', '无', '中度', '比利时', 90, 1);
 
 SET @black_russian_id = LAST_INSERT_ID();
 
@@ -165,7 +168,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 24. 新加坡司令 (Singapore Sling)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('新加坡司令', 'Singapore Sling', '诞生于新加坡莱佛士酒店的传奇鸡尾酒，色泽艳丽，口感复杂多层次。', 3, '金酒', '果香,酸甜,复杂', '高球杯', 'shake', '配方众多，此为接近原版的配方。樱桃白兰地可用樱桃利口酒代替。', '冰块', '樱桃,菠萝片,橙片', '中度', '新加坡', 89, 0);
+('新加坡司令', 'Singapore Sling', '诞生于新加坡莱佛士酒店的传奇鸡尾酒，色泽艳丽，口感复杂多层次。', 3, '金酒', '果香,酸甜,复杂', '高球杯', 'shake', '配方众多，此为接近原版的配方。樱桃白兰地可用樱桃利口酒代替。', '冰块', '樱桃,菠萝片,橙片', '中度', '新加坡', 89, 1);
 
 SET @sling_id = LAST_INSERT_ID();
 
@@ -197,7 +200,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 25. 青草蚱蜢 (Grasshopper)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('青草蚱蜢', 'Grasshopper', '薄荷巧克力风味的甜美鸡尾酒，色泽翠绿，口感如奶昔般丝滑，适合餐后饮用。', 1, '利口酒', '香甜,薄荷,奶香', '鸡尾酒杯', 'shake', '摇匀时间要久一点，让奶油充分乳化。可以加少量碎冰混合摇制，口感更冰爽。', '冰块', '薄荷叶,巧克力碎', '低度', '美国', 88, 0);
+('青草蚱蜢', 'Grasshopper', '薄荷巧克力风味的甜美鸡尾酒，色泽翠绿，口感如奶昔般丝滑，适合餐后饮用。', 1, '利口酒', '香甜,薄荷,奶香', '鸡尾酒杯', 'shake', '摇匀时间要久一点，让奶油充分乳化。可以加少量碎冰混合摇制，口感更冰爽。', '冰块', '薄荷叶,巧克力碎', '低度', '美国', 88, 1);
 
 SET @grasshopper_id = LAST_INSERT_ID();
 
@@ -223,7 +226,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 26. 教父 (Godfather)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('教父', 'Godfather', '电影《教父》同名鸡尾酒，苏格兰威士忌与杏仁利口酒的简约组合，口感醇厚带杏仁香。', 1, '威士忌', '醇厚,杏仁,微甜', '古典杯', 'build', '威士忌与杏仁利口酒的比例可调整，喜欢更甜可以增加杏仁利口酒。也可用波本代替苏格兰威士忌。', '冰块', '橙皮', '高度', '美国', 87, 0);
+('教父', 'Godfather', '电影《教父》同名鸡尾酒，苏格兰威士忌与杏仁利口酒的简约组合，口感醇厚带杏仁香。', 1, '威士忌', '醇厚,杏仁,微甜', '古典杯', 'build', '威士忌与杏仁利口酒的比例可调整，喜欢更甜可以增加杏仁利口酒。也可用波本代替苏格兰威士忌。', '冰块', '橙皮', '高度', '美国', 87, 1);
 
 SET @godfather_id = LAST_INSERT_ID();
 
@@ -248,7 +251,7 @@ INSERT INTO `cocktail_categories` (`cocktail_id`, `category_id`) VALUES
 -- 27. 帕洛玛 (Paloma)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `ice_type`, `garnish`, `alcohol_content`, `origin`, `sort_order`, `status`) VALUES
-('帕洛玛', 'Paloma', '在墨西哥比玛格丽特更受欢迎的龙舌兰鸡尾酒，清爽的西柚汁与龙舌兰完美搭配。', 1, '龙舌兰', '清爽,西柚,微咸', '高球杯', 'build', '推荐使用新鲜西柚汁，若用气泡西柚汽水口感会更清爽。盐边是可选项。', '冰块', '西柚片,盐边', '中度', '墨西哥', 86, 0);
+('帕洛玛', 'Paloma', '在墨西哥比玛格丽特更受欢迎的龙舌兰鸡尾酒，清爽的西柚汁与龙舌兰完美搭配。', 1, '龙舌兰', '清爽,西柚,微咸', '高球杯', 'build', '推荐使用新鲜西柚汁，若用气泡西柚汽水口感会更清爽。盐边是可选项。', '冰块', '西柚片,盐边', '中度', '墨西哥', 86, 1);
 
 SET @paloma_id = LAST_INSERT_ID();
 

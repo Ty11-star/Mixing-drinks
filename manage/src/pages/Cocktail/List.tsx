@@ -188,10 +188,10 @@ const CocktailList = () => {
       <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
         <Space>
           <Search
-            placeholder="搜索酒谱名称"
+            placeholder="搜索酒谱名称（中/英）"
             allowClear
             onSearch={(value) =>
-              setSearchParams({ ...searchParams, name: value, page: 1 })
+              setSearchParams({ ...searchParams, keyword: value.trim(), page: 1 })
             }
             style={{ width: 250 }}
           />

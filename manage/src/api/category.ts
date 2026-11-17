@@ -12,6 +12,8 @@ export interface Category {
 export interface CategoryListParams {
   type?: string;
   status?: number | string;
+  /** 名称搜索词（后端参数名 keyword） */
+  keyword?: string;
 }
 
 // 获取分类列表

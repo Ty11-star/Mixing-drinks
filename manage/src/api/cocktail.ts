@@ -32,7 +32,8 @@ export interface Cocktail {
 export interface CocktailListParams {
   page?: number;
   pageSize?: number;
-  name?: string;
+  /** 名称搜索词，中文名/英文名模糊匹配（后端参数名 keyword） */
+  keyword?: string;
   difficulty?: number;
   baseSpirit?: string;
   status?: number | string;

@@ -33,7 +33,11 @@ class CocktailService {
     if (difficulty) where.difficulty = difficulty;
     if (baseSpirit) where.baseSpirit = baseSpirit;
     if (keyword) {
-      where.name = { [Op.like]: `%${keyword}%` };
+      // 管理端列表搜索：中文名、英文名都可命中
+      where[Op.or] = [
+        { name: { [Op.like]: `%${keyword}%` } },
+        { nameEn: { [Op.like]: `%${keyword}%` } }
+      ];
     }
 
     const include = [

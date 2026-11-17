@@ -37,7 +37,7 @@ const IngredientList = () => {
   const [searchParams, setSearchParams] = useState({
     page: 1,
     pageSize: 10,
-    name: '',
+    keyword: '',
     category: '',
     status: 'all' as number | string,
   });
@@ -204,10 +204,10 @@ const IngredientList = () => {
       >
         <Space>
           <Search
-            placeholder="搜索材料名称"
+            placeholder="搜索材料名称（中/英）"
             allowClear
             onSearch={(value) =>
-              setSearchParams({ ...searchParams, name: value, page: 1 })
+              setSearchParams({ ...searchParams, keyword: value.trim(), page: 1 })
             }
             style={{ width: 250 }}
           />

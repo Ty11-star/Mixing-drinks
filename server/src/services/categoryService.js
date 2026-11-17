@@ -6,7 +6,7 @@ class CategoryService {
    * 获取分类列表
    */
   async getCategories(params = {}) {
-    const { type, status } = params;
+    const { type, status, keyword } = params;
     const where = {};
 
     // 状态过滤：默认只返回启用（小程序端）；管理端可传 status=all 或 0/1
@@ -20,6 +20,11 @@ class CategoryService {
 
     if (type) {
       where.type = type;
+    }
+
+    // 名称搜索
+    if (keyword) {
+      where.name = { [Op.like]: `%${keyword}%` };
     }
 
     const categories = await Category.findAll({
