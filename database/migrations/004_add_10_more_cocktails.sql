@@ -14,6 +14,23 @@
 USE `mixing_drinks`;
 
 -- ============================================
+-- 确保所需的分类存在
+-- ============================================
+INSERT IGNORE INTO `categories` (`id`, `name`, `type`, `sort_order`, `status`, `create_time`) VALUES
+(1, '伏特加', 'base_spirit', 1, 1, NOW()),
+(3, '金酒', 'base_spirit', 3, 1, NOW()),
+(4, '龙舌兰', 'base_spirit', 4, 1, NOW()),
+(5, '威士忌', 'base_spirit', 5, 1, NOW()),
+(6, '白兰地', 'base_spirit', 6, 1, NOW()),
+(7, '清爽', 'taste', 1, 1, NOW()),
+(8, '浓烈', 'taste', 2, 1, NOW()),
+(9, '香甜', 'taste', 3, 1, NOW()),
+(12, '其他', 'base_spirit', 12, 1, NOW()),
+(13, '简单', 'difficulty', 1, 1, NOW()),
+(14, '中等', 'difficulty', 2, 1, NOW()),
+(15, '复杂', 'difficulty', 3, 1, NOW());
+
+-- ============================================
 -- 18. 曼哈顿 (Manhattan)
 -- ============================================
 INSERT INTO `cocktails` (`name`, `name_en`, `description`, `difficulty`, `base_spirit`, `taste_tags`, `glass_type`, `method`, `tips`, `sort_order`, `status`, `create_time`, `update_time`) VALUES
