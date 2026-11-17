@@ -83,9 +83,12 @@ const CocktailList = () => {
 
   const columns: ColumnsType<Cocktail> = [
     {
-      title: 'ID',
-      dataIndex: 'id',
+      title: '序号',
+      key: 'index',
       width: 80,
+      render: (_text, _record, index) => {
+        return (searchParams.page! - 1) * searchParams.pageSize! + index + 1;
+      },
     },
     {
       title: '封面',

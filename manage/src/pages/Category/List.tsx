@@ -107,9 +107,10 @@ const CategoryList = () => {
 
   const columns: ColumnsType<Category> = [
     {
-      title: 'ID',
-      dataIndex: 'id',
+      title: '序号',
+      key: 'index',
       width: 80,
+      render: (_text, _record, index) => index + 1,
     },
     {
       title: '分类名称',
