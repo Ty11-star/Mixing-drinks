@@ -1,5 +1,5 @@
 const { Cocktail, Ingredient, CocktailIngredient, CocktailStep, Category, CocktailCategory } = require('../models');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const { matchCocktails } = require('./matchEngine');
 
 class CocktailService {
@@ -66,7 +66,10 @@ class CocktailService {
       include,
       limit: parseInt(pageSize),
       offset,
-      order: [['sortOrder', 'DESC'], ['id', 'ASC']],
+      order: [
+        ['sortOrder', 'DESC'],
+        [Sequelize.cast(Sequelize.col('Cocktail.id'), 'SIGNED'), 'ASC']
+      ],
       distinct: true
     });
 

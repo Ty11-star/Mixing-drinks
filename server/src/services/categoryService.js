@@ -1,5 +1,5 @@
 const { Category, Cocktail } = require('../models');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 
 class CategoryService {
   /**
@@ -29,7 +29,10 @@ class CategoryService {
 
     const categories = await Category.findAll({
       where,
-      order: [['sortOrder', 'DESC'], ['id', 'ASC']]
+      order: [
+        ['sortOrder', 'DESC'],
+        [Sequelize.cast(Sequelize.col('id'), 'SIGNED'), 'ASC']
+      ]
     });
 
     // 统计每个分类下的酒谱数量

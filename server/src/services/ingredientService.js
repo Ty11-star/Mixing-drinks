@@ -42,7 +42,10 @@ class IngredientService {
         where,
         limit: parseInt(pageSize),
         offset,
-        order: [[CATEGORY_ORDER, 'ASC'], ['id', 'ASC']]
+        order: [
+          [CATEGORY_ORDER, 'ASC'],
+          [Sequelize.cast(Sequelize.col('id'), 'SIGNED'), 'ASC']
+        ]
       });
 
       return {
@@ -56,7 +59,10 @@ class IngredientService {
     // 不分页，返回所有
     const ingredients = await Ingredient.findAll({
       where,
-      order: [[CATEGORY_ORDER, 'ASC'], ['id', 'ASC']]
+      order: [
+        [CATEGORY_ORDER, 'ASC'],
+        [Sequelize.cast(Sequelize.col('id'), 'SIGNED'), 'ASC']
+      ]
     });
 
     return ingredients;
