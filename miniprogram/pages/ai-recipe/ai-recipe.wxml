@@ -75,14 +75,14 @@
       <view class="btn-ghost" bindtap="copyRecipe">📋 复制配方</view>
       <view class="btn-primary {{saveState === 'saving' || saveState === 'saved' || saveState === 'exists' ? 'is-done' : ''}}" bindtap="saveRecipe">
         <block wx:if="{{saveState === 'saving'}}">保存中…</block>
-        <block wx:elif="{{saveState === 'saved'}}">✓ 已存酒谱库</block>
-        <block wx:elif="{{saveState === 'exists'}}">已在酒谱库</block>
-        <block wx:else>💾 存到酒谱库</block>
+        <block wx:elif="{{saveState === 'saved'}}">✓ 已存到我的配方</block>
+        <block wx:elif="{{saveState === 'exists'}}">已在本地配方中</block>
+        <block wx:else>💾 存到我的配方</block>
       </view>
     </view>
 
     <view class="ai-saved-hint" wx:if="{{saveState === 'saved' || saveState === 'exists'}}" bindtap="goSavedDetail">
-      已入库，下次勾同样材料可在「找找能调什么」直接找到 →
+      已保存到本机，可在「我的 → 我的 AI 配方」查看 →
     </view>
 
     <view class="ai-disclaimer">AI 生成内容仅供参考 · 未成年人请选择无酒精配方 · 理性饮酒</view>

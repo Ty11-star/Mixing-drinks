@@ -53,6 +53,28 @@
 }
 .login-btn::after { border: none; }
 
+.privacy-row {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--slate-blue, #3D5A7B);
+  padding: 20rpx 32rpx 0;
+  text-decoration: underline;
+}
+
+.my-recipes-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 28rpx 32rpx 0;
+  padding: 24rpx 28rpx;
+  background: #FFFFFF;
+  border: 1rpx solid var(--ice-blue, #E8F1F5);
+  border-radius: 14rpx;
+  font-size: 28rpx;
+  color: var(--midnight-blue, #1A2332);
+}
+.my-recipes-entry__arrow { font-size: 36rpx; color: var(--primary-amber-dark, #B8935E); }
+
 .section { padding: 36rpx 32rpx 0; }
 .section__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20rpx; }
 .section__title { font-family: var(--font-display, serif); font-size: 34rpx; font-weight: 600; color: var(--midnight-blue, #1A2332); }

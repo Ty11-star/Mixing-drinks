@@ -1,0 +1,51 @@
+<view class="page-wrap my-recipes">
+  <view class="head">
+    <view class="head__title">我的 AI 配方</view>
+    <view class="head__sub">仅保存在本机，不会进入公共酒谱库</view>
+  </view>
+
+  <empty-state
+    wx:if="{{recipes.length === 0}}"
+    icon="📖"
+    title="还没有本地配方"
+    description="生成酒谱或抽卡后点“存到我的配方”，就会出现在这里"
+  />
+
+  <view wx:else class="list">
+    <view class="card" wx:for="{{recipes}}" wx:key="id">
+      <view class="card__main" bindtap="toggle" data-id="{{item.id}}">
+        <view class="card__top">
+          <text class="card__name">{{item.name}}</text>
+          <text class="card__time">{{item.timeText}}</text>
+        </view>
+        <view class="card__meta">
+          <text wx:if="{{item.nameEn}}" class="tag">{{item.nameEn}}</text>
+          <text wx:if="{{item.baseSpirit}}" class="tag">{{item.baseSpirit}}</text>
+          <text wx:if="{{item.diffMeta && item.diffMeta.label}}" class="tag">{{item.diffMeta.label}}</text>
+        </view>
+        <view wx:if="{{item.description}}" class="card__desc">{{item.description}}</view>
+        <view class="card__toggle">{{expandedId === item.id ? '收起配方 ▲' : '查看配方 ▼'}}</view>
+      </view>
+
+      <view wx:if="{{expandedId === item.id}}" class="detail">
+        <view class="section-title">材料</view>
+        <view class="ing" wx:for="{{item.ingredients}}" wx:for-item="ing" wx:key="name">
+          <text class="ing__name">{{ing.name}}</text>
+          <text class="ing__amount">{{ing.amount}}</text>
+        </view>
+
+        <view class="section-title">做法</view>
+        <view class="step" wx:for="{{item.steps}}" wx:for-item="step" wx:key="index">
+          <text class="step__no">{{index + 1}}</text>
+          <text class="step__text">{{step}}</text>
+        </view>
+
+        <view wx:if="{{item.tips}}" class="tips">💡 {{item.tips}}</view>
+
+        <view class="delete" catchtap="remove" data-id="{{item.id}}">删除这条配方</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

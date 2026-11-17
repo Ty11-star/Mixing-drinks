@@ -10,6 +10,7 @@ const adminRoutes = require('./admin');
 const userRoutes = require('./users');
 const aiRoutes = require('./ai');
 const uploadRoutes = require('./upload');
+const favoriteRoutes = require('./favorite');
 
 // 注册路由
 router.use('/auth', authRoutes);
@@ -20,6 +21,7 @@ router.use('/admin', adminRoutes);
 router.use('/users', userRoutes);
 router.use('/ai', aiRoutes);
 router.use('/upload', uploadRoutes);
+router.use('/favorites', favoriteRoutes);
 
 // 健康检查
 router.get('/health', (req, res) => {

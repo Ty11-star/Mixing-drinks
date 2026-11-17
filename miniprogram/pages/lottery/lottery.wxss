@@ -184,14 +184,3 @@
 .result__btn--ghost { background: #FFFFFF; color: var(--slate-blue, #3D5A7B); border: 1rpx solid var(--ice-blue, #E8F1F5); box-shadow: none; }
 .result__btn.is-done { background: var(--ice-blue, #E8F1F5); color: var(--slate-blue, #3D5A7B); box-shadow: none; }
 .result__btn:active { transform: scale(0.98); }
-
-.result__reset {
-  text-align: center; margin: 12rpx 0 4rpx;
-  padding: 18rpx; border-radius: 14rpx;
-  background: #FFFFFF; color: var(--slate-blue, #3D5A7B);
-  border: 1rpx solid var(--ice-blue, #E8F1F5);
-  font-size: 26rpx;
-}
-.result__reset:active { transform: scale(0.98); }
-
-.dev-reset { text-align: center; font-size: 22rpx; color: #B0B8C0; padding: 28rpx 0 8rpx; }

@@ -2,6 +2,7 @@
 const aiApi = require('../../api/ai');
 const format = require('../../utils/format');
 const storage = require('../../utils/storage');
+const myRecipes = require('../../utils/myRecipes');
 
 function todayKey() {
   const d = new Date();
@@ -142,26 +143,30 @@ Page({
   saveRecipe() {
     const d = this.data.drink;
     if (!d || d.source !== 'ai' || this.data.saveState === 'saved') return;
-    wx.showLoading({ title: '保存中' });
-    aiApi.save({
-      name: d.name, nameEn: d.nameEn, baseSpirit: d.baseSpirit,
-      glassType: d.glassType, difficulty: d.difficulty,
-      description: d.description, tips: d.tips,
-      ingredients: d.ingredients || [], steps: d.steps || []
-    }).then(res => {
-      wx.hideLoading();
-      if (res && res.alreadyExists) {
-        wx.showToast({ title: '已收录过啦', icon: 'none' });
+    try {
+      const res = myRecipes.save({
+        name: d.name,
+        nameEn: d.nameEn,
+        baseSpirit: d.baseSpirit,
+        glassType: d.glassType,
+        difficulty: d.difficulty,
+        description: d.description,
+        tips: d.tips,
+        ingredients: d.ingredients || [],
+        steps: d.steps || []
+      });
+      if (!res.id) throw new Error('配方名称为空');
+      if (res.alreadyExists) {
+        wx.showToast({ title: '已在本地配方中', icon: 'none' });
       } else {
-        wx.showToast({ title: '已存到酒谱库', icon: 'success' });
+        wx.showToast({ title: '已存到我的配方', icon: 'success' });
       }
-      const updated = Object.assign({}, d, { savedId: res ? res.id : null });
-      this.setData({ saveState: 'saved', savedId: updated.savedId, drink: updated });
+      const updated = Object.assign({}, d, { savedId: res.id });
+      this.setData({ saveState: 'saved', savedId: res.id, drink: updated });
       storage.set('daily_draw', { date: todayKey(), drink: updated });
-    }).catch(() => {
-      wx.hideLoading();
+    } catch (e) {
       wx.showToast({ title: '保存失败', icon: 'none' });
-    });
+    }
   },
 
   goDetail() {
@@ -169,15 +174,5 @@ Page({
     if (d && d.source === 'official' && d.id) {
       wx.navigateTo({ url: '/pages/cocktail-detail/cocktail-detail?id=' + d.id });
     }
-  },
-
-  // 测试用：清除今日记录，便于重新体验抽卡 / 测试摇一摇
-  resetToday() {
-    storage.remove('daily_draw');
-    this.setData({
-      drawn: false, drink: null, gradient: '', icon: '🍸',
-      reveal: false, saveState: 'idle', savedId: null
-    });
-    wx.showToast({ title: '已清除，可重新摇', icon: 'none' });
   }
 });

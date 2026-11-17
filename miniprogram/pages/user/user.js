@@ -1,7 +1,9 @@
 // pages/user/user.js
 const app = getApp();
 const authApi = require('../../api/auth');
+const favoriteApi = require('../../api/favorite');
 const storage = require('../../utils/storage');
+const myRecipes = require('../../utils/myRecipes');
 
 Page({
   data: {
@@ -10,7 +12,8 @@ Page({
     avatarUrl: '',
     nickname: '',
     favorites: [],
-    history: []
+    history: [],
+    myRecipeCount: 0
   },
 
   onShow() {
@@ -24,9 +27,22 @@ Page({
       token,
       avatarUrl: userInfo ? userInfo.avatar : '',
       nickname: userInfo ? userInfo.nickname : '',
-      favorites: app.getFavorites(),
-      history: app.getHistory()
+      history: app.getHistory(),
+      myRecipeCount: myRecipes.list().length,
+      favorites: []
     });
+    if (token) {
+      this.loadFavorites();
+    }
+  },
+
+  async loadFavorites() {
+    try {
+      const list = await favoriteApi.list();
+      this.setData({ favorites: list || [] });
+    } catch (e) {
+      this.setData({ favorites: [] });
+    }
   },
 
   onChooseAvatar(e) {
@@ -78,6 +94,7 @@ Page({
       });
       wx.hideLoading();
       wx.showToast({ title: '登录成功', icon: 'success' });
+      this.loadFavorites();
     } catch (e) {
       wx.hideLoading();
       // request.js 已 toast 过具体原因，这里仅在无信息时兜底提示
@@ -85,6 +102,20 @@ Page({
         wx.showToast({ title: '登录失败', icon: 'none' });
       }
     }
+  },
+
+  openPrivacyContract() {
+    if (!wx.openPrivacyContract) {
+      wx.showToast({ title: '当前微信版本不支持', icon: 'none' });
+      return;
+    }
+    wx.openPrivacyContract({
+      fail: () => wx.showToast({ title: '打开失败，请稍后重试', icon: 'none' })
+    });
+  },
+
+  goMyRecipes() {
+    wx.navigateTo({ url: '/pages/my-recipes/my-recipes' });
   },
 
   goDetail(e) {

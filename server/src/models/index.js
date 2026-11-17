@@ -14,6 +14,7 @@ const Category = require('./Category');
 const CocktailCategory = require('./CocktailCategory');
 const User = require('./User');
 const Admin = require('./Admin');
+const Favorite = require('./Favorite');
 
 // 初始化模型
 const models = {
@@ -24,7 +25,8 @@ const models = {
   Category: Category(sequelize, DataTypes),
   CocktailCategory: CocktailCategory(sequelize, DataTypes),
   User: User(sequelize, DataTypes),
-  Admin: Admin(sequelize, DataTypes)
+  Admin: Admin(sequelize, DataTypes),
+  Favorite: Favorite(sequelize, DataTypes)
 };
 
 // 定义关联关系
@@ -73,6 +75,28 @@ models.Category.belongsToMany(models.Cocktail, {
   through: models.CocktailCategory,
   foreignKey: 'categoryId',
   as: 'cocktails'
+});
+
+// User -> Favorite (一对多)
+models.User.hasMany(models.Favorite, {
+  foreignKey: 'userId',
+  as: 'favorites'
+});
+
+models.Favorite.belongsTo(models.User, {
+  foreignKey: 'userId',
+  as: 'user'
+});
+
+// Favorite -> Cocktail (多对一)
+models.Favorite.belongsTo(models.Cocktail, {
+  foreignKey: 'cocktailId',
+  as: 'cocktail'
+});
+
+models.Cocktail.hasMany(models.Favorite, {
+  foreignKey: 'cocktailId',
+  as: 'favorites'
 });
 
 module.exports = {

@@ -9,7 +9,8 @@
     "pages/shake/shake",
     "pages/lottery/lottery",
     "pages/knowledge/knowledge",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/my-recipes/my-recipes"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -34,5 +35,6 @@
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "__usePrivacyCheck__": true
 }

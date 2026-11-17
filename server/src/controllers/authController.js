@@ -1,4 +1,5 @@
 const authService = require('../services/authService');
+const wechatSecurity = require('../services/wechatSecurity');
 const Response = require('../utils/response');
 
 class AuthController {
@@ -45,6 +46,13 @@ class AuthController {
     try {
       const userId = req.user.id;
       const { nickname, avatar } = req.body;
+
+      if (nickname !== undefined && nickname !== null && String(nickname).trim()) {
+        const check = await wechatSecurity.checkText(nickname, req.user.openid, 2);
+        if (!check.pass) {
+          return res.json(Response.error('昵称包含不适当内容，请修改后再试', 400));
+        }
+      }
 
       const user = await authService.updateUserInfo(userId, { nickname, avatar });
       res.json(Response.success(user, '更新成功'));

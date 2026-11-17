@@ -70,12 +70,10 @@
     <view class="result__actions">
       <view wx:if="{{drink.source === 'official'}}" class="result__btn result__btn--ghost" bindtap="goDetail">查看完整酒谱</view>
       <view wx:if="{{drink.source === 'ai'}}" class="result__btn {{saveState === 'saved' ? 'is-done' : ''}}" bindtap="saveRecipe">
-        {{saveState === 'saved' ? '✓ 已存到酒谱库' : '💾 好喝！存到酒谱库'}}
+        {{saveState === 'saved' ? '✓ 已存到我的配方' : '💾 好喝！存到我的配方'}}
       </view>
     </view>
-    <view class="result__reset" bindtap="resetToday">🔄 清除记录，再摇一次</view>
   </view>
 
   <view class="safe-bottom" style="height: calc(240rpx + env(safe-area-inset-bottom));"></view>
-  <view class="dev-reset" bindtap="resetToday">测试：清除今日记录</view>
 </view>

@@ -2,6 +2,7 @@
 const aiApi = require('../../api/ai');
 const format = require('../../utils/format');
 const storage = require('../../utils/storage');
+const myRecipes = require('../../utils/myRecipes');
 
 Page({
   data: {
@@ -65,30 +66,30 @@ Page({
     wx.setClipboardData({ data: lines.join('\n') });
   },
 
-  // 将 AI 配方保存到酒谱库，下次可直接用「找找能调什么」找到
+  // 将 AI 配方保存到当前设备的本地配方，不进入公共酒谱库
   async saveRecipe() {
     const r = this.data.recipe;
     if (!r || this.data.saveState === 'saving' || this.data.saveState === 'saved' || this.data.saveState === 'exists') return;
     this.setData({ saveState: 'saving' });
     try {
-      const payload = {
+      const res = myRecipes.save({
         name: r.name,
         nameEn: r.nameEn || '',
         baseSpirit: r.baseSpirit || '',
         glassType: r.glassType || '',
         difficulty: r.difficulty || 1,
-        description: this.data.summary || '',
+        summary: this.data.summary || '',
         tips: r.tips || '',
         ingredients: (r.ingredients || []).map(i => ({ name: i.name, amount: i.amount || '' })),
-        steps: (r.steps || []).map(s => ({ description: s }))
-      };
-      const res = await aiApi.save(payload);
-      if (res && res.alreadyExists) {
+        steps: (r.steps || []).map(s => (typeof s === 'string' ? s : s && s.description))
+      });
+      if (!res.id) throw new Error('配方名称为空');
+      if (res.alreadyExists) {
         this.setData({ saveState: 'exists', savedId: res.id });
-        wx.showToast({ title: '该配方已在酒谱库', icon: 'none' });
+        wx.showToast({ title: '已在本地配方中', icon: 'none' });
       } else {
-        this.setData({ saveState: 'saved', savedId: res && res.id });
-        wx.showToast({ title: '已存入酒谱库', icon: 'success' });
+        this.setData({ saveState: 'saved', savedId: res.id });
+        wx.showToast({ title: '已存到我的配方', icon: 'success' });
       }
     } catch (e) {
       this.setData({ saveState: 'idle' });
@@ -97,8 +98,6 @@ Page({
   },
 
   goSavedDetail() {
-    if (this.data.savedId) {
-      wx.navigateTo({ url: '/pages/cocktail-detail/cocktail-detail?id=' + this.data.savedId });
-    }
+    wx.navigateTo({ url: '/pages/my-recipes/my-recipes' });
   }
 });

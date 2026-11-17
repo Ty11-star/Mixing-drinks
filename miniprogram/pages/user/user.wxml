@@ -22,6 +22,12 @@
   <view class="login-row">
     <button class="login-btn ripple-btn" bindtap="doLogin">{{token ? '重新登录' : '微信一键登录'}}</button>
   </view>
+  <view class="privacy-row" bindtap="openPrivacyContract">查看《用户隐私保护指引》</view>
+
+  <view class="my-recipes-entry" bindtap="goMyRecipes">
+    <text>我的 AI 配方（{{myRecipeCount}}）</text>
+    <text class="my-recipes-entry__arrow">›</text>
+  </view>
 
   <!-- 我的收藏 -->
   <view class="section">

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const aiService = require('../services/aiService');
+const wechatSecurity = require('../services/wechatSecurity');
 const Response = require('../utils/response');
-const { optionalAuth } = require('../middlewares/auth');
+const { optionalAuth, authenticateToken } = require('../middlewares/auth');
 const { Cocktail, CocktailIngredient, CocktailStep, Ingredient } = require('../models');
 
 /**
@@ -27,6 +28,15 @@ router.post('/recommend', optionalAuth, async (req, res, next) => {
       return res.json(Response.error('请提供材料清单', 400));
     }
 
+    const check = await wechatSecurity.checkText(
+      names.join('、'),
+      req.user && req.user.openid,
+      2
+    );
+    if (!check.pass) {
+      return res.json(Response.error('材料内容不适当，请重新选择', 400));
+    }
+
     const result = await aiService.recommendByIngredients(names);
     res.json(Response.success(result, '生成成功'));
   } catch (error) {
@@ -39,7 +49,7 @@ router.post('/recommend', optionalAuth, async (req, res, next) => {
  * POST /api/v1/ai/save
  * body: { name, nameEn, baseSpirit, glassType, difficulty, description, tips, ingredients:[{name,amount}], steps:[{description}] }
  */
-router.post('/save', optionalAuth, async (req, res, next) => {
+router.post('/save', authenticateToken, async (req, res, next) => {
   try {
     const {
       name, nameEn, baseSpirit, glassType, difficulty,
@@ -48,6 +58,16 @@ router.post('/save', optionalAuth, async (req, res, next) => {
 
     if (!name || !String(name).trim()) {
       return res.json(Response.error('缺少酒谱名称', 400));
+    }
+
+    const safeText = [
+      name, nameEn, description, tips,
+      ...(Array.isArray(ingredients) ? ingredients.map(i => i && i.name) : []),
+      ...(Array.isArray(steps) ? steps.map(s => (typeof s === 'string' ? s : s && s.description)) : [])
+    ].filter(Boolean).join(' ');
+    const check = await wechatSecurity.checkText(safeText, req.user.openid, 2);
+    if (!check.pass) {
+      return res.json(Response.error('配方内容不适当，请修改后再保存', 400));
     }
 
     // 同名已存在则直接返回，避免重复入库
