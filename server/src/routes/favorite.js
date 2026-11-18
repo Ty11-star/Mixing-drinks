@@ -12,7 +12,7 @@ router.get('/', authenticateToken, async (req, res, next) => {
     const favorites = await Favorite.findAll({
       where: { userId },
       attributes: ['cocktailId'],
-      order: [['createdAt', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
     const ids = favorites.map(f => f.cocktailId).filter(Boolean);
     if (ids.length === 0) {
