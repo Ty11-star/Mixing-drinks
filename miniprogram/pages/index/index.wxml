@@ -7,9 +7,14 @@
         <text class="hero__zh">调一杯</text>
         <text class="hero__en">MIX · SIP · REPEAT</text>
       </view>
-      <view class="hero__search ripple-btn" bindtap="goSearch">
-        <text class="hero__search-icon">🔍</text>
-        <text class="hero__search-text">搜鸡尾酒 / 基酒</text>
+      <view class="hero__head-actions">
+        <view class="hero__mine ripple-btn" bindtap="goMine">
+          <text class="hero__mine-icon">👤</text>
+        </view>
+        <view class="hero__search ripple-btn" bindtap="goSearch">
+          <text class="hero__search-icon">🔍</text>
+          <text class="hero__search-text">搜鸡尾酒 / 基酒</text>
+        </view>
       </view>
     </view>
     <view class="hero__cta" bindtap="goIngredient">
@@ -70,8 +75,20 @@
   <view class="list" wx:else>
     <view class="list-row" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
       <view class="list-row__img" style="background:{{item._gradient}}">
-        <image wx:if="{{item.image}}" class="list-row__photo" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" show-menu-by-longpress="{{false}}"></image>
-        <text wx:else class="list-row__icon">{{item._icon}}</text>
+        <text class="list-row__icon">{{item._icon}}</text>
+        <image
+          wx:if="{{item.image}}"
+          class="list-row__photo {{item._imgLoaded ? 'is-loaded' : ''}}"
+          src="{{item.image}}"
+          mode="aspectFill"
+          lazy-load="{{true}}"
+          show-menu-by-longpress="{{false}}"
+          data-id="{{item.id}}"
+          bindload="onListImageLoad"
+        ></image>
+        <view class="list-row__fav {{item._isFav ? 'is-fav' : ''}}" data-id="{{item.id}}" catchtap="toggleFav">
+          <text>{{item._isFav ? '♥' : '♡'}}</text>
+        </view>
       </view>
       <view class="list-row__info">
         <view class="list-row__name ellipsis">{{item.name}}</view>
@@ -93,6 +110,8 @@
     <text wx:elif="{{finished}}">— 到底啦 —</text>
     <text wx:else>上拉加载更多</text>
   </view>
+
+  <view class="drink-disclaimer">未成年人请勿饮酒 · 理性饮酒，适量有益</view>
 
   <view class="safe-bottom"></view>
 </view>

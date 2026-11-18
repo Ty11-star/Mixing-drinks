@@ -6,8 +6,7 @@ Component({
       { pagePath: '/pages/index/index', text: '首页', icon: '🍸' },
       { pagePath: '/pages/shake/shake', text: '调一杯', icon: '🥃' },
       { pagePath: '/pages/lottery/lottery', text: '抽卡', icon: '🎲' },
-      { pagePath: '/pages/knowledge/knowledge', text: '知识', icon: '📖' },
-      { pagePath: '/pages/user/user', text: '我的', icon: '👤' }
+      { pagePath: '/pages/knowledge/knowledge', text: '知识', icon: '📖' }
     ]
   },
   methods: {

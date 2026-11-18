@@ -1,8 +1,6 @@
 // pages/cocktail-detail/cocktail-detail.js
 const cocktailApi = require('../../api/cocktail');
-const favoriteApi = require('../../api/favorite');
 const format = require('../../utils/format');
-const storage = require('../../utils/storage');
 const app = getApp();
 
 function parseAmountVal(amount) {
@@ -48,11 +46,6 @@ Page({
         _ratio: Math.max(0.06, parseAmountVal(i.amount) / maxVal),
         _optional: i.isOptional === 1 || i.isOptional === '1'
       }));
-      const summary = {
-        id: detail.id, name: detail.name, nameEn: detail.nameEn,
-        baseSpirit: detail.baseSpirit, difficulty: detail.difficulty, tasteTags: detail.tasteTags
-      };
-      app.addHistory(summary);
       this.setData({
         detail,
         loading: false,
@@ -64,20 +57,9 @@ Page({
         methodLabel: format.getMethodLabel(detail.method),
         ingredients
       });
-      if (storage.get('token')) {
-        this.checkFavoriteStatus();
-      }
+      this.setData({ isFav: app.isFavorite(id) });
     } catch (e) {
       this.setData({ loading: false });
-    }
-  },
-
-  async checkFavoriteStatus() {
-    try {
-      const map = await favoriteApi.check([this.data.id]);
-      this.setData({ isFav: !!map[this.data.id] });
-    } catch (e) {
-      this.setData({ isFav: false });
     }
   },
 
@@ -88,35 +70,21 @@ Page({
     }
   },
 
-  async toggleFav() {
+  toggleFav() {
     if (!this.data.detail) return;
-    if (!storage.get('token')) {
-      wx.showModal({
-        title: '需要登录',
-        content: '登录后可收藏喜欢的酒谱',
-        confirmText: '去登录',
-        success: (res) => {
-          if (res.confirm) wx.switchTab({ url: '/pages/user/user' });
-        }
-      });
-      return;
-    }
-    const isFav = this.data.isFav;
-    const id = this.data.detail.id;
-    try {
-      if (isFav) {
-        await favoriteApi.remove(id);
-        this.setData({ isFav: false, favRipple: true });
-        wx.showToast({ title: '已取消收藏', icon: 'none' });
-      } else {
-        await favoriteApi.add(id);
-        this.setData({ isFav: true, favRipple: true });
-        wx.showToast({ title: '已收藏', icon: 'none' });
-      }
-      setTimeout(() => this.setData({ favRipple: false }), 600);
-    } catch (e) {
-      wx.showToast({ title: '操作失败', icon: 'none' });
-    }
+    const detail = this.data.detail;
+    const added = app.toggleFavorite({
+      id: detail.id,
+      name: detail.name,
+      nameEn: detail.nameEn,
+      baseSpirit: detail.baseSpirit,
+      difficulty: detail.difficulty,
+      tasteTags: detail.tasteTags,
+      image: detail.image || this.data.image || ''
+    });
+    this.setData({ isFav: added, favRipple: true });
+    wx.showToast({ title: added ? '已收藏' : '已取消收藏', icon: 'none' });
+    setTimeout(() => this.setData({ favRipple: false }), 600);
   },
 
   onShareAppMessage() {

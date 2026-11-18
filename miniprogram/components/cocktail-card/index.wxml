@@ -1,10 +1,20 @@
 <view class="cocktail-card" bindtap="goDetail" hover-class="cocktail-card--hover">
   <view class="cocktail-card__image" style="background:{{gradient}}">
-    <view class="cocktail-card__shimmer"></view>
-    <image wx:if="{{image}}" class="cocktail-card__photo" src="{{image}}" mode="aspectFill" lazy-load="{{true}}" show-menu-by-longpress="{{false}}"></image>
-    <text wx:else class="cocktail-card__icon">{{icon}}</text>
+    <text class="cocktail-card__icon">{{icon}}</text>
+    <image
+      wx:if="{{image}}"
+      class="cocktail-card__photo {{imageLoaded ? 'is-loaded' : ''}}"
+      src="{{image}}"
+      mode="aspectFill"
+      lazy-load="{{true}}"
+      show-menu-by-longpress="{{false}}"
+      bindload="onImageLoad"
+    ></image>
     <view class="cocktail-card__diff">
       <text>{{diffMeta.glass}}</text>
+    </view>
+    <view class="cocktail-card__fav {{isFav ? 'is-fav' : ''}}" catchtap="toggleFav">
+      <text>{{isFav ? '♥' : '♡'}}</text>
     </view>
   </view>
   <view class="cocktail-card__body">

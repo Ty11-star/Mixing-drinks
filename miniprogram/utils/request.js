@@ -2,7 +2,6 @@
 // wx.request 封装：统一响应处理 + 离线 mock 回退
 const config = require('./config');
 const mock = require('./mock');
-const storage = require('./storage');
 
 /**
  * 发起请求
@@ -26,15 +25,13 @@ function request(options) {
   // 真实请求
   const fullUrl = config.baseUrl + url;
   return new Promise((resolve, reject) => {
-    const token = storage.get('token', '');
     wx.request({
       url: fullUrl,
       method,
       data,
       timeout: options.timeout || config.timeout,
       header: {
-        'content-type': 'application/json',
-        ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+        'content-type': 'application/json'
       },
       success(res) {
         const body = res.data;

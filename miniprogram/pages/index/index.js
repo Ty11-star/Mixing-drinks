@@ -2,6 +2,7 @@
 const cocktailApi = require('../../api/cocktail');
 const categoryApi = require('../../api/category');
 const format = require('../../utils/format');
+const app = getApp();
 
 Page({
   data: {
@@ -25,6 +26,12 @@ Page({
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 0 });
     }
+    // 从详情页返回后，同步列表的收藏状态
+    if (this.data.list.length) {
+      this.setData({
+        list: this.data.list.map(i => Object.assign({}, i, { _isFav: app.isFavorite(i.id) }))
+      });
+    }
   },
 
   async loadCategories() {
@@ -44,9 +51,28 @@ Page({
       ...c,
       _gradient: format.getSpiritGradient(c.baseSpirit),
       _icon: format.getSpiritIcon(c.baseSpirit),
+      _imgLoaded: false,
+      _isFav: app.isFavorite(c.id),
       _taste: format.parseTasteTags(c.tasteTags).slice(0, 3),
       _diff: format.getDifficulty(c.difficulty)
     }));
+  },
+
+  onListImageLoad(e) {
+    const id = e.currentTarget.dataset.id;
+    const idx = this.data.list.findIndex(i => i.id === id);
+    if (idx >= 0) {
+      this.setData({ [`list[${idx}]._imgLoaded`]: true });
+    }
+  },
+
+  toggleFav(e) {
+    const id = e.currentTarget.dataset.id;
+    const item = this.data.list.find(i => i.id === id);
+    if (!item) return;
+    const added = app.toggleFavorite(item);
+    this.setData({ [`list[${this.data.list.indexOf(item)}]._isFav`]: added });
+    wx.showToast({ title: added ? '已收藏' : '已取消收藏', icon: 'none' });
   },
 
   async loadList(reset) {
@@ -102,6 +128,10 @@ Page({
 
   goSearch() {
     wx.navigateTo({ url: '/pages/search/search' });
+  },
+
+  goMine() {
+    wx.navigateTo({ url: '/pages/user/user' });
   },
 
   goIngredient() {

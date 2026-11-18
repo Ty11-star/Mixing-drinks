@@ -52,9 +52,12 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
-  padding: 16rpx 20rpx;
-  gap: 16rpx;
+  padding: 8rpx 12rpx;
 }
-.grid__col { width: calc(50% - 8rpx); }
+.grid__col {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 8rpx;
+}
 
 .load-more { text-align: center; color: var(--slate-blue, #3D5A7B); font-size: 24rpx; padding: 28rpx 0; }

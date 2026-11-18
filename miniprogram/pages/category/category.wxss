@@ -44,7 +44,10 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
-  padding: 16rpx 20rpx;
-  gap: 16rpx;
+  padding: 8rpx 12rpx;
 }
-.grid__col { width: calc(50% - 8rpx); }
+.grid__col {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 8rpx;
+}

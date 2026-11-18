@@ -82,7 +82,7 @@
     </view>
 
     <view class="ai-saved-hint" wx:if="{{saveState === 'saved' || saveState === 'exists'}}" bindtap="goSavedDetail">
-      已保存到本机，可在「我的 → 我的 AI 配方」查看 →
+      已保存到本机，点击前往「我的 AI 配方」查看 →
     </view>
 
     <view class="ai-disclaimer">AI 生成内容仅供参考 · 未成年人请选择无酒精配方 · 理性饮酒</view>

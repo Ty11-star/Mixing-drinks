@@ -67,6 +67,7 @@
       <text class="block__text">{{detail.tips}}</text>
     </view>
 
+    <view class="drink-disclaimer">未成年人请勿饮酒 · 理性饮酒，适量有益</view>
     <view class="safe-bottom"></view>
   </block>
 

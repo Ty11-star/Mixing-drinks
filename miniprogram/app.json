@@ -30,11 +30,9 @@
       { "pagePath": "pages/index/index", "text": "首页" },
       { "pagePath": "pages/shake/shake", "text": "调一杯" },
       { "pagePath": "pages/lottery/lottery", "text": "抽卡" },
-      { "pagePath": "pages/knowledge/knowledge", "text": "知识" },
-      { "pagePath": "pages/user/user", "text": "我的" }
+      { "pagePath": "pages/knowledge/knowledge", "text": "知识" }
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json",
-  "__usePrivacyCheck__": true
+  "sitemapLocation": "sitemap.json"
 }

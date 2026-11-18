@@ -189,6 +189,15 @@ view, text, scroll-view, button, input, textarea, navigator {
   overflow: hidden;
 }
 
+/* —— 理性饮酒提示（全局通用）—— */
+.drink-disclaimer {
+  text-align: center;
+  font-size: 22rpx;
+  color: #9AA7B5;
+  line-height: 1.6;
+  padding: 24rpx 32rpx 8rpx;
+}
+
 /* —— 底部安全区占位（须大于自定义 tabBar 高度 110rpx，否则内容被盖）—— */
 .safe-bottom {
   height: calc(160rpx + env(safe-area-inset-bottom));
