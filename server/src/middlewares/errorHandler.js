@@ -34,7 +34,9 @@ const errorHandler = (err, req, res, next) => {
 
   // Sequelize 数据库错误
   if (err.name === 'SequelizeDatabaseError') {
-    return res.status(200).json(Response.error('数据库操作失败', 500));
+    const detail = (err.parent && err.parent.sqlMessage) ? err.parent.sqlMessage : err.message;
+    console.error('数据库错误详情:', detail);
+    return res.status(200).json(Response.error('数据库操作失败: ' + detail, 500));
   }
 
   // JWT 错误

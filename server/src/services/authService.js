@@ -44,14 +44,14 @@ class AuthService {
   /**
    * 微信小程序登录
    */
-  async wechatLogin(code) {
+  async wechatLogin(code, profile = {}) {
     const { appid, secret } = this.getWechatConfig();
     const devMode = process.env.NODE_ENV !== 'production';
     const invalidConfig = !appid || !secret || appid === 'your-wechat-appid';
 
     // 开发模式且未配置真实 AppID：跳过微信接口，直接创建开发用户
     if (devMode && invalidConfig) {
-      return this.devLogin(code);
+      return this.devLogin(profile);
     }
 
     try {
@@ -73,12 +73,12 @@ class AuthService {
         throw new Error(errmsg || '微信登录失败');
       }
 
-      return await this.findOrCreateUser(openid);
+      return await this.findOrCreateUser(openid, profile);
     } catch (error) {
       // 开发环境降级：游客模式/appid 不匹配时保证登录链路可用
       if (devMode) {
         console.warn('[auth] 微信登录失败，开发环境降级为开发用户：', error.message);
-        return this.devLogin(code);
+        return this.devLogin(profile);
       }
       throw new Error('微信登录失败：' + error.message);
     }
@@ -93,7 +93,11 @@ class AuthService {
     if (!user) {
       user = await User.create(Object.assign({ openid }, defaults, { lastLoginTime: new Date() }));
     } else {
-      await user.update({ lastLoginTime: new Date() });
+      // 每次登录同步用户在授权弹窗里填写的资料
+      const updateData = { lastLoginTime: new Date() };
+      if (defaults.nickname) updateData.nickname = defaults.nickname;
+      if (defaults.avatar) updateData.avatar = defaults.avatar;
+      await user.update(updateData);
     }
 
     const token = generateToken({
@@ -115,9 +119,12 @@ class AuthService {
   /**
    * 开发模式登录：用 code 哈希生成稳定伪 openid，无需真实微信凭据
    */
-  async devLogin() {
+  async devLogin(profile = {}) {
     // 固定开发身份：同一次开发会话内重复登录对应同一用户，避免每次 wx.login（code 每次都变）都新建用户
-    const result = await this.findOrCreateUser('dev_guest', { nickname: '调酒爱好者' });
+    // 昵称头像使用用户在授权弹窗中填写的信息，未填写时才回退默认昵称
+    const defaults = { nickname: profile.nickname || '调酒爱好者' };
+    if (profile.avatar) defaults.avatar = profile.avatar;
+    const result = await this.findOrCreateUser('dev_guest', defaults);
     result.dev = true;
     return result;
   }

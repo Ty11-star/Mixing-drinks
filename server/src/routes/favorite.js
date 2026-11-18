@@ -8,19 +8,38 @@ const Response = require('../utils/response');
 router.get('/', authenticateToken, async (req, res, next) => {
   try {
     const userId = req.user.id;
+    // 先查收藏记录，拿到酒谱ID（不连表，避免关联查询问题）
     const favorites = await Favorite.findAll({
       where: { userId },
-      include: [{
-        model: Cocktail,
-        as: 'cocktail',
-        attributes: ['id', 'name', 'nameEn', 'baseSpirit', 'glassType', 'difficulty', 'cover', 'tasteTags']
-      }],
+      attributes: ['cocktailId'],
       order: [['createdAt', 'DESC']]
     });
-    const list = favorites.map(f => f.cocktail).filter(Boolean);
+    const ids = favorites.map(f => f.cocktailId).filter(Boolean);
+    if (ids.length === 0) {
+      return res.json(Response.success([]));
+    }
+
+    // 单独查酒谱。优先带 cover，兼容旧表无 cover 字段的情况
+    let cocktails;
+    try {
+      cocktails = await Cocktail.findAll({
+        where: { id: ids },
+        attributes: ['id', 'name', 'nameEn', 'baseSpirit', 'glassType', 'difficulty', 'cover', 'tasteTags']
+      });
+    } catch (e) {
+      cocktails = await Cocktail.findAll({
+        where: { id: ids },
+        attributes: ['id', 'name', 'nameEn', 'baseSpirit', 'glassType', 'difficulty', 'tasteTags']
+      });
+    }
+
+    const byId = {};
+    cocktails.forEach(c => { byId[c.id] = c; });
+    const list = ids.map(id => byId[id]).filter(Boolean);
     res.json(Response.success(list));
   } catch (e) {
-    next(e);
+    const detail = (e.parent && e.parent.sqlMessage) ? e.parent.sqlMessage : e.message;
+    return res.json(Response.error('数据库操作失败: ' + detail, 500));
   }
 });
 

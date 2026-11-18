@@ -26,13 +26,13 @@ class AuthController {
    */
   async wechatLogin(req, res, next) {
     try {
-      const { code } = req.body;
+      const { code, nickname, avatar } = req.body;
 
       if (!code) {
         return res.json(Response.error('code不能为空', 400));
       }
 
-      const result = await authService.wechatLogin(code);
+      const result = await authService.wechatLogin(code, { nickname, avatar });
       res.json(Response.success(result, '登录成功'));
     } catch (error) {
       next(error);

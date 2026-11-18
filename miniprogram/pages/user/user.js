@@ -13,7 +13,10 @@ Page({
     nickname: '',
     favorites: [],
     history: [],
-    myRecipeCount: 0
+    myRecipeCount: 0,
+    showAuthModal: false,
+    authAvatarUrl: '',
+    authNickname: ''
   },
 
   onShow() {
@@ -72,7 +75,35 @@ Page({
     this.saveProfile();
   },
 
-  async doLogin() {
+  // 点击登录：先弹出授权资料弹窗
+  showLoginModal() {
+    const userInfo = storage.get('userInfo', null);
+    this.setData({
+      showAuthModal: true,
+      authAvatarUrl: userInfo && userInfo.avatar ? userInfo.avatar : '',
+      authNickname: userInfo && userInfo.nickname ? userInfo.nickname : ''
+    });
+  },
+
+  hideLoginModal() {
+    this.setData({ showAuthModal: false });
+  },
+
+  // 阻止弹窗内的事件冒泡到遮罩层
+  noop() {},
+
+  onAuthChooseAvatar(e) {
+    this.setData({ authAvatarUrl: e.detail.avatarUrl });
+  },
+
+  onAuthNicknameInput(e) {
+    this.setData({ authNickname: e.detail.value });
+  },
+
+  // 授权确认后真正登录：携带用户填写的昵称、头像
+  async confirmAuth() {
+    const nickname = (this.data.authNickname || '').trim();
+    const avatar = this.data.authAvatarUrl || '';
     try {
       const loginRes = await wx.login();
       if (!loginRes.code) {
@@ -80,17 +111,18 @@ Page({
         return;
       }
       wx.showLoading({ title: '登录中' });
-      const res = await authApi.wechatLogin(loginRes.code);
+      const res = await authApi.wechatLogin(loginRes.code, { nickname, avatar });
       storage.set('token', res.token);
       storage.set('userInfo', res.userInfo);
       const app = getApp();
       app.globalData.token = res.token;
       app.globalData.userInfo = res.userInfo;
       this.setData({
+        showAuthModal: false,
         token: res.token,
         userInfo: res.userInfo,
-        avatarUrl: res.userInfo.avatar,
-        nickname: res.userInfo.nickname
+        avatarUrl: res.userInfo.avatar || avatar,
+        nickname: res.userInfo.nickname || nickname
       });
       wx.hideLoading();
       wx.showToast({ title: '登录成功', icon: 'success' });

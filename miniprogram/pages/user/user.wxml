@@ -20,7 +20,7 @@
   </view>
 
   <view class="login-row">
-    <button class="login-btn ripple-btn" bindtap="doLogin">{{token ? '重新登录' : '微信一键登录'}}</button>
+    <button class="login-btn ripple-btn" bindtap="showLoginModal">{{token ? '重新授权登录' : '微信登录'}}</button>
   </view>
   <view class="privacy-row" bindtap="openPrivacyContract">查看《用户隐私保护指引》</view>
 
@@ -63,6 +63,41 @@
     <view class="grid" wx:else>
       <view class="grid__col" wx:for="{{history}}" wx:key="id">
         <cocktail-card cocktail="{{item}}"></cocktail-card>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录授权弹窗：收集微信头像与昵称 -->
+  <view class="auth-mask" wx:if="{{showAuthModal}}" bindtap="hideLoginModal">
+    <view class="auth-modal" catchtap="noop">
+      <view class="auth-modal__title">完善个人信息</view>
+      <view class="auth-modal__desc">登录后可使用收藏、 AI 配方等功能。请授权你的头像和昵称。</view>
+
+      <button class="auth-modal__avatar" open-type="chooseAvatar" bind:chooseavatar="onAuthChooseAvatar">
+        <image wx:if="{{authAvatarUrl}}" src="{{authAvatarUrl}}" class="auth-modal__avatar-img" mode="aspectFill"></image>
+        <view wx:else class="auth-modal__avatar-ph">＋</view>
+      </button>
+      <view class="auth-modal__avatar-tip">点击选择头像（可选）</view>
+
+      <view class="auth-modal__field">
+        <text class="auth-modal__label">昵称</text>
+        <input
+          class="auth-modal__input"
+          type="nickname"
+          placeholder="请输入昵称"
+          placeholder-class="auth-modal__input-ph"
+          value="{{authNickname}}"
+          bindinput="onAuthNicknameInput"
+        />
+      </view>
+
+      <view class="auth-modal__privacy">
+        登录即表示同意 <text class="auth-modal__link" bindtap="openPrivacyContract">《用户隐私保护指引》</text>
+      </view>
+
+      <view class="auth-modal__actions">
+        <button class="auth-modal__btn auth-modal__btn--cancel" bindtap="hideLoginModal">取消</button>
+        <button class="auth-modal__btn auth-modal__btn--confirm" bindtap="confirmAuth">同意并登录</button>
       </view>
     </view>
   </view>
