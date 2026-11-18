@@ -70,7 +70,7 @@
   <view class="list" wx:else>
     <view class="list-row" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
       <view class="list-row__img" style="background:{{item._gradient}}">
-        <image wx:if="{{item.image}}" class="list-row__photo" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}"></image>
+        <image wx:if="{{item.image}}" class="list-row__photo" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" show-menu-by-longpress="{{false}}"></image>
         <text wx:else class="list-row__icon">{{item._icon}}</text>
       </view>
       <view class="list-row__info">

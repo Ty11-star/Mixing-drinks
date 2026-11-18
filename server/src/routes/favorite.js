@@ -13,7 +13,7 @@ router.get('/', authenticateToken, async (req, res, next) => {
       include: [{
         model: Cocktail,
         as: 'cocktail',
-        attributes: ['id', 'name', 'nameEn', 'baseSpirit', 'glassType', 'difficulty', 'image', 'tasteTags']
+        attributes: ['id', 'name', 'nameEn', 'baseSpirit', 'glassType', 'difficulty', 'cover', 'tasteTags']
       }],
       order: [['createdAt', 'DESC']]
     });

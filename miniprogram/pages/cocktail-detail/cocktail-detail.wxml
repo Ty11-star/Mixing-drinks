@@ -6,7 +6,7 @@
     <!-- 视差 Hero -->
     <view class="hero" style="background:{{gradient}}">
       <view class="hero__bg" style="transform:translateY({{scrollTop * 0.3}}px);opacity:{{1 - scrollTop / 320 > 0.2 ? 1 - scrollTop / 320 : 0.2}}">
-        <image wx:if="{{image}}" class="hero__photo" src="{{image}}" mode="aspectFill"></image>
+        <image wx:if="{{image}}" class="hero__photo" src="{{image}}" mode="aspectFill" lazy-load="{{true}}" show-menu-by-longpress="{{false}}"></image>
         <text wx:else class="hero__watermark">{{icon}}</text>
       </view>
       <view class="hero__content" style="transform:translateY({{scrollTop * 0.12}}px)">

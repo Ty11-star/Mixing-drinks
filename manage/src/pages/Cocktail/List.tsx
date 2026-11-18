@@ -101,6 +101,21 @@ const CocktailList = () => {
             width={56}
             height={56}
             style={{ objectFit: 'cover', borderRadius: 8 }}
+            placeholder={
+              <div style={{
+                width: 56,
+                height: 56,
+                background: 'var(--bg-secondary)',
+                borderRadius: 8,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--text-muted)'
+              }}>
+                ...
+              </div>
+            }
+            preview={false}
           />
         ) : (
           <span style={{ color: '#bbb' }}>—</span>

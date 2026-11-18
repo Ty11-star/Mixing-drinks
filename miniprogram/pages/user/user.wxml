@@ -2,7 +2,7 @@
   <!-- 个人资料 -->
   <view class="profile">
     <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-      <image wx:if="{{avatarUrl}}" src="{{avatarUrl}}" class="avatar-img" mode="aspectFill"></image>
+      <image wx:if="{{avatarUrl}}" src="{{avatarUrl}}" class="avatar-img" mode="aspectFill" lazy-load="{{true}}" show-menu-by-longpress="{{false}}"></image>
       <view wx:else class="avatar-ph">{{nickname ? nickname[0] : '客'}}</view>
     </button>
     <view class="profile__info">
