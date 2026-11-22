@@ -6,10 +6,11 @@
 <meta name="robots" content="noindex, nofollow">
 <title>调一杯 · Mixing Drinks</title>
 <!--
-  对外首页：除工信部 ICP 备案号这一法定链接外，无任何脚本、链接、按钮或表单，
+  对外首页：除工信部 ICP 备案号与公安备案号这两个法定链接外，无任何脚本、链接、按钮或表单，
   不提供跳转到后台或其他界面的入口。
   ICP 备案号：粤ICP备2026181317号（2026-11-13 审核通过）
-  法定链接指向 https://beian.miit.gov.cn/ ，不属于站内跳转。
+  公安备案号：粤公网安备44130202001841号
+  法定链接分别指向 beian.miit.gov.cn 与 beian.mps.gov.cn，均不属于站内跳转。
 -->
 <style>
   :root {
@@ -149,6 +150,8 @@
     color: var(--gold);
     text-decoration: underline;
   }
+  .police-beian svg { color: rgba(212, 165, 116, .88); }
+  .police-beian:hover svg { color: var(--gold); }
   @media (max-width: 480px) {
     h1 { font-size: 30px; }
     .sub { font-size: 13px; }
@@ -173,6 +176,15 @@
   <footer>
     <div>
       <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026181317号</a>
+    </div>
+    <div>
+      <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44130202001841" target="_blank" rel="noopener noreferrer" class="police-beian">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:middle;margin-right:5px;">
+          <path d="M12 1.5 3.5 5v6.2c0 5.2 3.6 9.9 8.5 11.3 4.9-1.4 8.5-6.1 8.5-11.3V5L12 1.5Z" fill="currentColor" opacity="0.85" />
+          <path d="M12 4.2 6 6.6v4.7c0 3.9 2.7 7.4 6 8.5 3.3-1.1 6-4.6 6-8.5V6.6L12 4.2Z" fill="none" stroke="#1A2332" stroke-width="0.9" />
+          <path d="M12 8.3l1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3 1-2Z" fill="#1A2332" />
+        </svg>粤公网安备44130202001841号
+      </a>
     </div>
     <div>调一杯 · Mixing Drinks</div>
   </footer>
