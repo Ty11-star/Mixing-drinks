@@ -2,7 +2,7 @@
   <!-- 顶部固定区：标题 + 酒杯（不随原料滑动） -->
   <view class="shake__head">
     <view class="shake__title">调一杯</view>
-    <view class="shake__sub">点选材料倒入杯中，再摇出专属配方 🍸</view>
+    <view class="shake__sub">点选材料倒入杯中，摇一摇帮你找配方 🍸</view>
   </view>
 
   <view class="stage">

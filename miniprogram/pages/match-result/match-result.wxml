@@ -25,7 +25,6 @@
       <view class="match-card__info">
         <view class="match-card__name">{{item.cocktail.name}}</view>
         <view class="match-card__en">{{item.cocktail.nameEn}}</view>
-        <view class="match-card__ai" wx:if="{{item.cocktail.source === 'ai'}}">AI 生成</view>
         <view class="match-card__tags">
           <text class="tag tag--spirit">{{item.cocktail.baseSpirit}}</text>
           <text class="match-card__glass">{{item._diff.glass}} {{item._diff.label}}</text>

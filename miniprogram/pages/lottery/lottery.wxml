@@ -43,7 +43,6 @@
       <text class="result__tag" wx:if="{{drink.baseSpirit}}">{{drink.baseSpirit}}</text>
       <text class="result__tag" wx:if="{{drink.glassType}}">{{drink.glassType}}</text>
       <text class="result__tag" wx:if="{{drink.difficulty}}">难度 {{drink.difficulty}}/3</text>
-      <text class="result__tag result__tag--ai" wx:if="{{drink.source === 'ai'}}">AI 创作</text>
     </view>
     <view class="result__taste" wx:if="{{drink.tasteTags.length}}">
       <text wx:for="{{drink.tasteTags}}" wx:key="*this" class="result__taste-item">{{item}}</text>
@@ -68,10 +67,7 @@
     <view class="result__tips" wx:if="{{drink.tips}}">💡 {{drink.tips}}</view>
 
     <view class="result__actions">
-      <view wx:if="{{drink.source === 'official'}}" class="result__btn result__btn--ghost" bindtap="goDetail">查看完整酒谱</view>
-      <view wx:if="{{drink.source === 'ai'}}" class="result__btn {{saveState === 'saved' ? 'is-done' : ''}}" bindtap="saveRecipe">
-        {{saveState === 'saved' ? '✓ 已存到我的配方' : '💾 好喝！存到我的配方'}}
-      </view>
+      <view class="result__btn result__btn--ghost" bindtap="goDetail">查看完整酒谱</view>
     </view>
   </view>
 

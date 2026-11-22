@@ -1,8 +1,7 @@
 // pages/lottery/lottery.js
-const aiApi = require('../../api/ai');
+const cocktailApi = require('../../api/cocktail');
 const format = require('../../utils/format');
 const storage = require('../../utils/storage');
-const myRecipes = require('../../utils/myRecipes');
 
 function todayKey() {
   const d = new Date();
@@ -18,8 +17,6 @@ Page({
     shaking: false,
     pouring: false,
     reveal: false,
-    saveState: 'idle',
-    savedId: null,
     bubbles: []
   },
 
@@ -97,8 +94,7 @@ Page({
     } else {
       this.setData({
         today: key, drawn: false, drink: null,
-        gradient: '', reveal: false,
-        saveState: 'idle', savedId: null
+        gradient: '', reveal: false
       });
     }
   },
@@ -109,17 +105,20 @@ Page({
       drawn: true,
       drink,
       gradient: format.getSpiritGradient(drink.baseSpirit),
-      reveal: revealed,
-      saveState: drink.source === 'ai' ? (drink.savedId ? 'saved' : 'idle') : 'official',
-      savedId: drink.savedId || null
+      reveal: revealed
     });
   },
 
-  draw() {
+  async draw() {
     if (this.data.drawn || this.data.shaking) return;
     this.setData({ shaking: true });
-    aiApi.daily().then(res => {
-      const drink = res;
+    try {
+      // 从官方酒谱库随机抽一杯：拉一批列表，随机选一个，再取详情
+      const page = await cocktailApi.getList({ page: 1, pageSize: 50 });
+      const pool = page.list || [];
+      if (!pool.length) throw new Error('empty');
+      const picked = pool[Math.floor(Math.random() * pool.length)];
+      const drink = await cocktailApi.getDetail(picked.id);
       storage.set('daily_draw', { date: todayKey(), drink });
       // 摇晃 0.9s 后停止，开始注酒；注酒流再播 1s 后消失
       setTimeout(() => {
@@ -127,10 +126,10 @@ Page({
         this.applyDrink(drink, true);
         setTimeout(() => this.setData({ pouring: false }), 1000);
       }, 900);
-    }).catch(() => {
+    } catch (e) {
       this.setData({ shaking: false });
       wx.showToast({ title: '抽取失败，稍后再试', icon: 'none' });
-    });
+    }
   },
 
   // 直接点击酒杯也能抽卡
@@ -140,38 +139,9 @@ Page({
     }
   },
 
-  saveRecipe() {
-    const d = this.data.drink;
-    if (!d || d.source !== 'ai' || this.data.saveState === 'saved') return;
-    try {
-      const res = myRecipes.save({
-        name: d.name,
-        nameEn: d.nameEn,
-        baseSpirit: d.baseSpirit,
-        glassType: d.glassType,
-        difficulty: d.difficulty,
-        description: d.description,
-        tips: d.tips,
-        ingredients: d.ingredients || [],
-        steps: d.steps || []
-      });
-      if (!res.id) throw new Error('配方名称为空');
-      if (res.alreadyExists) {
-        wx.showToast({ title: '已在本地配方中', icon: 'none' });
-      } else {
-        wx.showToast({ title: '已存到我的配方', icon: 'success' });
-      }
-      const updated = Object.assign({}, d, { savedId: res.id });
-      this.setData({ saveState: 'saved', savedId: res.id, drink: updated });
-      storage.set('daily_draw', { date: todayKey(), drink: updated });
-    } catch (e) {
-      wx.showToast({ title: '保存失败', icon: 'none' });
-    }
-  },
-
   goDetail() {
     const d = this.data.drink;
-    if (d && d.source === 'official' && d.id) {
+    if (d && d.id) {
       wx.navigateTo({ url: '/pages/cocktail-detail/cocktail-detail?id=' + d.id });
     }
   }

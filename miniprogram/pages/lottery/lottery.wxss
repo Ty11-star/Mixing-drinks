@@ -160,7 +160,6 @@
 .result__en { font-size: 24rpx; color: var(--slate-blue, #3D5A7B); text-align: center; margin-top: 4rpx; }
 .result__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12rpx; margin: 20rpx 0; }
 .result__tag { font-size: 22rpx; padding: 6rpx 18rpx; background: #FFFFFF; border: 1rpx solid var(--ice-blue, #E8F1F5); border-radius: 9999rpx; color: var(--slate-blue, #3D5A7B); }
-.result__tag--ai { background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E)); color: #FFFFFF; border-color: transparent; }
 .result__taste { display: flex; flex-wrap: wrap; justify-content: center; gap: 12rpx; margin-bottom: 16rpx; }
 .result__taste-item { font-size: 22rpx; padding: 6rpx 18rpx; background: var(--ice-blue, #E8F1F5); border-radius: 9999rpx; color: var(--midnight-blue, #1A2332); }
 .result__desc { font-size: 27rpx; color: var(--slate-blue, #3D5A7B); line-height: 1.7; text-align: center; margin-bottom: 20rpx; }

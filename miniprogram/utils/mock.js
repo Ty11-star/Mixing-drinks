@@ -428,64 +428,9 @@ function wechatLogin() {
   };
 }
 
-// AI 推荐（离线兜底）：根据勾选材料拼一杯简单的兑和法饮品
-function mockAiRecommend(ingredients) {
-  const list = (ingredients || []).map(i => String(i));
-  const spirit = list.find(n => /伏特加|朗姆|金酒|威士忌|龙舌兰|白兰地/.test(n)) || '无酒精';
-  const sour = list.find(n => /柠檬汁|青柠汁/.test(n)) || '柠檬汁';
-  const sweet = list.find(n => /糖浆|可乐|雪碧|橙汁/.test(n)) || '糖浆';
-  const bubbly = list.find(n => /苏打水|汤力水|汽水|姜汁/.test(n));
-  return {
-    recommendation: {
-      name: spirit === '无酒精' ? '清爽特调（离线版）' : '吧台即兴（离线版）',
-      nameEn: 'Bar Improv (Offline)',
-      baseSpirit: spirit,
-      glassType: '高球杯',
-      difficulty: 1,
-      alcoholLevel: spirit === '无酒精' ? '无酒精' : '低度',
-      ingredients: [
-        { name: spirit, amount: '45ml' },
-        { name: sour, amount: '20ml' },
-        { name: sweet, amount: '适量' }
-      ].concat(bubbly ? [{ name: bubbly, amount: '加满' }] : []),
-      steps: [
-        '在高球杯中加满冰块',
-        '依次倒入 ' + spirit + ' 和 ' + sour,
-        '加入 ' + sweet + (bubbly ? '，再加满 ' + bubbly : '') + '，轻轻搅拌均匀',
-        '用手头的材料简单装饰即可'
-      ],
-      tips: '当前为离线演示配方。启动后端并配置 DeepSeek 后可获得真正的 AI 定制配方。',
-      usedIngredients: list.slice(0, 6),
-      missingIngredients: []
-    },
-    alternatives: [],
-    summary: '离线模式：根据你勾选的材料快速拼了一杯简单特调。'
-  };
-}
-
 // 模拟网络延迟
 function delay(data) {
   return new Promise(resolve => setTimeout(() => resolve(data), 180));
-}
-
-// 离线抽卡：随机取一款酒谱库饮品
-function mockDaily() {
-  const c = COCKTAILS[Math.floor(Math.random() * COCKTAILS.length)];
-  return {
-    source: 'official',
-    id: c.id,
-    name: c.name,
-    nameEn: c.nameEn,
-    baseSpirit: c.baseSpirit,
-    glassType: c.glassType,
-    difficulty: c.difficulty,
-    description: c.description,
-    tips: c.tips,
-    tasteTags: String(c.tasteTags).split(/[,，]/),
-    ingredients: c.ingredients.map(i => ({ name: i.name, amount: i.amount })),
-    steps: c.steps.map(s => s.description),
-    image: ''
-  };
 }
 
 // 路由分发
@@ -503,8 +448,6 @@ function request(method, path, query = {}, body = {}) {
     if (m === 'GET' && clean === '/ingredients/by-category') return delay(getIngredientsByCategory());
     if (m === 'GET' && clean === '/categories') return delay(getCategories(query.type));
     if (m === 'POST' && clean === '/cocktails/match') return delay(matchByIngredients(body.ingredientIds));
-    if (m === 'POST' && clean === '/ai/recommend') return delay(mockAiRecommend(body.ingredients));
-    if (m === 'GET' && clean === '/ai/daily') return delay(mockDaily());
     if (m === 'POST' && clean === '/auth/wechat/login') return delay(wechatLogin());
 
     const detailMatch = clean.match(/^\/cocktails\/(\d+)$/);

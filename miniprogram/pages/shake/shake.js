@@ -131,11 +131,10 @@ Page({
     }
     if (this.data.shaking) return;
     this.setData({ shaking: true });
-    const names = this.data.selected.map(s => s.name);
-    storage.set('ai_ingredients', names);
+    // 摇一摇：根据所选材料做规则匹配（走普通后端接口）
     setTimeout(() => {
       this.setData({ shaking: false });
-      wx.navigateTo({ url: '/pages/ai-recipe/ai-recipe' });
+      this.findMatch();
     }, 900);
   }
 });

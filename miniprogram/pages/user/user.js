@@ -1,25 +1,25 @@
 // pages/user/user.js
 const app = getApp();
-const myRecipes = require('../../utils/myRecipes');
 
 Page({
   data: {
-    favorites: [],
-    myRecipeCount: 0
+    favorites: []
   },
 
   onShow() {
     this.setData({
-      favorites: app.getFavorites(),
-      myRecipeCount: myRecipes.list().length
+      favorites: app.getFavorites()
     });
-  },
-
-  goMyRecipes() {
-    wx.navigateTo({ url: '/pages/my-recipes/my-recipes' });
   },
 
   goDetail(e) {
     wx.navigateTo({ url: '/pages/cocktail-detail/cocktail-detail?id=' + e.currentTarget.dataset.id });
+  },
+
+  copyBeian() {
+    wx.setClipboardData({
+      data: '粤公网安备44130202001841号',
+      success: () => wx.showToast({ title: '备案号已复制', icon: 'none' })
+    });
   }
 });

@@ -5,12 +5,10 @@
     "pages/category/category",
     "pages/search/search",
     "pages/match-result/match-result",
-    "pages/ai-recipe/ai-recipe",
     "pages/shake/shake",
     "pages/lottery/lottery",
     "pages/knowledge/knowledge",
-    "pages/user/user",
-    "pages/my-recipes/my-recipes"
+    "pages/user/user"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -34,5 +32,6 @@
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "__usePrivacyCheck__": true
 }

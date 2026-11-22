@@ -8,11 +8,6 @@
     </view>
   </view>
 
-  <view class="my-recipes-entry" bindtap="goMyRecipes">
-    <text>我的 AI 配方（{{myRecipeCount}}）</text>
-    <text class="my-recipes-entry__arrow">›</text>
-  </view>
-
   <!-- 我的收藏 -->
   <view class="section">
     <view class="section__head">
@@ -29,6 +24,15 @@
       <view class="grid__col" wx:for="{{favorites}}" wx:key="id">
         <cocktail-card cocktail="{{item}}"></cocktail-card>
       </view>
+    </view>
+  </view>
+
+  <!-- 备案信息 -->
+  <view class="footer-info">
+    <view class="footer-info__brand">调一杯 · MIX SIP REPEAT</view>
+    <view class="footer-info__beian">粤ICP备2026181317号-2X</view>
+    <view class="footer-info__beian footer-info__beian--police" bindtap="copyBeian">
+      <text class="footer-info__badge">🛡</text> 粤公网安备44130202001841号
     </view>
   </view>
 
