@@ -223,3 +223,152 @@
   font-size: 24rpx;
   padding: 28rpx 0;
 }
+
+/* ============ 模式切换 ============ */
+.switch-wrap {
+  background: var(--midnight-blue, #1A2332);
+  padding: 20rpx 0 20rpx;
+}
+.mode-switch {
+  display: flex;
+  margin: 0 32rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999rpx;
+  padding: 6rpx;
+}
+.mode-switch__item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 18rpx 0;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.25s;
+}
+.mode-switch__item.is-active {
+  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(212, 165, 116, 0.3);
+}
+.mode-switch__emoji { font-size: 28rpx; }
+
+/* 便利店模式：外层透明，切换器浅绿底呼应绿色 Hero */
+.index--conv .switch-wrap { background: transparent; padding: 20rpx 0 0; }
+.index--conv .mode-switch {
+  background: #E8F2E4;
+  box-shadow: none;
+}
+.index--conv .mode-switch__item { color: #6B7A6B; }
+.index--conv .mode-switch__item.is-active {
+  background: #FFFFFF;
+  color: #2E7D32;
+  box-shadow: 0 4rpx 12rpx rgba(46, 125, 50, 0.15);
+}
+
+/* ============ 便利店 Hero ============ */
+.conv-hero {
+  margin: 20rpx 24rpx 0;
+  padding: 32rpx 32rpx 36rpx;
+  border-radius: 32rpx;
+  background: linear-gradient(135deg, #C8E6C9 0%, #DCEDC8 45%, #FFF9C4 100%);
+  position: relative;
+  overflow: hidden;
+}
+.conv-hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.conv-hero__title { display: flex; flex-direction: column; }
+.conv-hero__zh {
+  font-family: var(--font-display, serif);
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1B5E20;
+  letter-spacing: 0.02em;
+}
+.conv-hero__en {
+  font-size: 18rpx;
+  letter-spacing: 0.24em;
+  color: #558B2F;
+  margin-top: 4rpx;
+}
+.conv-hero__bag { font-size: 80rpx; }
+.conv-hero__slogan {
+  font-size: 26rpx;
+  color: #33691E;
+  margin-top: 16rpx;
+  font-weight: 500;
+}
+.conv-hero__match {
+  margin-top: 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  box-shadow: 0 6rpx 18rpx rgba(46,125,50,0.12);
+}
+.conv-hero__match-icon {
+  font-size: 48rpx;
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F1F8E9;
+  border-radius: 16rpx;
+}
+.conv-hero__match-text { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.conv-hero__match-title { font-size: 30rpx; font-weight: 700; color: #1B5E20; }
+.conv-hero__match-sub { font-size: 22rpx; color: #7CB342; }
+.conv-hero__match-arrow { font-size: 40rpx; color: #66BB6A; }
+
+/* 便利店场景分类 */
+.conv-scenes { margin-top: 28rpx; padding: 0 16rpx; }
+.conv-scenes__scroll { white-space: nowrap; }
+.conv-scene {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  margin: 0 8rpx;
+  padding: 14rpx 26rpx;
+  background: #FFFFFF;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  color: #558B2F;
+  box-shadow: 0 4rpx 12rpx rgba(46,125,50,0.08);
+  transition: all 0.25s;
+}
+.conv-scene.active {
+  background: linear-gradient(135deg, #66BB6A, #43A047);
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 20rpx rgba(46,125,50,0.25);
+}
+.conv-scene__emoji { font-size: 28rpx; }
+
+/* 避坑入口 */
+.conv-pitfall-entry {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin: 24rpx 32rpx 0;
+  padding: 20rpx 24rpx;
+  background: #FFF8E1;
+  border: 1rpx solid #FFE082;
+  border-radius: 20rpx;
+}
+.conv-pitfall-entry__icon { font-size: 44rpx; }
+.conv-pitfall-entry__text { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.conv-pitfall-entry__title { font-size: 28rpx; font-weight: 700; color: #E65100; }
+.conv-pitfall-entry__sub { font-size: 22rpx; color: #B8860B; }
+.conv-pitfall-entry__arrow { font-size: 40rpx; color: #FFA726; }
+
+.conv-accent { color: #2E7D32; }
+.conv-toolbar__hint { font-size: 22rpx; color: #7CB342; }
+.conv-grid { margin-top: 4rpx; }

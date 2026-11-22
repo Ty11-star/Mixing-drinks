@@ -1,0 +1,55 @@
+<view class="page-wrap conv-detail" wx:if="{{drink}}">
+  <!-- 头部 -->
+  <view class="cd-hero" style="background:{{drink.gradient}}">
+    <text class="cd-hero__emoji">{{drink.emoji}}</text>
+    <view class="cd-hero__cost">约 ¥{{drink.cost}}</view>
+  </view>
+
+  <view class="cd-main">
+    <view class="cd-title">
+      <view class="cd-title__name">{{drink.name}}</view>
+      <view class="cd-title__en">{{drink.nameEn}}</view>
+      <view class="cd-title__tags">
+        <text class="cd-title__tag">⏱ {{drink.tag}}</text>
+        <text class="cd-title__tag">{{drink.steps}} 步搞定</text>
+        <text class="cd-title__tag">💰 低成本</text>
+      </view>
+    </view>
+
+    <!-- 材料 -->
+    <view class="cd-section">
+      <view class="cd-section__head">🛒 需要的材料</view>
+      <view class="cd-mat" wx:for="{{materials}}" wx:key="name">
+        <text class="cd-mat__emoji">{{item.emoji}}</text>
+        <text class="cd-mat__name">{{item.name}}</text>
+        <text class="cd-mat__amount">{{item.amount}}</text>
+      </view>
+      <view class="cd-buy-tip">💡 以上材料便利店基本都能买到，价格以当地为准</view>
+    </view>
+
+    <!-- 步骤 -->
+    <view class="cd-section">
+      <view class="cd-section__head">👨‍🍳 跟着做</view>
+      <view class="cd-step" wx:for="{{drink.instructions}}" wx:key="*this">
+        <view class="cd-step__num">{{index + 1}}</view>
+        <view class="cd-step__text">{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 小贴士 -->
+    <view class="cd-tips">
+      <view class="cd-tips__head">💡 小贴士</view>
+      <view class="cd-tips__body">{{drink.tips}}</view>
+    </view>
+
+    <!-- 收藏 -->
+    <view class="cd-actions">
+      <view class="cd-fav {{isFav ? 'is-fav' : ''}}" bindtap="toggleFav">
+        <text>{{isFav ? '♥ 已收藏' : '♡ 收藏这杯'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="drink-disclaimer">未成年人请勿饮酒 · 理性饮酒</view>
+  <view class="safe-bottom"></view>
+</view>

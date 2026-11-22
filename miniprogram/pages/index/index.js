@@ -2,6 +2,7 @@
 const cocktailApi = require('../../api/cocktail');
 const categoryApi = require('../../api/category');
 const format = require('../../utils/format');
+const convenience = require('../../utils/convenience');
 const app = getApp();
 
 Page({
@@ -14,7 +15,12 @@ Page({
     finished: false,
     baseSpirit: '',
     spirits: [],
-    viewMode: 'grid'
+    viewMode: 'grid',
+    // 便利店模式
+    mode: 'pro',
+    convScenes: convenience.SCENES,
+    convScene: 'all',
+    convDrinks: convenience.DRINKS
   },
 
   onLoad() {
@@ -136,5 +142,29 @@ Page({
 
   goIngredient() {
     wx.switchTab({ url: '/pages/shake/shake' });
+  },
+
+  // ===== 便利店模式 =====
+  switchMode(e) {
+    const mode = e.currentTarget.dataset.mode;
+    if (mode === this.data.mode) return;
+    this.setData({ mode });
+  },
+
+  selectConvScene(e) {
+    const key = e.currentTarget.dataset.key;
+    if (key === this.data.convScene) return;
+    this.setData({
+      convScene: key,
+      convDrinks: convenience.getDrinksByScene(key)
+    });
+  },
+
+  goConvenienceMatch() {
+    wx.navigateTo({ url: '/pages/convenience-match/convenience-match' });
+  },
+
+  goPitfalls() {
+    wx.navigateTo({ url: '/pages/convenience-pitfalls/convenience-pitfalls' });
   }
 });

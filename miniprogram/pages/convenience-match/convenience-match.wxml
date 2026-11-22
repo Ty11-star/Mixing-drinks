@@ -1,0 +1,56 @@
+<view class="page-wrap match-page">
+  <view class="match-intro">
+    <view class="match-intro__title">🧺 勾一勾你手头的材料</view>
+    <view class="match-intro__sub">选好后自动帮你找出能调的便利店酒</view>
+  </view>
+
+  <!-- 材料分组 -->
+  <view class="match-group" wx:for="{{groups}}" wx:key="category">
+    <view class="match-group__head">{{item.category}}</view>
+    <view class="match-group__items">
+      <view
+        class="match-mat {{item.selected ? 'is-selected' : ''}}"
+        wx:for="{{item.materials}}"
+        wx:for-item="m"
+        wx:key="name"
+        data-name="{{m.name}}"
+        bindtap="toggleMaterial"
+      >
+        <text class="match-mat__emoji">{{m.emoji}}</text>
+        <text class="match-mat__name">{{m.name}}</text>
+        <text class="match-mat__check" wx:if="{{m.selected}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结果 -->
+  <view class="match-result">
+    <view class="match-result__head">
+      <text>✨ 你能调这些</text>
+      <text class="match-result__count" wx:if="{{selected.length}}">（已选 {{selected.length}} 种）</text>
+    </view>
+
+    <view wx:if="{{!results.length}}" class="match-empty">
+      <text class="match-empty__icon">🛒</text>
+      <view class="match-empty__title">上面勾点材料吧</view>
+      <view class="match-empty__sub">选了材料就能看到能调什么</view>
+    </view>
+
+    <view class="match-item" wx:for="{{results}}" wx:key="id" data-id="{{item.drink.id}}" bindtap="goDetail">
+      <view class="match-item__emoji" style="background:{{item.drink.gradient}}">{{item.drink.emoji}}</view>
+      <view class="match-item__info">
+        <view class="match-item__name">{{item.drink.name}}</view>
+        <view class="match-item__sub">材料齐 {{item.matched}}/{{item.total}} · 约 ¥{{item.drink.cost}}</view>
+        <view class="match-item__bar">
+          <view class="match-item__bar-fill" style="width:{{item.matched / item.total * 100}}%"></view>
+        </view>
+        <view class="match-item__missing" wx:if="{{item.missing.length}}">还差：{{item.missing.join('、')}}</view>
+        <view class="match-item__ready" wx:else>✅ 材料齐了，马上能调</view>
+      </view>
+      <text class="match-item__arrow">›</text>
+    </view>
+  </view>
+
+  <view class="drink-disclaimer">未成年人请勿饮酒 · 理性饮酒</view>
+  <view class="safe-bottom"></view>
+</view>

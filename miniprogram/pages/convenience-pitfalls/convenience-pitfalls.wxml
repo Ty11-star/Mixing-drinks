@@ -1,0 +1,20 @@
+<view class="page-wrap pit-page">
+  <view class="pit-header">
+    <view class="pit-header__title">⚠️ 便利店调酒避坑指南</view>
+    <view class="pit-header__sub">这几点注意到了，成功率翻倍</view>
+  </view>
+
+  <view class="pit-list">
+    <view class="pit-item" wx:for="{{pitfalls}}" wx:key="title">
+      <view class="pit-item__icon">{{item.emoji}}</view>
+      <view class="pit-item__body">
+        <view class="pit-item__title">{{item.title}}</view>
+        <view class="pit-item__desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="pit-footer">祝你在便利店调出好喝的那一杯 🍹</view>
+  <view class="drink-disclaimer">未成年人请勿饮酒 · 理性饮酒</view>
+  <view class="safe-bottom"></view>
+</view>

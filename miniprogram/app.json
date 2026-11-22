@@ -8,7 +8,10 @@
     "pages/shake/shake",
     "pages/lottery/lottery",
     "pages/knowledge/knowledge",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/convenience-detail/convenience-detail",
+    "pages/convenience-match/convenience-match",
+    "pages/convenience-pitfalls/convenience-pitfalls"
   ],
   "window": {
     "backgroundTextStyle": "dark",

@@ -1,0 +1,17 @@
+<view class="c-card" bindtap="goDetail">
+  <view class="c-card__image" style="background:{{drink.gradient}}">
+    <text class="c-card__emoji">{{drink.emoji}}</text>
+    <view class="c-card__cost">¥{{drink.cost}}</view>
+    <view class="c-card__fav {{isFav ? 'is-fav' : ''}}" catchtap="toggleFav">
+      <text>{{isFav ? '♥' : '♡'}}</text>
+    </view>
+  </view>
+  <view class="c-card__body">
+    <view class="c-card__name">{{drink.name}}</view>
+    <view class="c-card__en">{{drink.nameEn}}</view>
+    <view class="c-card__foot">
+      <text class="c-card__tag">⏱ {{drink.tag}}</text>
+      <text class="c-card__step">{{drink.steps}} 步搞定</text>
+    </view>
+  </view>
+</view>

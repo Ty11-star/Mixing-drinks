@@ -21,7 +21,8 @@ const SPIRIT_GRADIENTS = {
   '龙舌兰': 'linear-gradient(135deg, #F5E6D3 0%, #D4A574 100%)',
   '白兰地': 'linear-gradient(135deg, #D9A066 0%, #A0522D 100%)',
   '混合基酒': 'linear-gradient(135deg, #C8B6E2 0%, #8A5A2C 100%)',
-  '无酒精': 'linear-gradient(135deg, #BFE3D0 0%, #7ECFA0 100%)'
+  '无酒精': 'linear-gradient(135deg, #BFE3D0 0%, #7ECFA0 100%)',
+  '便利店': 'linear-gradient(135deg, #C8E6C9 0%, #FFF9C4 100%)'
 };
 
 function getSpiritGradient(baseSpirit) {
@@ -37,7 +38,8 @@ const SPIRIT_ICONS = {
   '龙舌兰': '🍹',
   '白兰地': '🥃',
   '混合基酒': '🍸',
-  '无酒精': '🧃'
+  '无酒精': '🧃',
+  '便利店': '🏪'
 };
 function getSpiritIcon(baseSpirit) {
   return SPIRIT_ICONS[baseSpirit] || '🍸';

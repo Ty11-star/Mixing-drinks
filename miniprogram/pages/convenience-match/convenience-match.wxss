@@ -1,0 +1,89 @@
+.match-page { padding: 0 0 32rpx; }
+
+.match-intro {
+  padding: 40rpx 32rpx 24rpx;
+  background: linear-gradient(135deg, #C8E6C9, #FFF9C4);
+  border-radius: 0 0 32rpx 32rpx;
+}
+.match-intro__title { font-size: 38rpx; font-weight: 700; color: #1B5E20; }
+.match-intro__sub { font-size: 24rpx; color: #558B2F; margin-top: 10rpx; }
+
+.match-group { padding: 28rpx 32rpx 0; }
+.match-group__head {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2E7D32;
+  margin-bottom: 16rpx;
+}
+.match-group__items { display: flex; flex-wrap: wrap; gap: 14rpx; }
+.match-mat {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 14rpx 22rpx;
+  background: #FFFFFF;
+  border: 2rpx solid #E8F2E4;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  color: #3E4A3E;
+  transition: all 0.2s;
+}
+.match-mat.is-selected {
+  background: #E8F5E9;
+  border-color: #66BB6A;
+  color: #1B5E20;
+  font-weight: 600;
+}
+.match-mat__emoji { font-size: 30rpx; }
+.match-mat__check { color: #43A047; font-weight: 700; }
+
+.match-result { padding: 40rpx 32rpx 0; }
+.match-result__head { font-size: 32rpx; font-weight: 700; color: #2E3A2E; margin-bottom: 20rpx; }
+.match-result__count { font-size: 24rpx; color: #7CB342; font-weight: 400; }
+
+.match-empty {
+  text-align: center;
+  padding: 60rpx 0;
+}
+.match-empty__icon { font-size: 100rpx; }
+.match-empty__title { font-size: 30rpx; color: #5A6A5A; margin-top: 20rpx; }
+.match-empty__sub { font-size: 24rpx; color: #9AA99A; margin-top: 10rpx; }
+
+.match-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 14rpx rgba(46,125,50,0.08);
+}
+.match-item__emoji {
+  flex: 0 0 100rpx;
+  height: 100rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+}
+.match-item__info { flex: 1; min-width: 0; }
+.match-item__name { font-size: 30rpx; font-weight: 700; color: #2E3A2E; }
+.match-item__sub { font-size: 22rpx; color: #7CB342; margin-top: 4rpx; }
+.match-item__bar {
+  height: 8rpx;
+  background: #E8F2E4;
+  border-radius: 999rpx;
+  margin-top: 12rpx;
+  overflow: hidden;
+}
+.match-item__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #81C784, #43A047);
+  border-radius: 999rpx;
+  transition: width 0.3s;
+}
+.match-item__missing { font-size: 20rpx; color: #B0A060; margin-top: 8rpx; }
+.match-item__ready { font-size: 20rpx; color: #43A047; margin-top: 8rpx; font-weight: 600; }
+.match-item__arrow { font-size: 40rpx; color: #A5D6A7; }
