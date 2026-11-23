@@ -11,7 +11,7 @@ const userRoutes = require('./users');
 const aiRoutes = require('./ai');
 const uploadRoutes = require('./upload');
 const favoriteRoutes = require('./favorite');
-const convenienceRoutes = require('./convenience');
+const convenienceController = require('../controllers/convenienceController');
 
 // 注册路由
 router.use('/auth', authRoutes);
@@ -23,7 +23,9 @@ router.use('/users', userRoutes);
 router.use('/ai', aiRoutes);
 router.use('/upload', uploadRoutes);
 router.use('/favorites', favoriteRoutes);
-router.use('/convenience', convenienceRoutes);
+
+// 便利店公开接口（小程序调用）
+router.get('/convenience', convenienceController.getAll);
 
 // 健康检查
 router.get('/health', (req, res) => {

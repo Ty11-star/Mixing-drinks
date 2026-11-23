@@ -1,15 +1,14 @@
 /**
- * 便利店调酒相关模型
- * 材料库 / 配方 / 避坑指南
+ * 便利店调酒模型（Sequelize）
  */
 
-module.exports = {
-  ConvenienceMaterial: (sequelize, DataTypes) => sequelize.define('ConvenienceMaterial', {
+// 便利店材料库
+const ConvenienceMaterial = (sequelize, DataTypes) => {
+  const Material = sequelize.define('ConvenienceMaterial', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true,
-      comment: '主键'
+      autoIncrement: true
     },
     name: {
       type: DataTypes.STRING(50),
@@ -17,129 +16,183 @@ module.exports = {
       comment: '材料名称'
     },
     emoji: {
-      type: DataTypes.STRING(20),
-      comment: '表情图标'
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      comment: 'emoji表情'
     },
     category: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(50),
+      allowNull: false,
       comment: '材料分类'
+    },
+    image: {
+      type: DataTypes.STRING(200),
+      allowNull: true,
+      comment: '材料图片URL'
     },
     sortOrder: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
-      field: 'sort_order',
-      comment: '排序'
+      comment: '排序',
+      field: 'sort_order'
     }
   }, {
     tableName: 'convenience_materials',
-    timestamps: true,
-    createdAt: 'create_time',
-    updatedAt: 'update_time'
-  }),
+    timestamps: false
+  });
 
-  ConvenienceDrink: (sequelize, DataTypes) => sequelize.define('ConvenienceDrink', {
+  return Material;
+};
+
+// 便利店配方
+const ConvenienceDrink = (sequelize, DataTypes) => {
+  const Drink = sequelize.define('ConvenienceDrink', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true,
-      comment: '主键，从1001起'
+      autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: false,
       comment: '配方名称'
     },
     nameEn: {
       type: DataTypes.STRING(100),
-      field: 'name_en',
-      comment: '英文名'
+      allowNull: true,
+      comment: '英文名',
+      field: 'name_en'
     },
     emoji: {
-      type: DataTypes.STRING(20),
-      comment: '表情图标'
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      comment: 'emoji表情'
     },
     gradient: {
-      type: DataTypes.STRING(150),
-      comment: '卡片渐变背景'
+      type: DataTypes.STRING(200),
+      allowNull: true,
+      comment: '渐变CSS'
+    },
+    image: {
+      type: DataTypes.STRING(200),
+      allowNull: true,
+      comment: '配方图片URL'
     },
     cost: {
-      type: DataTypes.DECIMAL(6, 1),
-      defaultValue: 0,
-      comment: '估算成本（元）'
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      comment: '成本（元）'
     },
     steps: {
       type: DataTypes.INTEGER,
-      defaultValue: 0,
+      allowNull: false,
       comment: '步骤数'
     },
     tag: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(50),
+      allowNull: true,
       comment: '标签'
+    },
+    scenes: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: '适用场景（JSON数组）',
+      get() {
+        const val = this.getDataValue('scenes');
+        return val ? JSON.parse(val) : [];
+      },
+      set(val) {
+        this.setDataValue('scenes', JSON.stringify(val || []));
+      }
+    },
+    materials: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: '材料清单（JSON数组）',
+      get() {
+        const val = this.getDataValue('materials');
+        return val ? JSON.parse(val) : [];
+      },
+      set(val) {
+        this.setDataValue('materials', JSON.stringify(val || []));
+      }
+    },
+    instructions: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: '制作步骤（JSON数组）',
+      get() {
+        const val = this.getDataValue('instructions');
+        return val ? JSON.parse(val) : [];
+      },
+      set(val) {
+        this.setDataValue('instructions', JSON.stringify(val || []));
+      }
     },
     tips: {
       type: DataTypes.TEXT,
+      allowNull: true,
       comment: '小贴士'
     },
-    instructions: {
-      type: DataTypes.JSON,
-      comment: '步骤数组'
-    },
-    materials: {
-      type: DataTypes.JSON,
-      comment: '材料数组 [{name,amount}]'
-    },
-    scenes: {
-      type: DataTypes.JSON,
-      comment: '场景数组'
-    },
-    status: {
+    isActive: {
       type: DataTypes.TINYINT,
       defaultValue: 1,
-      comment: '1-启用 0-禁用'
+      comment: '是否启用：1-是 0-否',
+      field: 'is_active'
     },
     sortOrder: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
-      field: 'sort_order',
-      comment: '排序'
+      comment: '排序',
+      field: 'sort_order'
     }
   }, {
     tableName: 'convenience_drinks',
-    timestamps: true,
-    createdAt: 'create_time',
-    updatedAt: 'update_time'
-  }),
+    timestamps: false
+  });
 
-  ConveniencePitfall: (sequelize, DataTypes) => sequelize.define('ConveniencePitfall', {
+  return Drink;
+};
+
+// 便利店避坑指南
+const ConveniencePitfall = (sequelize, DataTypes) => {
+  const Pitfall = sequelize.define('ConveniencePitfall', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true,
-      comment: '主键'
+      autoIncrement: true
     },
     emoji: {
-      type: DataTypes.STRING(20),
-      comment: '表情图标'
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      comment: 'emoji表情'
     },
     title: {
       type: DataTypes.STRING(100),
       allowNull: false,
       comment: '标题'
     },
-    desc: {
+    description: {
       type: DataTypes.TEXT,
-      comment: '说明'
+      allowNull: false,
+      comment: '详细说明'
     },
     sortOrder: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
-      field: 'sort_order',
-      comment: '排序'
+      comment: '排序',
+      field: 'sort_order'
     }
   }, {
     tableName: 'convenience_pitfalls',
-    timestamps: true,
-    createdAt: 'create_time',
-    updatedAt: 'update_time'
-  })
+    timestamps: false
+  });
+
+  return Pitfall;
+};
+
+module.exports = {
+  ConvenienceMaterial,
+  ConvenienceDrink,
+  ConveniencePitfall
 };

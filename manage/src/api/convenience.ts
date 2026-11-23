@@ -1,57 +1,94 @@
+/**
+ * 便利店调酒 API
+ */
 import request from '../utils/request';
 
-export interface ConvMaterial {
+export interface ConvenienceMaterial {
   id?: number;
   name: string;
-  emoji?: string;
-  category?: string;
+  emoji: string;
+  category: string;
+  image?: string;
   sortOrder?: number;
 }
 
-export interface ConvDrink {
+export interface ConvenienceDrink {
   id?: number;
   name: string;
   nameEn?: string;
-  emoji?: string;
+  emoji: string;
   gradient?: string;
-  cost?: number;
-  steps?: number;
+  image?: string;
+  cost: number;
+  steps: number;
   tag?: string;
-  tips?: string;
-  instructions?: string[];
-  materials?: { name: string; amount: string }[];
   scenes?: string[];
-  status?: number;
+  materials?: Array<{ name: string; amount: string }>;
+  instructions?: string[];
+  tips?: string;
+  isActive?: number;
   sortOrder?: number;
 }
 
-export interface ConvPitfall {
+export interface ConveniencePitfall {
   id?: number;
-  emoji?: string;
+  emoji: string;
   title: string;
-  desc?: string;
+  description: string;
   sortOrder?: number;
 }
 
-// 公开读取（小程序端使用）
-export const getPublicConvenience = () => request.get('/convenience');
+// ===== 材料库 =====
+export const getMaterials = () => {
+  return request.get('/admin/convenience/materials');
+};
 
-// 配方管理
-export const getConvDrinks = () => request.get('/admin/convenience/drinks');
-export const createConvDrink = (data: ConvDrink) => request.post('/admin/convenience/drinks', data);
-export const updateConvDrink = (id: number, data: ConvDrink) => request.put(`/admin/convenience/drinks/${id}`, data);
-export const deleteConvDrink = (id: number) => request.delete(`/admin/convenience/drinks/${id}`);
-export const updateConvDrinkStatus = (id: number, status: number) =>
-  request.put(`/admin/convenience/drinks/${id}/status`, { status });
+export const createMaterial = (data: ConvenienceMaterial) => {
+  return request.post('/admin/convenience/materials', data);
+};
 
-// 材料管理
-export const getConvMaterials = () => request.get('/admin/convenience/materials');
-export const createConvMaterial = (data: ConvMaterial) => request.post('/admin/convenience/materials', data);
-export const updateConvMaterial = (id: number, data: ConvMaterial) => request.put(`/admin/convenience/materials/${id}`, data);
-export const deleteConvMaterial = (id: number) => request.delete(`/admin/convenience/materials/${id}`);
+export const updateMaterial = (id: number, data: ConvenienceMaterial) => {
+  return request.put(`/admin/convenience/materials/${id}`, data);
+};
 
-// 避坑指南管理
-export const getConvPitfalls = () => request.get('/admin/convenience/pitfalls');
-export const createConvPitfall = (data: ConvPitfall) => request.post('/admin/convenience/pitfalls', data);
-export const updateConvPitfall = (id: number, data: ConvPitfall) => request.put(`/admin/convenience/pitfalls/${id}`, data);
-export const deleteConvPitfall = (id: number) => request.delete(`/admin/convenience/pitfalls/${id}`);
+export const deleteMaterial = (id: number) => {
+  return request.delete(`/admin/convenience/materials/${id}`);
+};
+
+// ===== 配方 =====
+export const getDrinks = () => {
+  return request.get('/admin/convenience/drinks');
+};
+
+export const createDrink = (data: ConvenienceDrink) => {
+  return request.post('/admin/convenience/drinks', data);
+};
+
+export const updateDrink = (id: number, data: ConvenienceDrink) => {
+  return request.put(`/admin/convenience/drinks/${id}`, data);
+};
+
+export const deleteDrink = (id: number) => {
+  return request.delete(`/admin/convenience/drinks/${id}`);
+};
+
+export const toggleDrinkStatus = (id: number) => {
+  return request.put(`/admin/convenience/drinks/${id}/status`);
+};
+
+// ===== 避坑指南 =====
+export const getPitfalls = () => {
+  return request.get('/admin/convenience/pitfalls');
+};
+
+export const createPitfall = (data: ConveniencePitfall) => {
+  return request.post('/admin/convenience/pitfalls', data);
+};
+
+export const updatePitfall = (id: number, data: ConveniencePitfall) => {
+  return request.put(`/admin/convenience/pitfalls/${id}`, data);
+};
+
+export const deletePitfall = (id: number) => {
+  return request.delete(`/admin/convenience/pitfalls/${id}`);
+};
