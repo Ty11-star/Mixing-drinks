@@ -38,9 +38,21 @@ export interface ConveniencePitfall {
   sortOrder?: number;
 }
 
+export interface ConvenienceListParams {
+  page?: number;
+  pageSize?: number;
+}
+
+// 上传图片，返回 { url: '/uploads/xxx.jpg' }（走带 token 的 request 实例）
+export const uploadConvenienceImage = (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return request.post('/admin/upload', formData);
+};
+
 // ===== 材料库 =====
-export const getMaterials = () => {
-  return request.get('/admin/convenience/materials');
+export const getMaterials = (params?: ConvenienceListParams) => {
+  return request.get('/admin/convenience/materials', { params });
 };
 
 export const createMaterial = (data: ConvenienceMaterial) => {
@@ -56,8 +68,8 @@ export const deleteMaterial = (id: number) => {
 };
 
 // ===== 配方 =====
-export const getDrinks = () => {
-  return request.get('/admin/convenience/drinks');
+export const getDrinks = (params?: ConvenienceListParams) => {
+  return request.get('/admin/convenience/drinks', { params });
 };
 
 export const createDrink = (data: ConvenienceDrink) => {
@@ -77,8 +89,8 @@ export const toggleDrinkStatus = (id: number) => {
 };
 
 // ===== 避坑指南 =====
-export const getPitfalls = () => {
-  return request.get('/admin/convenience/pitfalls');
+export const getPitfalls = (params?: ConvenienceListParams) => {
+  return request.get('/admin/convenience/pitfalls', { params });
 };
 
 export const createPitfall = (data: ConveniencePitfall) => {

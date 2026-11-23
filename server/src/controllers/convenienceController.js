@@ -4,14 +4,24 @@
 const { ConvenienceMaterial, ConvenienceDrink, ConveniencePitfall } = require('../models');
 const { success, error } = require('../utils/response');
 
+// 统一解析分页参数
+function getPagination(query) {
+  const page = Math.max(1, parseInt(String(query.page), 10) || 1);
+  const pageSize = Math.min(100, Math.max(1, parseInt(String(query.pageSize), 10) || 10));
+  return { page, pageSize };
+}
+
 // 材料库管理
 const materials = {
   async list(req, res) {
     try {
-      const list = await ConvenienceMaterial.findAll({
-        order: [['sortOrder', 'ASC'], ['id', 'ASC']]
+      const { page, pageSize } = getPagination(req.query);
+      const { count, rows } = await ConvenienceMaterial.findAndCountAll({
+        order: [['sortOrder', 'ASC'], ['id', 'ASC']],
+        offset: (page - 1) * pageSize,
+        limit: pageSize
       });
-      res.json(success(list));
+      res.json(success({ list: rows, total: count }));
     } catch (err) {
       console.error('获取材料库失败:', err);
       res.status(500).json(error('获取材料库失败'));
@@ -65,10 +75,13 @@ const materials = {
 const drinks = {
   async list(req, res) {
     try {
-      const list = await ConvenienceDrink.findAll({
-        order: [['sortOrder', 'ASC'], ['id', 'ASC']]
+      const { page, pageSize } = getPagination(req.query);
+      const { count, rows } = await ConvenienceDrink.findAndCountAll({
+        order: [['sortOrder', 'ASC'], ['id', 'ASC']],
+        offset: (page - 1) * pageSize,
+        limit: pageSize
       });
-      res.json(success(list));
+      res.json(success({ list: rows, total: count }));
     } catch (err) {
       console.error('获取配方失败:', err);
       res.status(500).json(error('获取配方失败'));
@@ -122,10 +135,13 @@ const drinks = {
 const pitfalls = {
   async list(req, res) {
     try {
-      const list = await ConveniencePitfall.findAll({
-        order: [['sortOrder', 'ASC'], ['id', 'ASC']]
+      const { page, pageSize } = getPagination(req.query);
+      const { count, rows } = await ConveniencePitfall.findAndCountAll({
+        order: [['sortOrder', 'ASC'], ['id', 'ASC']],
+        offset: (page - 1) * pageSize,
+        limit: pageSize
       });
-      res.json(success(list));
+      res.json(success({ list: rows, total: count }));
     } catch (err) {
       console.error('获取避坑指南失败:', err);
       res.status(500).json(error('获取避坑指南失败'));

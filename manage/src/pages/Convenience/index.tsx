@@ -7,6 +7,7 @@ import {
   getDrinks, createDrink, updateDrink, deleteDrink,
   getMaterials, createMaterial, updateMaterial, deleteMaterial,
   getPitfalls, createPitfall, updatePitfall, deletePitfall,
+  uploadConvenienceImage,
   type ConvenienceDrink, type ConvenienceMaterial, type ConveniencePitfall,
 } from '../../api/convenience';
 
@@ -14,9 +15,13 @@ const { TextArea } = Input;
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api/v1';
 const STATIC_BASE = API_BASE.replace(/\/api\/v1\/?$/, '');
 
-/** 通用图片上传：表单存相对路径 /uploads/xxx，预览时拼后端域名 */
+// 表格可用高度：扣掉顶栏、内边距、Tab、按钮区和分页
+const getScrollY = () => Math.max(320, window.innerHeight - 420);
+
+/** 图片上传：走带 token 的接口，表单存相对路径，预览拼后端域名 */
 const ImageUpload: React.FC<{ value?: string; onChange?: (url: string) => void }> = ({ value, onChange }) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     setFileList(value ? [{ uid: '-1', name: 'image', status: 'done', url: STATIC_BASE + value }] : []);
@@ -24,52 +29,85 @@ const ImageUpload: React.FC<{ value?: string; onChange?: (url: string) => void }
 
   return (
     <Upload
-      action={`${API_BASE}/admin/upload`}
       listType="picture-card"
       fileList={fileList}
       maxCount={1}
       accept="image/*"
-      onChange={({ fileList: list }) => {
-        setFileList(list);
-        const last = list[list.length - 1];
-        if (last?.status === 'done') {
-          const url = last.response?.data?.url || last.response?.url;
-          if (url) onChange?.(url);
+      customRequest={async ({ file, onSuccess, onError }: any) => {
+        try {
+          setUploading(true);
+          const res = await uploadConvenienceImage(file as File);
+          const url = res.data?.url || res.data?.data?.url || '';
+          if (!url) throw new Error('上传返回异常');
+          setFileList([{ uid: '-1', name: (file as File).name, status: 'done', url: STATIC_BASE + url }]);
+          onChange?.(url);
+          onSuccess?.(res);
+          message.success('图片上传成功');
+        } catch (err: any) {
+          message.error(err.message || '上传失败');
+          onError?.(err);
+        } finally {
+          setUploading(false);
         }
+      }}
+      onChange={({ fileList: list }) => {
+        if (list.every((f) => f.status === 'done')) setFileList(list);
+      }}
+      onRemove={() => {
+        onChange?.('');
+        return true;
       }}
     >
       {fileList.length === 0 && (
         <div>
-          <PlusOutlined />
-          <div style={{ marginTop: 8 }}>上传图片</div>
+          {uploading ? <span>上传中…</span> : <><PlusOutlined /><div style={{ marginTop: 8 }}>上传图片</div></>}
         </div>
       )}
     </Upload>
   );
 };
 
-const indexColumn = {
-  title: 'ID',
+const indexColumn = (page: number, pageSize: number) => ({
+  title: '序号',
   key: 'index',
-  width: 60,
-  render: (_: unknown, __: unknown, index: number) => index + 1,
-};
+  width: 70,
+  render: (_: unknown, __: unknown, index: number) => (page - 1) * pageSize + index + 1,
+});
 
 const imageColumn = (width = 100) => ({
   title: '图片',
   dataIndex: 'image',
   width,
   render: (image?: string) => image ? (
-    <Image src={STATIC_BASE + image} width={56} height={56} style={{ objectFit: 'cover' } as const} />
-  ) : '-',
+    <Image src={STATIC_BASE + image} width={56} height={56} preview={false} style={{ objectFit: 'cover' as const, borderRadius: 8 }} />
+  ) : <span style={{ color: '#bbb' }}>—</span>,
+});
+
+const paginationOf = (page: number, pageSize: number, total: number, onChange: (p: number, s: number) => void) => ({
+  current: page,
+  pageSize,
+  total,
+  showSizeChanger: true,
+  showTotal: (t: number) => `共 ${t} 条`,
+  onChange,
 });
 
 const ConvenienceManage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('drinks');
+  const [scrollY, setScrollY] = useState(getScrollY());
+
+  useEffect(() => {
+    const onResize = () => setScrollY(getScrollY());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   // 配方
   const [drinks, setDrinks] = useState<ConvenienceDrink[]>([]);
   const [drinksLoading, setDrinksLoading] = useState(false);
+  const [drinkPage, setDrinkPage] = useState(1);
+  const [drinkPageSize, setDrinkPageSize] = useState(10);
+  const [drinkTotal, setDrinkTotal] = useState(0);
   const [drinkModalVisible, setDrinkModalVisible] = useState(false);
   const [drinkForm] = Form.useForm();
   const [editingDrink, setEditingDrink] = useState<ConvenienceDrink | null>(null);
@@ -77,6 +115,9 @@ const ConvenienceManage: React.FC = () => {
   // 材料
   const [materials, setMaterials] = useState<ConvenienceMaterial[]>([]);
   const [materialsLoading, setMaterialsLoading] = useState(false);
+  const [materialPage, setMaterialPage] = useState(1);
+  const [materialPageSize, setMaterialPageSize] = useState(10);
+  const [materialTotal, setMaterialTotal] = useState(0);
   const [materialModalVisible, setMaterialModalVisible] = useState(false);
   const [materialForm] = Form.useForm();
   const [editingMaterial, setEditingMaterial] = useState<ConvenienceMaterial | null>(null);
@@ -84,6 +125,9 @@ const ConvenienceManage: React.FC = () => {
   // 避坑指南
   const [pitfalls, setPitfalls] = useState<ConveniencePitfall[]>([]);
   const [pitfallsLoading, setPitfallsLoading] = useState(false);
+  const [pitfallPage, setPitfallPage] = useState(1);
+  const [pitfallPageSize, setPitfallPageSize] = useState(10);
+  const [pitfallTotal, setPitfallTotal] = useState(0);
   const [pitfallModalVisible, setPitfallModalVisible] = useState(false);
   const [pitfallForm] = Form.useForm();
   const [editingPitfall, setEditingPitfall] = useState<ConveniencePitfall | null>(null);
@@ -91,8 +135,9 @@ const ConvenienceManage: React.FC = () => {
   const loadDrinks = async () => {
     setDrinksLoading(true);
     try {
-      const res = await getDrinks();
-      setDrinks(res.data || []);
+      const res = await getDrinks({ page: drinkPage, pageSize: drinkPageSize });
+      setDrinks(res.data?.list || []);
+      setDrinkTotal(res.data?.total || 0);
     } catch {
       message.error('加载配方列表失败');
     } finally {
@@ -103,8 +148,9 @@ const ConvenienceManage: React.FC = () => {
   const loadMaterials = async () => {
     setMaterialsLoading(true);
     try {
-      const res = await getMaterials();
-      setMaterials(res.data || []);
+      const res = await getMaterials({ page: materialPage, pageSize: materialPageSize });
+      setMaterials(res.data?.list || []);
+      setMaterialTotal(res.data?.total || 0);
     } catch {
       message.error('加载材料列表失败');
     } finally {
@@ -115,8 +161,9 @@ const ConvenienceManage: React.FC = () => {
   const loadPitfalls = async () => {
     setPitfallsLoading(true);
     try {
-      const res = await getPitfalls();
-      setPitfalls(res.data || []);
+      const res = await getPitfalls({ page: pitfallPage, pageSize: pitfallPageSize });
+      setPitfalls(res.data?.list || []);
+      setPitfallTotal(res.data?.total || 0);
     } catch {
       message.error('加载避坑指南列表失败');
     } finally {
@@ -124,13 +171,11 @@ const ConvenienceManage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    loadDrinks();
-    loadMaterials();
-    loadPitfalls();
-  }, []);
+  useEffect(() => { loadDrinks(); }, [drinkPage, drinkPageSize]);
+  useEffect(() => { loadMaterials(); }, [materialPage, materialPageSize]);
+  useEffect(() => { loadPitfalls(); }, [pitfallPage, pitfallPageSize]);
 
-  // ===== 配方管理 =====
+  // ===== 配方 =====
 
   const openDrinkForm = (record?: ConvenienceDrink) => {
     setEditingDrink(record || null);
@@ -176,11 +221,7 @@ const ConvenienceManage: React.FC = () => {
       setDrinkModalVisible(false);
       loadDrinks();
     } catch (err: any) {
-      message.error(
-        err?.message?.includes('JSON')
-          ? 'JSON 格式错误，请检查输入'
-          : (editingDrink ? '更新失败' : '创建失败')
-      );
+      message.error(err?.message?.includes('JSON') ? 'JSON 格式错误，请检查输入' : (editingDrink ? '更新失败' : '创建失败'));
     }
   };
 
@@ -202,7 +243,7 @@ const ConvenienceManage: React.FC = () => {
   };
 
   const drinkColumns: ColumnsType<ConvenienceDrink> = [
-    indexColumn,
+    indexColumn(drinkPage, drinkPageSize),
     imageColumn(),
     { title: '名称', dataIndex: 'name', width: 140 },
     { title: '英文名', dataIndex: 'nameEn', width: 140 },
@@ -210,10 +251,7 @@ const ConvenienceManage: React.FC = () => {
     { title: '成本', dataIndex: 'cost', width: 80, render: (v: number) => `¥${v}` },
     { title: '步骤', dataIndex: 'steps', width: 70 },
     { title: '标签', dataIndex: 'tag', width: 100 },
-    {
-      title: '状态', dataIndex: 'isActive', width: 80,
-      render: (v: number) => v === 1 ? '启用' : '停用',
-    },
+    { title: '状态', dataIndex: 'isActive', width: 80, render: (v: number) => v === 1 ? '启用' : '停用' },
     {
       title: '操作', key: 'action', width: 150,
       render: (_, record) => (
@@ -225,7 +263,7 @@ const ConvenienceManage: React.FC = () => {
     },
   ];
 
-  // ===== 材料管理 =====
+  // ===== 材料 =====
 
   const openMaterialForm = (record?: ConvenienceMaterial) => {
     setEditingMaterial(record || null);
@@ -276,7 +314,7 @@ const ConvenienceManage: React.FC = () => {
   };
 
   const materialColumns: ColumnsType<ConvenienceMaterial> = [
-    indexColumn,
+    indexColumn(materialPage, materialPageSize),
     imageColumn(),
     { title: '名称', dataIndex: 'name', width: 150 },
     { title: 'Emoji', dataIndex: 'emoji', width: 80 },
@@ -292,7 +330,7 @@ const ConvenienceManage: React.FC = () => {
     },
   ];
 
-  // ===== 避坑指南管理 =====
+  // ===== 避坑指南 =====
 
   const openPitfallForm = (record?: ConveniencePitfall) => {
     setEditingPitfall(record || null);
@@ -342,7 +380,7 @@ const ConvenienceManage: React.FC = () => {
   };
 
   const pitfallColumns: ColumnsType<ConveniencePitfall> = [
-    indexColumn,
+    indexColumn(pitfallPage, pitfallPageSize),
     { title: 'Emoji', dataIndex: 'emoji', width: 80 },
     { title: '标题', dataIndex: 'title', width: 200 },
     { title: '说明', dataIndex: 'description', ellipsis: true },
@@ -358,51 +396,56 @@ const ConvenienceManage: React.FC = () => {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Tabs activeKey={activeTab} onChange={setActiveTab}>
         <Tabs.TabPane tab="配方管理" key="drinks">
           <div style={{ marginBottom: 16 }}>
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => openDrinkForm()}>
-              添加配方
-            </Button>
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => openDrinkForm()}>添加配方</Button>
           </div>
           <Table
             columns={drinkColumns}
             dataSource={drinks}
             rowKey="id"
             loading={drinksLoading}
-            pagination={{ pageSize: 20 }}
-            scroll={{ x: 1000 }}
+            size="middle"
+            scroll={{ y: scrollY, x: 1000 }}
+            pagination={paginationOf(drinkPage, drinkPageSize, drinkTotal, (p, s) => {
+              setDrinkPage(p); setDrinkPageSize(s);
+            })}
           />
         </Tabs.TabPane>
 
         <Tabs.TabPane tab="材料库" key="materials">
           <div style={{ marginBottom: 16 }}>
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => openMaterialForm()}>
-              添加材料
-            </Button>
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => openMaterialForm()}>添加材料</Button>
           </div>
           <Table
             columns={materialColumns}
             dataSource={materials}
             rowKey="id"
             loading={materialsLoading}
-            pagination={{ pageSize: 20 }}
+            size="middle"
+            scroll={{ y: scrollY }}
+            pagination={paginationOf(materialPage, materialPageSize, materialTotal, (p, s) => {
+              setMaterialPage(p); setMaterialPageSize(s);
+            })}
           />
         </Tabs.TabPane>
 
         <Tabs.TabPane tab="避坑指南" key="pitfalls">
           <div style={{ marginBottom: 16 }}>
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => openPitfallForm()}>
-              添加避坑指南
-            </Button>
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => openPitfallForm()}>添加避坑指南</Button>
           </div>
           <Table
             columns={pitfallColumns}
             dataSource={pitfalls}
             rowKey="id"
             loading={pitfallsLoading}
-            pagination={{ pageSize: 20 }}
+            size="middle"
+            scroll={{ y: scrollY }}
+            pagination={paginationOf(pitfallPage, pitfallPageSize, pitfallTotal, (p, s) => {
+              setPitfallPage(p); setPitfallPageSize(s);
+            })}
           />
         </Tabs.TabPane>
       </Tabs>
@@ -418,47 +461,21 @@ const ConvenienceManage: React.FC = () => {
         cancelText="取消"
       >
         <Form form={drinkForm} layout="vertical">
-          <Form.Item name="name" label="名称" rules={[{ required: true, message: '请输入配方名称' }]}>
-            <Input placeholder="如：威士忌可乐" />
-          </Form.Item>
-          <Form.Item name="nameEn" label="英文名">
-            <Input placeholder="Whiskey Cola" />
-          </Form.Item>
-          <Form.Item name="emoji" label="Emoji" rules={[{ required: true, message: '请输入 Emoji' }]}>
-            <Input placeholder="🍹" />
-          </Form.Item>
-          <Form.Item name="gradient" label="渐变样式">
-            <Input placeholder="linear-gradient(...)" />
-          </Form.Item>
-          <Form.Item name="tag" label="标签">
-            <Input placeholder="如：经典" />
-          </Form.Item>
+          <Form.Item name="name" label="名称" rules={[{ required: true, message: '请输入配方名称' }]}><Input placeholder="如：威士忌可乐" /></Form.Item>
+          <Form.Item name="nameEn" label="英文名"><Input placeholder="Whiskey Cola" /></Form.Item>
+          <Form.Item name="emoji" label="Emoji" rules={[{ required: true, message: '请输入 Emoji' }]}><Input placeholder="🍹" /></Form.Item>
+          <Form.Item name="gradient" label="渐变样式"><Input placeholder="linear-gradient(...)" /></Form.Item>
+          <Form.Item name="tag" label="标签"><Input placeholder="如：经典" /></Form.Item>
           <div style={{ display: 'flex', gap: 16 }}>
-            <Form.Item name="cost" label="成本（元）" style={{ flex: 1 }}>
-              <InputNumber min={0} style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name="steps" label="步骤数" style={{ flex: 1 }}>
-              <InputNumber min={0} style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name="isActive" label="启用" valuePropName="checked" style={{ flex: 1 }}>
-              <Switch />
-            </Form.Item>
+            <Form.Item name="cost" label="成本（元）" style={{ flex: 1 }}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item>
+            <Form.Item name="steps" label="步骤数" style={{ flex: 1 }}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item>
+            <Form.Item name="isActive" label="启用" valuePropName="checked" style={{ flex: 1 }}><Switch /></Form.Item>
           </div>
-          <Form.Item name="scenes" label="适用场景">
-            <TextArea rows={2} placeholder="每行一个场景，如：独自放松" />
-          </Form.Item>
-          <Form.Item name="materials" label="材料配比 (JSON 数组)">
-            <TextArea rows={3} placeholder={'[{"name":"威士忌","amount":"50ml"}]'} />
-          </Form.Item>
-          <Form.Item name="instructions" label="制作步骤 (JSON 数组)">
-            <TextArea rows={3} placeholder={'["在杯中加入冰块","倒入威士忌","倒满可乐"]'} />
-          </Form.Item>
-          <Form.Item name="tips" label="小贴士">
-            <TextArea rows={2} />
-          </Form.Item>
-          <Form.Item name="image" label="配方图片">
-            <ImageUpload />
-          </Form.Item>
+          <Form.Item name="scenes" label="适用场景"><TextArea rows={2} placeholder="每行一个场景" /></Form.Item>
+          <Form.Item name="materials" label="材料配比 (JSON 数组)"><TextArea rows={3} placeholder={'[{"name":"威士忌","amount":"50ml"}]'} /></Form.Item>
+          <Form.Item name="instructions" label="制作步骤 (JSON 数组)"><TextArea rows={3} placeholder={'["加冰","倒入威士忌","倒满可乐"]'} /></Form.Item>
+          <Form.Item name="tips" label="小贴士"><TextArea rows={2} /></Form.Item>
+          <Form.Item name="image" label="配方图片"><ImageUpload /></Form.Item>
         </Form>
       </Modal>
 
@@ -473,21 +490,11 @@ const ConvenienceManage: React.FC = () => {
         cancelText="取消"
       >
         <Form form={materialForm} layout="vertical">
-          <Form.Item name="name" label="名称" rules={[{ required: true, message: '请输入材料名称' }]}>
-            <Input placeholder="如：威士忌" />
-          </Form.Item>
-          <Form.Item name="emoji" label="Emoji" rules={[{ required: true, message: '请输入 Emoji' }]}>
-            <Input placeholder="🥃" />
-          </Form.Item>
-          <Form.Item name="category" label="分类" rules={[{ required: true, message: '请输入材料分类' }]}>
-            <Input placeholder="如：烈酒、饮料、配料" />
-          </Form.Item>
-          <Form.Item name="sortOrder" label="排序">
-            <InputNumber style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="image" label="材料图片">
-            <ImageUpload />
-          </Form.Item>
+          <Form.Item name="name" label="名称" rules={[{ required: true, message: '请输入材料名称' }]}><Input placeholder="如：威士忌" /></Form.Item>
+          <Form.Item name="emoji" label="Emoji" rules={[{ required: true, message: '请输入 Emoji' }]}><Input placeholder="🥃" /></Form.Item>
+          <Form.Item name="category" label="分类" rules={[{ required: true, message: '请输入材料分类' }]}><Input placeholder="如：烈酒、饮料、配料" /></Form.Item>
+          <Form.Item name="sortOrder" label="排序"><InputNumber style={{ width: '100%' }} /></Form.Item>
+          <Form.Item name="image" label="材料图片"><ImageUpload /></Form.Item>
         </Form>
       </Modal>
 
@@ -502,18 +509,10 @@ const ConvenienceManage: React.FC = () => {
         cancelText="取消"
       >
         <Form form={pitfallForm} layout="vertical">
-          <Form.Item name="emoji" label="Emoji" rules={[{ required: true, message: '请输入 Emoji' }]}>
-            <Input placeholder="⚠️" />
-          </Form.Item>
-          <Form.Item name="title" label="标题" rules={[{ required: true, message: '请输入标题' }]}>
-            <Input placeholder="如：千万不要混饮过度" />
-          </Form.Item>
-          <Form.Item name="description" label="说明" rules={[{ required: true, message: '请输入说明' }]}>
-            <TextArea rows={5} />
-          </Form.Item>
-          <Form.Item name="sortOrder" label="排序">
-            <InputNumber style={{ width: '100%' }} />
-          </Form.Item>
+          <Form.Item name="emoji" label="Emoji" rules={[{ required: true, message: '请输入 Emoji' }]}><Input placeholder="⚠️" /></Form.Item>
+          <Form.Item name="title" label="标题" rules={[{ required: true, message: '请输入标题' }]}><Input placeholder="如：千万不要混饮过度" /></Form.Item>
+          <Form.Item name="description" label="说明" rules={[{ required: true, message: '请输入说明' }]}><TextArea rows={5} /></Form.Item>
+          <Form.Item name="sortOrder" label="排序"><InputNumber style={{ width: '100%' }} /></Form.Item>
         </Form>
       </Modal>
     </div>
