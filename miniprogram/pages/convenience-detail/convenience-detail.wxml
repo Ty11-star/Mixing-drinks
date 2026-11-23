@@ -1,7 +1,16 @@
 <view class="page-wrap conv-detail {{isDark ? 'theme-dark' : ''}}" wx:if="{{drink}}">
   <!-- 头部 -->
   <view class="cd-hero" style="background:{{drink.gradient}}">
-    <text class="cd-hero__emoji">{{drink.emoji}}</text>
+    <text class="cd-hero__emoji" wx:if="{{!drink.image || !heroLoaded}}">{{drink.emoji}}</text>
+    <image
+      wx:if="{{drink.image}}"
+      class="cd-hero__photo {{heroLoaded ? 'is-loaded' : ''}}"
+      src="{{drink.image}}"
+      mode="aspectFill"
+      lazy-load="{{true}}"
+      bindload="onHeroImageLoad"
+      binderror="onHeroImageError"
+    ></image>
     <view class="cd-hero__cost">约 ¥{{drink.cost}}</view>
   </view>
 

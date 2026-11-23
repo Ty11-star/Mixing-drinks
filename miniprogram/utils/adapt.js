@@ -79,6 +79,7 @@ function normalizeMatch(list) {
 }
 
 module.exports = {
+  buildImageUrl,
   normalizeCocktail,
   normalizePage,
   normalizeMatch

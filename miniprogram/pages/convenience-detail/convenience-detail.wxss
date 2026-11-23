@@ -17,6 +17,13 @@
   line-height: 1;
   filter: drop-shadow(0 20rpx 32rpx rgba(52, 68, 60, 0.16));
 }
+.cd-hero__photo {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.cd-hero__photo.is-loaded { opacity: 1; }
 .cd-hero__cost {
   position: absolute; right: 48rpx; top: calc(48rpx + env(safe-area-inset-top));
   background: var(--glass-strong);

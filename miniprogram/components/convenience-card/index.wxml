@@ -1,6 +1,6 @@
 <view class="c-card card {{isDark ? 'is-dark' : ''}}" bindtap="goDetail">
   <view class="c-card__image" style="background:{{isDark ? (drink.gradientDark || 'linear-gradient(135deg,#2A3A44,#1A2A33)') : drink.gradient}}">
-    <text class="c-card__emoji" wx:if="{{!imageLoaded}}">{{drink.emoji}}</text>
+    <text class="c-card__emoji" wx:if="{{!drink.image || !imageLoaded}}">{{drink.emoji}}</text>
     <image
       wx:if="{{drink.image}}"
       class="c-card__photo {{imageLoaded ? 'is-loaded' : ''}}"

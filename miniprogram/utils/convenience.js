@@ -405,6 +405,13 @@ const PITFALLS = [
 
 // ========== 运行时数据：优先使用后端内容，失败时回退到本地静态数据 ==========
 const request = require('./request');
+const { buildImageUrl } = require('./adapt');
+
+/** 把后端返回的 image 相对路径转成小程序可访问的绝对地址，无图则保持空串由 emoji 兜底 */
+function normalizeImage(item) {
+  if (!item || typeof item !== 'object') return item;
+  return Object.assign({}, item, { image: buildImageUrl(item.image) });
+}
 
 let state = {
   materials: MATERIALS.slice(),
@@ -432,8 +439,8 @@ function loadRemote(force) {
     .then(data => {
       if (data && Array.isArray(data.drinks) && data.drinks.length) {
         state = {
-          drinks: data.drinks,
-          materials: Array.isArray(data.materials) ? data.materials : state.materials,
+          drinks: data.drinks.map(normalizeImage),
+          materials: Array.isArray(data.materials) ? data.materials.map(normalizeImage) : state.materials,
           pitfalls: Array.isArray(data.pitfalls) ? data.pitfalls : state.pitfalls
         };
       }

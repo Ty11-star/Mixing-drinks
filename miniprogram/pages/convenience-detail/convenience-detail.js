@@ -17,7 +17,8 @@ Page({
 
     drink: null,
     materials: [],
-    isFav: false
+    isFav: false,
+    heroLoaded: false
   },
 
   async onLoad(options) {
@@ -31,9 +32,13 @@ Page({
     this.setData({
       drink,
       materials: convenience.getMaterialsByNames(drink.materials || []),
-      isFav: app.isFavorite(id)
+      isFav: app.isFavorite(id),
+      heroLoaded: false
     });
   },
+
+  onHeroImageLoad() { this.setData({ heroLoaded: true }); },
+  onHeroImageError() { this.setData({ heroLoaded: false }); },
 
   toggleFav() {
     const d = this.data.drink;
