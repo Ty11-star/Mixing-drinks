@@ -94,40 +94,22 @@ const ConvenienceDrink = (sequelize, DataTypes) => {
       comment: '标签'
     },
     scenes: {
-      type: DataTypes.TEXT,
+      type: DataTypes.JSON,
       allowNull: true,
       comment: '适用场景（JSON数组）',
-      get() {
-        const val = this.getDataValue('scenes');
-        return val ? JSON.parse(val) : [];
-      },
-      set(val) {
-        this.setDataValue('scenes', JSON.stringify(val || []));
-      }
+      defaultValue: []
     },
     materials: {
-      type: DataTypes.TEXT,
+      type: DataTypes.JSON,
       allowNull: true,
       comment: '材料清单（JSON数组）',
-      get() {
-        const val = this.getDataValue('materials');
-        return val ? JSON.parse(val) : [];
-      },
-      set(val) {
-        this.setDataValue('materials', JSON.stringify(val || []));
-      }
+      defaultValue: []
     },
     instructions: {
-      type: DataTypes.TEXT,
+      type: DataTypes.JSON,
       allowNull: true,
       comment: '制作步骤（JSON数组）',
-      get() {
-        const val = this.getDataValue('instructions');
-        return val ? JSON.parse(val) : [];
-      },
-      set(val) {
-        this.setDataValue('instructions', JSON.stringify(val || []));
-      }
+      defaultValue: []
     },
     tips: {
       type: DataTypes.TEXT,
@@ -138,7 +120,7 @@ const ConvenienceDrink = (sequelize, DataTypes) => {
       type: DataTypes.TINYINT,
       defaultValue: 1,
       comment: '是否启用：1-是 0-否',
-      field: 'is_active'
+      field: 'status'
     },
     sortOrder: {
       type: DataTypes.INTEGER,
@@ -175,7 +157,8 @@ const ConveniencePitfall = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
-      comment: '详细说明'
+      comment: '详细说明',
+      field: 'desc'
     },
     sortOrder: {
       type: DataTypes.INTEGER,
