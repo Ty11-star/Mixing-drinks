@@ -1,4 +1,4 @@
-<view class="page-wrap pit-page">
+<view class="page-wrap pit-page {{isDark ? 'theme-dark' : ''}}">
   <view class="pit-header">
     <view class="pit-header__title">⚠️ 便利店调酒避坑指南</view>
     <view class="pit-header__sub">这几点注意到了，成功率翻倍</view>

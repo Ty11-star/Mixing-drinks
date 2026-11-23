@@ -1,47 +1,51 @@
-<view class="page-wrap index {{mode === 'convenience' ? 'index--conv' : ''}}">
+<view class="page-wrap index {{mode === 'convenience' ? 'index--conv' : ''}} {{isDark ? 'theme-dark' : ''}}">
 
-  <!-- 模式切换 -->
+  <!-- 模式切换：玻璃胶囊 -->
   <view class="switch-wrap">
     <view class="mode-switch">
-      <view class="mode-switch__item {{mode === 'pro' ? 'is-active' : ''}}" data-mode="pro" bindtap="switchMode">
-        <text class="mode-switch__emoji">🍸</text>
-        <text>专业调酒</text>
-      </view>
-      <view class="mode-switch__item {{mode === 'convenience' ? 'is-active' : ''}}" data-mode="convenience" bindtap="switchMode">
-        <text class="mode-switch__emoji">🏪</text>
-        <text>便利店调酒</text>
-      </view>
+      <view class="mode-switch__item {{mode === 'pro' ? 'is-active' : ''}}" data-mode="pro" bindtap="switchMode">专业调酒</view>
+      <view class="mode-switch__item {{mode === 'convenience' ? 'is-active' : ''}}" data-mode="convenience" bindtap="switchMode">便利店调酒</view>
     </view>
   </view>
 
   <!-- ============ 专业调酒模式 ============ -->
   <block wx:if="{{mode === 'pro'}}">
-    <view class="hero">
+    <!-- 沉浸 Hero -->
+    <view class="hero rise">
+      <image wx:if="{{heroImage}}" class="hero__photo" src="{{heroImage}}" mode="aspectFill" />
+      <view class="hero__photo-veil"></view>
+      <view class="hero__glow"></view>
       <view class="hero__bar">
-        <view class="hero__title">
-          <text class="hero__zh">调一杯</text>
-          <text class="hero__en">MIX · SIP · REPEAT</text>
+        <view class="brandmark">
+          <text class="brandmark__zh">慢酌</text>
+          <text class="brandmark__en">Slow SIP</text>
         </view>
-        <view class="hero__head-actions">
-          <view class="hero__mine ripple-btn" bindtap="goMine">
-            <text class="hero__mine-icon">👤</text>
-          </view>
-          <view class="hero__search ripple-btn" bindtap="goSearch">
-            <text class="hero__search-icon">🔍</text>
-            <text class="hero__search-text">搜鸡尾酒 / 基酒</text>
-          </view>
+        <view class="hero__mine ripple-btn" bindtap="goMine">
+          <image class="ico" src="{{icons.user}}" />
         </view>
       </view>
-      <view class="hero__cta" bindtap="goIngredient">
-        <view class="hero__cta-text">
-          <text class="hero__cta-title">调一杯，试试看？</text>
-          <text class="hero__cta-sub">选一下手头的材料，马上推荐</text>
+
+      <view class="hero__copy">
+        <view class="hero__kicker"><view class="hero__kicker-line"></view><text>今夜适合慢一点</text></view>
+        <view class="hero__title"><view>把夜晚，</view><view>调<text class="hero__title-em">慢</text>一点</view></view>
+        <view class="hero__sub"><view>为此刻的心情，找一杯合适的酒。</view><view>不必着急，慢慢挑。</view></view>
+        <view class="search-pill" bindtap="goSearch">
+          <image class="ico ico-sm" src="{{icons.searchAccent}}" />
+          <text>想喝点什么味道？</text>
         </view>
-        <text class="hero__cta-arrow">→</text>
+        <view class="scroll-hint"><view class="scroll-hint__line"></view><text>往下，慢慢看</text></view>
       </view>
     </view>
 
-    <!-- 基酒筛选 -->
+    <!-- 此刻推荐 -->
+    <view class="section">
+      <view class="section__head">
+        <view class="section__title">此刻推荐<text class="section__en">for tonight</text></view>
+        <view class="section__more" bindtap="toggleView">{{viewMode === 'grid' ? '列表' : '网格'}} ›</view>
+      </view>
+    </view>
+
+    <!-- 基酒筛选：横滑胶囊 -->
     <view class="spirit-tabs">
       <scroll-view scroll-x class="spirit-tabs__scroll" enhanced show-scrollbar="{{false}}">
         <view
@@ -50,19 +54,12 @@
           wx:key="name"
           data-name="{{item.name}}"
           bindtap="selectSpirit"
-        >
-          <text>{{item.label}}</text>
-          <text class="spirit-tab__count" wx:if="{{item.count !== undefined}}">{{item.count}}</text>
-        </view>
+        >{{item.label}}</view>
       </scroll-view>
     </view>
 
-    <!-- 工具条：视图切换已移到这里 -->
     <view class="toolbar">
       <view class="toolbar__count">共 <text class="text-amber fw-600">{{total}}</text> 款</view>
-      <view class="toolbar__view" bindtap="toggleView">
-        <text>{{viewMode === 'grid' ? '▦ 网格' : '☰ 列表'}}</text>
-      </view>
     </view>
 
     <pour-loading wx:if="{{loading && list.length === 0}}" text="正在调酒…"></pour-loading>
@@ -100,7 +97,7 @@
             bindload="onListImageLoad"
           ></image>
           <view class="list-row__fav {{item._isFav ? 'is-fav' : ''}}" data-id="{{item.id}}" catchtap="toggleFav">
-            <text>{{item._isFav ? '♥' : '♡'}}</text>
+            <image class="ico ico-sm" src="{{item._isFav ? icons.heartFilled : icons.heartOutline}}" />
           </view>
         </view>
         <view class="list-row__info">
@@ -109,9 +106,6 @@
           <view class="list-row__foot">
             <text class="list-row__spirit">{{item.baseSpirit}}</text>
             <text class="list-row__glass">{{item._diff.glass}} {{item._diff.label}}</text>
-          </view>
-          <view class="cocktail-card__taste" wx:if="{{item._taste.length}}">
-            <text wx:for="{{item._taste}}" wx:for-item="t" wx:key="*this">{{t}}</text>
           </view>
         </view>
       </view>
@@ -122,31 +116,36 @@
       <text wx:elif="{{finished}}">— 到底啦 —</text>
       <text wx:else>上拉加载更多</text>
     </view>
+
+    <!-- 引言 -->
+    <view class="quote-block card">
+      <text>喝酒这件事，喝的从来不只是酒。</text>
+      <text class="quote-block__em">是停下来那一刻的自己。</text>
+    </view>
   </block>
 
   <!-- ============ 便利店调酒模式 ============ -->
   <block wx:else>
-    <view class="conv-hero">
-      <view class="conv-hero__top">
-        <view class="conv-hero__title">
-          <text class="conv-hero__zh">便利店调酒</text>
-          <text class="conv-hero__en">EASY · CHEAP · ANYTIME</text>
+    <view class="conv-hero rise">
+      <view class="conv-hero__glow"></view>
+      <view class="conv-hero__bar">
+        <view class="brandmark">
+          <text class="brandmark__zh">便利店调酒</text>
+          <text class="brandmark__en">Easy &amp; Anytime</text>
         </view>
-        <view class="conv-hero__bag">🛒</view>
+        <image class="ico ico-lg" src="{{icons.basketAccent}}" />
       </view>
-      <view class="conv-hero__slogan">不用买基酒，下楼就能调 🏃</view>
-      <!-- 我手边有什么：主入口 -->
+      <view class="conv-hero__slogan">不用买基酒，下楼就能调。</view>
       <view class="conv-hero__match" bindtap="goConvenienceMatch">
-        <text class="conv-hero__match-icon">🧺</text>
+        <view class="conv-hero__match-icon"><image class="ico ico-lg" src="{{icons.basketAccent}}" /></view>
         <view class="conv-hero__match-text">
           <text class="conv-hero__match-title">我手边有什么？</text>
           <text class="conv-hero__match-sub">勾勾材料，看看能调什么</text>
         </view>
-        <text class="conv-hero__match-arrow">→</text>
+        <image class="ico ico-sm" src="{{icons.arrowAccent}}" />
       </view>
     </view>
 
-    <!-- 场景分类 -->
     <view class="conv-scenes">
       <scroll-view scroll-x class="conv-scenes__scroll" enhanced show-scrollbar="{{false}}">
         <view
@@ -155,16 +154,12 @@
           wx:key="key"
           data-key="{{item.key}}"
           bindtap="selectConvScene"
-        >
-          <text class="conv-scene__emoji">{{item.emoji}}</text>
-          <text>{{item.label}}</text>
-        </view>
+        >{{item.label}}</view>
       </scroll-view>
     </view>
 
-    <!-- 避坑指南入口 -->
-    <view class="conv-pitfall-entry" bindtap="goPitfalls">
-      <text class="conv-pitfall-entry__icon">⚠️</text>
+    <view class="conv-pitfall-entry card" bindtap="goPitfalls">
+      <view class="conv-pitfall-entry__icon"><image class="ico" src="{{icons.warnAccent}}" /></view>
       <view class="conv-pitfall-entry__text">
         <text class="conv-pitfall-entry__title">新手避坑指南</text>
         <text class="conv-pitfall-entry__sub">这几个组合千万别乱调</text>
@@ -172,13 +167,11 @@
       <text class="conv-pitfall-entry__arrow">›</text>
     </view>
 
-    <!-- 工具条 -->
     <view class="toolbar">
       <view class="toolbar__count">共 <text class="fw-600 conv-accent">{{convDrinks.length}}</text> 款</view>
       <view class="conv-toolbar__hint">低成本 · 好上手</view>
     </view>
 
-    <!-- 便利店卡片网格 -->
     <view class="grid conv-grid">
       <view class="grid__col" wx:for="{{convDrinks}}" wx:key="id">
         <convenience-card drink="{{item}}"></convenience-card>

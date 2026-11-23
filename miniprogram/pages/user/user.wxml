@@ -1,4 +1,4 @@
-<view class="page-wrap user">
+<view class="page-wrap user {{isDark ? 'theme-dark' : ''}}">
   <!-- 顶部信息 -->
   <view class="profile">
     <view class="profile__avatar">调</view>

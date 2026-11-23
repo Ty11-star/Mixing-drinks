@@ -74,14 +74,17 @@ const DATA = {
 
 Page({
   data: {
+    isDark: false,
+
     tabs: TABS,
     active: 'spirit',
     items: DATA.spirit
   },
 
   onShow() {
+    try { const app = getApp(); this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 3 });
+      this.getTabBar().setData({ isDark: (getApp().globalData.theme === "dark"), selected: 3 });
     }
   },
 

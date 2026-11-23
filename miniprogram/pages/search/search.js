@@ -6,6 +6,8 @@ const HOT = ['莫吉托', '金汤力', '玛格丽特', '长岛冰茶', '威士�
 
 Page({
   data: {
+    isDark: false,
+
     keyword: '',
     history: [],
     hot: HOT,
@@ -19,6 +21,7 @@ Page({
   },
 
   onShow() {
+    try { const app = getApp(); this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
     this.setData({ history: storage.get('search_history', []) });
   },
 

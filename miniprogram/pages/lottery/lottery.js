@@ -10,6 +10,8 @@ function todayKey() {
 
 Page({
   data: {
+    isDark: false,
+
     today: '',
     drawn: false,
     drink: null,
@@ -35,8 +37,9 @@ Page({
   },
 
   onShow() {
+    try { const app = getApp(); this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 2 });
+      this.getTabBar().setData({ isDark: (getApp().globalData.theme === "dark"), selected: 2 });
     }
     this.checkToday();
     this.startShake();

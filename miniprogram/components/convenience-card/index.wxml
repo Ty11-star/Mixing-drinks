@@ -1,17 +1,27 @@
-<view class="c-card" bindtap="goDetail">
-  <view class="c-card__image" style="background:{{drink.gradient}}">
-    <text class="c-card__emoji">{{drink.emoji}}</text>
-    <view class="c-card__cost">¥{{drink.cost}}</view>
+<view class="c-card card {{isDark ? 'is-dark' : ''}}" bindtap="goDetail">
+  <view class="c-card__image" style="background:{{isDark ? (drink.gradientDark || 'linear-gradient(135deg,#2A3A44,#1A2A33)') : drink.gradient}}">
+    <text class="c-card__emoji" wx:if="{{!imageLoaded}}">{{drink.emoji}}</text>
+    <image
+      wx:if="{{drink.image}}"
+      class="c-card__photo {{imageLoaded ? 'is-loaded' : ''}}"
+      src="{{drink.image}}"
+      mode="aspectFill"
+      lazy-load="{{true}}"
+      show-menu-by-longpress="{{false}}"
+      bindload="onImageLoad"
+      binderror="onImageError"
+    ></image>
+    <view class="c-card__cost">约 ¥{{drink.cost}}</view>
     <view class="c-card__fav {{isFav ? 'is-fav' : ''}}" catchtap="toggleFav">
-      <text>{{isFav ? '♥' : '♡'}}</text>
+      <image class="ico ico-sm" src="{{isFav ? icons.heartFilled : icons.heartOutline}}" />
     </view>
   </view>
   <view class="c-card__body">
     <view class="c-card__name">{{drink.name}}</view>
     <view class="c-card__en">{{drink.nameEn}}</view>
     <view class="c-card__foot">
-      <text class="c-card__tag">⏱ {{drink.tag}}</text>
-      <text class="c-card__step">{{drink.steps}} 步搞定</text>
+      <view class="c-card__tag"><image class="ico-sm" src="{{icons.clockSoft}}" /><text>{{drink.tag}}</text></view>
+      <text class="c-card__step">{{drink.steps}} 步</text>
     </view>
   </view>
 </view>

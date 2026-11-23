@@ -1,5 +1,6 @@
 // components/cocktail-card/index.js
 const format = require('../../utils/format');
+const { icons } = require('../../utils/icons');
 const app = getApp();
 
 Component({
@@ -7,6 +8,7 @@ Component({
     cocktail: { type: Object, value: {} }
   },
   data: {
+    icons: icons,
     gradient: '',
     icon: '🍸',
     image: '',
@@ -18,11 +20,15 @@ Component({
   observers: {
     cocktail(c) {
       if (!c || !c.id) return;
+      const prev = this.data;
+      const nextImage = c.image || '';
+      const isLocal = nextImage && !/^https?:\/\//.test(nextImage);
+      // 本地缓存图直接视为已加载；网络地址变化才重置，避免闪烁
       this.setData({
         gradient: format.getSpiritGradient(c.baseSpirit),
         icon: format.getSpiritIcon(c.baseSpirit),
-        image: c.image || '',
-        imageLoaded: false,
+        image: nextImage,
+        imageLoaded: isLocal || (prev.image === nextImage ? prev.imageLoaded : false),
         isFav: app.isFavorite(c.id),
         taste: format.parseTasteTags(c.tasteTags).slice(0, 3),
         diffMeta: format.getDifficulty(c.difficulty)

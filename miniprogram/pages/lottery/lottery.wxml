@@ -1,4 +1,4 @@
-<view class="page-wrap lottery">
+<view class="page-wrap lottery {{isDark ? 'theme-dark' : ''}}">
   <view class="lottery__head">
     <view class="lottery__title">今日特调</view>
     <view class="lottery__sub">{{today}} · 每天一杯，抽签定今日心情</view>

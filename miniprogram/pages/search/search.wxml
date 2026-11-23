@@ -1,4 +1,4 @@
-<view class="page-wrap search">
+<view class="page-wrap search {{isDark ? 'theme-dark' : ''}}">
   <!-- 搜索框 -->
   <view class="search-bar">
     <view class="search-bar__input-wrap">

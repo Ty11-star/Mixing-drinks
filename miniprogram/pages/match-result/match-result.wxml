@@ -1,4 +1,4 @@
-<view class="page-wrap match">
+<view class="page-wrap match {{isDark ? 'theme-dark' : ''}}">
   <pour-loading wx:if="{{loading}}" text="正在为你调酒…"></pour-loading>
 
   <block wx:elif="{{total > 0}}">

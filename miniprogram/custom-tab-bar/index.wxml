@@ -1,13 +1,12 @@
-<view class="tab-bar">
-  <view class="tab-bar__indicator" style="width:{{100/list.length}}%;transform:translateX({{selected*100}}%);"></view>
+<view class="tabbar {{isDark ? 'theme-dark' : ''}}">
   <view
-    class="tab-item {{selected === index ? 'active' : ''}}"
+    class="tab {{selected === index ? 'on' : ''}}"
     wx:for="{{list}}"
     wx:key="pagePath"
     data-index="{{index}}"
     bindtap="switchTab"
   >
-    <text class="tab-item__icon">{{item.icon}}</text>
-    <text class="tab-item__text">{{item.text}}</text>
+    <image class="tab__ico" src="{{selected === index ? icons[item.icon + 'Accent'] : icons[item.icon]}}" />
+    <text class="tab__text">{{item.text}}</text>
   </view>
 </view>

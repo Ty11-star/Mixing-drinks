@@ -1,0 +1,105 @@
+{
+  "light": {
+    "navBgColor": "#E9EBE6",
+    "navTextStyle": "black",
+    "windowBgColor": "#E9EBE6",
+    "backgroundTextStyle": "dark",
+
+    "tabBarColor": "#6B7873",
+    "tabBarSelectedColor": "#96662F",
+    "tabBarBgColor": "#FFFFFF",
+    "tabBarBorderStyle": "white",
+
+    "bg": "#E9EBE6",
+    "bgSoft": "#F3F4EF",
+    "bgDeep": "#DDE1DA",
+    "glass": "rgba(255, 255, 255, 0.88)",
+    "glassStrong": "rgba(255, 255, 255, 0.96)",
+    "glassBorder": "rgba(255, 255, 255, 0.95)",
+    "glassHi": "rgba(255, 255, 255, 0.6)",
+    "frostedGlass": "rgba(255, 255, 255, 0.9)",
+    "iceBlue": "rgba(255, 255, 255, 0.9)",
+    "surface": "#FFFFFF",
+
+    "text": "#222C2C",
+    "text2": "#475652",
+    "text3": "#6B7873",
+
+    "accent": "#96662F",
+    "accent2": "#7A6448",
+    "accentSoft": "rgba(150, 102, 47, 0.10)",
+    "accentGlow": "rgba(150, 102, 47, 0.22)",
+    "amberLight": "#D8B98E",
+
+    "orbWarm": "rgba(214, 178, 126, 0.16)",
+    "orbCool": "rgba(138, 176, 164, 0.14)",
+    "divider": "rgba(34, 44, 44, 0.10)",
+    "shadow": "0 48rpx 120rpx rgba(52, 68, 60, 0.14)",
+    "shadowSm": "0 16rpx 56rpx rgba(52, 68, 60, 0.10)",
+    "shadowLifted": "0 32rpx 80rpx rgba(52, 68, 60, 0.16)",
+
+    "success": "#6E9B84",
+    "warning": "#D8B98E",
+    "error": "#B9685C",
+
+    "cardVeil": "linear-gradient(180deg, transparent 32%, rgba(32, 42, 40, 0.08) 52%, rgba(28, 38, 36, 0.82) 100%)",
+    "heroVeil": "linear-gradient(180deg, rgba(233, 235, 230, 0.28) 0%, rgba(233, 235, 230, 0.06) 38%, rgba(233, 235, 230, 0.72) 85%, #E9EBE6 100%)",
+    "headGradient": "linear-gradient(160deg, rgba(255, 252, 240, 0.6), rgba(233, 235, 230, 0.2))",
+    "heroGradient": "linear-gradient(172deg, rgba(255, 252, 240, 0.5) 0%, rgba(233, 235, 230, 0) 62%)",
+    "convHeroGradient": "linear-gradient(140deg, rgba(255, 251, 238, 0.7), rgba(233, 235, 230, 0.3))",
+    "glassEdge": "rgba(52, 68, 60, 0.08)",
+    "overlayDark": "rgba(28, 38, 36, 0.82)"
+  },
+
+  "dark": {
+    "navBgColor": "#0A141B",
+    "navTextStyle": "white",
+    "windowBgColor": "#0A141B",
+    "backgroundTextStyle": "light",
+
+    "tabBarColor": "#8FA0AC",
+    "tabBarSelectedColor": "#D9AE7C",
+    "tabBarBgColor": "#162430",
+    "tabBarBorderStyle": "black",
+
+    "bg": "#0A141B",
+    "bgSoft": "#101E28",
+    "bgDeep": "#060E14",
+    "glass": "rgba(255, 255, 255, 0.055)",
+    "glassStrong": "rgba(255, 255, 255, 0.095)",
+    "glassBorder": "rgba(255, 255, 255, 0.14)",
+    "glassHi": "rgba(255, 255, 255, 0.20)",
+    "frostedGlass": "rgba(22, 36, 48, 0.72)",
+    "iceBlue": "rgba(255, 255, 255, 0.1)",
+    "surface": "#162430",
+
+    "text": "#F2ECE2",
+    "text2": "#A6B5BF",
+    "text3": "#96A6B2",
+
+    "accent": "#D9AE7C",
+    "accent2": "#C08E77",
+    "accentSoft": "rgba(217, 174, 124, 0.14)",
+    "accentGlow": "rgba(217, 174, 124, 0.30)",
+    "amberLight": "#E5C6A0",
+
+    "orbWarm": "rgba(217, 174, 124, 0.20)",
+    "orbCool": "rgba(74, 134, 148, 0.22)",
+    "divider": "rgba(255, 255, 255, 0.09)",
+    "shadow": "0 48rpx 120rpx rgba(0, 0, 0, 0.42)",
+    "shadowSm": "0 16rpx 56rpx rgba(0, 0, 0, 0.30)",
+    "shadowLifted": "0 32rpx 80rpx rgba(0, 0, 0, 0.5)",
+
+    "success": "#7ECFA0",
+    "warning": "#D9AE7C",
+    "error": "#C54B3D",
+
+    "cardVeil": "linear-gradient(180deg, transparent 32%, rgba(6, 14, 20, 0.18) 52%, rgba(6, 14, 20, 0.88) 100%)",
+    "heroVeil": "linear-gradient(180deg, rgba(10, 20, 27, 0.30) 0%, rgba(10, 20, 27, 0.58) 48%, #0A141B 100%)",
+    "headGradient": "linear-gradient(160deg, rgba(26, 44, 56, 0.7), rgba(10, 20, 27, 0.2))",
+    "heroGradient": "linear-gradient(172deg, rgba(26, 44, 56, 0.55) 0%, rgba(10, 20, 27, 0) 62%)",
+    "convHeroGradient": "linear-gradient(140deg, rgba(26, 44, 56, 0.7), rgba(10, 20, 27, 0.3))",
+    "glassEdge": "rgba(255, 255, 255, 0.14)",
+    "overlayDark": "rgba(6, 14, 20, 0.88)"
+  }
+}

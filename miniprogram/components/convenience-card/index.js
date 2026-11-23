@@ -1,3 +1,4 @@
+const { icons } = require('../../utils/icons');
 const app = getApp();
 
 Component({
@@ -5,15 +6,32 @@ Component({
     drink: { type: Object, value: {} }
   },
   data: {
-    isFav: false
+    icons: icons,
+    isFav: false,
+    imageLoaded: false,
+    isDark: false
+  },
+  lifetimes: {
+    attached() {
+      try { this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
+      if (wx.onThemeChange) {
+        this._onTheme = (res) => this.setData({ isDark: res.theme === 'dark' });
+        wx.onThemeChange(this._onTheme);
+      }
+    },
+    detached() {
+      if (wx.offThemeChange && this._onTheme) wx.offThemeChange(this._onTheme);
+    }
   },
   observers: {
     drink(d) {
       if (!d || !d.id) return;
-      this.setData({ isFav: app.isFavorite(d.id) });
+      this.setData({ isFav: app.isFavorite(d.id), imageLoaded: false });
     }
   },
   methods: {
+    onImageLoad() { this.setData({ imageLoaded: true }); },
+    onImageError() { this.setData({ imageLoaded: false }); },
     toggleFav() {
       const d = this.data.drink;
       if (!d || !d.id) return;

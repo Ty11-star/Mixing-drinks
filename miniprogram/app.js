@@ -1,10 +1,30 @@
 // app.js
 const storage = require('./utils/storage');
+const { refreshIcons, getTheme } = require('./utils/icons');
 
 App({
   globalData: {
     searchHistoryKey: 'search_history',
-    favoriteKey: 'favorite_list'
+    favoriteKey: 'favorite_list',
+    theme: getTheme()
+  },
+
+  onLaunch() {
+    this.globalData.theme = getTheme();
+    if (wx.onThemeChange) {
+      wx.onThemeChange((res) => {
+        this.globalData.theme = res.theme;
+        refreshIcons(res.theme);
+        try {
+          const pages = getCurrentPages();
+          pages.forEach((page) => {
+            if (page && page.setData) {
+              page.setData({ isDark: res.theme === 'dark' });
+            }
+          });
+        } catch (e) {}
+      });
+    }
   },
 
   /**

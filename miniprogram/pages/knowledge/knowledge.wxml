@@ -1,4 +1,4 @@
-<view class="page-wrap knowledge">
+<view class="page-wrap knowledge {{isDark ? 'theme-dark' : ''}}">
   <view class="know-hero">
     <view class="know-hero__title">调酒小知识</view>
     <view class="know-hero__sub">读懂基酒、方法与术语，调酒更得心应手</view>

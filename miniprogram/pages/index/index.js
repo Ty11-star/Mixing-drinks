@@ -3,10 +3,15 @@ const cocktailApi = require('../../api/cocktail');
 const categoryApi = require('../../api/category');
 const format = require('../../utils/format');
 const convenience = require('../../utils/convenience');
+const imageCache = require('../../utils/imageCache');
+const { icons } = require('../../utils/icons');
 const app = getApp();
 
 Page({
   data: {
+    isDark: false,
+
+    icons: icons,
     list: [],
     page: 1,
     pageSize: 10,
@@ -16,6 +21,7 @@ Page({
     baseSpirit: '',
     spirits: [],
     viewMode: 'grid',
+    heroImage: '',
     // 便利店模式
     mode: 'pro',
     convScenes: convenience.SCENES,
@@ -26,11 +32,22 @@ Page({
   onLoad() {
     this.loadCategories();
     this.loadList(true);
+    this.loadHeroImage();
+  },
+
+  loadHeroImage() {
+    const page = this;
+    const host = 'https://myty11.com/uploads/1793787710854-457430532.png';
+    const src = imageCache.resolve(host, {
+      onReady(local) { page.setData({ heroImage: local }); }
+    });
+    this.setData({ heroImage: src });
   },
 
   onShow() {
+    try { const app = getApp(); this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 0 });
+      this.getTabBar().setData({ isDark: (getApp().globalData.theme === "dark"), selected: 0 });
     }
     // 从详情页返回后，同步列表的收藏状态
     if (this.data.list.length) {
@@ -53,15 +70,47 @@ Page({
   },
 
   enrich(list) {
-    return list.map(c => ({
-      ...c,
-      _gradient: format.getSpiritGradient(c.baseSpirit),
-      _icon: format.getSpiritIcon(c.baseSpirit),
-      _imgLoaded: false,
-      _isFav: app.isFavorite(c.id),
-      _taste: format.parseTasteTags(c.tasteTags).slice(0, 3),
-      _diff: format.getDifficulty(c.difficulty)
-    }));
+    const page = this;
+    // 无封面图的酒：按 id 循环分配一张实拍图兜底，保证卡片视觉统一
+    const FALLBACK = [
+      'https://myty11.com/uploads/1793787710854-457430532.png',
+      'https://myty11.com/uploads/1793796778405-679592327.png',
+      'https://myty11.com/uploads/1793796787995-498359043.png',
+      'https://myty11.com/uploads/1793796795373-304837180.png',
+      'https://myty11.com/uploads/1793796806024-690644324.png'
+    ];
+    return list.map((c, i) => {
+      const item = {
+        ...c,
+        _gradient: format.getSpiritGradient(c.baseSpirit),
+        _icon: format.getSpiritIcon(c.baseSpirit),
+        _imgLoaded: false,
+        _isFav: app.isFavorite(c.id),
+        _taste: format.parseTasteTags(c.tasteTags).slice(0, 3),
+        _diff: format.getDifficulty(c.difficulty)
+      };
+      if (!item.image && item.id) {
+        item.image = FALLBACK[Number(item.id) % FALLBACK.length];
+      }
+      if (item.image) {
+        const url = item.image;
+        // 命中缓存返回本地路径；未命中后台下载，完成后回调刷新当前项
+        item.image = imageCache.resolve(url, {
+          onReady(localPath) {
+            const idx = page.data.list.findIndex(x => x.id === item.id);
+            if (idx >= 0) {
+              page.setData({
+                [`list[${idx}].image`]: localPath,
+                [`list[${idx}]._imgLoaded`]: true
+              });
+            }
+          }
+        });
+        // 来自本地缓存的图片无需再等 onload
+        if (item.image !== url) item._imgLoaded = true;
+      }
+      return item;
+    });
   },
 
   onListImageLoad(e) {

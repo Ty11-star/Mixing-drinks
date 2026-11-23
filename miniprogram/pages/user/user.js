@@ -3,10 +3,13 @@ const app = getApp();
 
 Page({
   data: {
+    isDark: false,
+
     favorites: []
   },
 
   onShow() {
+    try { const app = getApp(); this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
     this.setData({
       favorites: app.getFavorites()
     });

@@ -6,7 +6,6 @@
 // 3. 后端 Cocktail 模型暂无 alcoholContent/iceType/garnish/origin 字段（视图层已做守卫）
 
 const config = require('./config');
-const imageCache = require('./imageCache');
 
 /**
  * 将后端返回的相对封面路径（如 /uploads/xxx.jpg）拼接为小程序可访问的绝对地址；
@@ -38,8 +37,8 @@ function normalizeCocktail(cocktail) {
   if (!cocktail) return cocktail;
   const next = Object.assign({}, cocktail);
 
-  // 封面图：相对路径转绝对地址，并优先使用本地缓存（首次加载后秒开）
-  next.image = imageCache.resolve(buildImageUrl(next.cover));
+  // 封面图：相对路径转绝对地址（缓存由视图层 imageCache.resolve 统一处理）
+  next.image = buildImageUrl(next.cover);
 
   if (Array.isArray(next.ingredients)) {
     next.ingredients = next.ingredients

@@ -10,20 +10,14 @@
       show-menu-by-longpress="{{false}}"
       bindload="onImageLoad"
     ></image>
-    <view class="cocktail-card__diff">
-      <text>{{diffMeta.glass}}</text>
-    </view>
+    <view class="cocktail-card__veil"></view>
     <view class="cocktail-card__fav {{isFav ? 'is-fav' : ''}}" catchtap="toggleFav">
-      <text>{{isFav ? '♥' : '♡'}}</text>
+      <image class="ico ico-sm" src="{{isFav ? icons.heartFilled : icons.heartOutline}}" />
     </view>
-  </view>
-  <view class="cocktail-card__body">
-    <view class="cocktail-card__title ellipsis">{{cocktail.name}}</view>
-    <view class="cocktail-card__subtitle ellipsis" wx:if="{{cocktail.nameEn}}">{{cocktail.nameEn}}</view>
-    <view class="cocktail-card__divider"></view>
-    <view class="cocktail-card__spirit">{{cocktail.baseSpirit}}</view>
-    <view class="cocktail-card__taste" wx:if="{{taste.length}}">
-      <text wx:for="{{taste}}" wx:key="*this" wx:for-item="t">{{t}}</text>
+    <view class="cocktail-card__body">
+      <view class="cocktail-card__title ellipsis">{{cocktail.name}}</view>
+      <view class="cocktail-card__subtitle ellipsis" wx:if="{{cocktail.nameEn}}">{{cocktail.nameEn}}</view>
+      <view class="cocktail-card__desc" wx:if="{{taste.length}}">{{taste[0]}} · {{cocktail.baseSpirit}}</view>
     </view>
   </view>
 </view>

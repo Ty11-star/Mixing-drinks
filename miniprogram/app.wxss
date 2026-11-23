@@ -1,233 +1,261 @@
 /* ============================================================
-   调酒小程序 · 全局设计系统 (Design Tokens)
-   设计理念：精确、流动、分层、仪式感、玻璃质感
+   调一杯 · 全局设计系统 · 晨光微醺 (Morning Glow)
+   柔和暖调 / 轻盈通透 / 微醺光晕 / 低信息密度
+   参照 design-prototype.html 的 dawn 主题，1px ≈ 2rpx
    ============================================================ */
 
 page {
-  /* —— 主色：琥珀金 —— */
-  --primary-amber: #D4A574;
-  --primary-amber-light: #E5C4A0;
-  --primary-amber-dark: #B8935E;
-  --primary-amber-glow: rgba(212, 165, 116, 0.2);
+  /* 主题令牌：晨光微醺 */
+  --bg: #E9EBE6;
+  --bg-soft: #F3F4EF;
+  --bg-deep: #DDE1DA;
+  --surface: #FFFFFF;
+  --glass: rgba(255, 255, 255, 0.88);
+  --glass-strong: rgba(255, 255, 255, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.95);
+  --glass-hi: rgba(255, 255, 255, 0.6);
+  --frosted-glass: rgba(255, 255, 255, 0.9);
+  --ice-blue: rgba(255, 255, 255, 0.9);
+  --glass-edge: rgba(52, 68, 60, 0.08);
+  --text: #222C2C;
+  --text-2: #475652;
+  --text-3: #6B7873;
+  --accent: #96662F;
+  --accent-2: #7A6448;
+  --accent-soft: rgba(150, 102, 47, 0.10);
+  --accent-glow: rgba(150, 102, 47, 0.22);
+  --primary-amber-light: #D8B98E;
+  --orb-warm: rgba(214, 178, 126, 0.16);
+  --orb-cool: rgba(138, 176, 164, 0.14);
+  --divider: rgba(34, 44, 44, 0.10);
+  --shadow: 0 48rpx 120rpx rgba(52, 68, 60, 0.14);
+  --shadow-sm: 0 16rpx 56rpx rgba(52, 68, 60, 0.10);
+  --shadow-lifted: 0 32rpx 80rpx rgba(52, 68, 60, 0.16);
+  --success: #6E9B84;
+  --warning: #D8B98E;
+  --error: #B9685C;
+  --card-veil: linear-gradient(180deg, transparent 32%, rgba(32, 42, 40, 0.08) 52%, rgba(28, 38, 36, 0.82) 100%);
+  --hero-veil: linear-gradient(180deg, rgba(233, 235, 230, 0.28) 0%, rgba(233, 235, 230, 0.06) 38%, rgba(233, 235, 230, 0.72) 85%, #E9EBE6 100%);
+  --head-gradient: linear-gradient(160deg, rgba(255, 252, 240, 0.6), rgba(233, 235, 230, 0.2));
+  --hero-gradient: linear-gradient(172deg, rgba(255, 252, 240, 0.5) 0%, rgba(233, 235, 230, 0) 62%);
+  --conv-hero-gradient: linear-gradient(140deg, rgba(255, 251, 238, 0.7), rgba(233, 235, 230, 0.3));
+  --primary-amber: #96662F;
+  --primary-amber-dark: #7A6448;
+  --primary-amber-glow: rgba(150, 102, 47, 0.22);
+  --midnight-blue: #222C2C;
+  --midnight-blue-light: #475652;
+  --slate-blue: #475652;
+  --mojito-mint: #6E9B84;
+  --bloody-mary-red: #B9685C;
+  --glass-white: #E9EBE6;
+  --shadow-glass: rgba(52, 68, 60, 0.08);
 
-  /* —— 辅助：午夜蓝 —— */
-  --midnight-blue: #1A2332;
-  --midnight-blue-light: #2D3E50;
-  --slate-blue: #3D5A7B;
-
-  /* —— 点缀色 —— */
-  --mojito-mint: #7ECFA0;
-  --bloody-mary-red: #C54B3D;
-  --blue-lagoon: #4FB3D9;
-  --cosmopolitan-pink: #E889A4;
-
-  /* —— 中性：玻璃与冰 —— */
-  --glass-white: #F8FAFB;
-  --frosted-glass: rgba(248, 250, 251, 0.85);
-  --ice-blue: #E8F1F5;
-  --shadow-glass: rgba(26, 35, 50, 0.08);
-
-  /* —— 功能色 —— */
-  --success: #7ECFA0;
-  --warning: #F5C77E;
-  --error: #C54B3D;
-
-  /* —— 间距（8rpx 网格）—— */
-  --spacing-xs: 8rpx;
-  --spacing-sm: 16rpx;
-  --spacing-md: 24rpx;
-  --spacing-lg: 32rpx;
-  --spacing-xl: 48rpx;
-  --spacing-xxl: 64rpx;
-  --coaster-padding: 24rpx;
-  --content-margin: 32rpx;
-
-  /* —— 圆角 —— */
-  --radius-xs: 8rpx;
-  --radius-sm: 12rpx;
-  --radius-md: 16rpx;
-  --radius-lg: 24rpx;
-  --radius-xl: 32rpx;
-  --radius-round: 9999rpx;
-
-  /* —— 阴影 —— */
-  --shadow-glass-light: 0 4rpx 12rpx var(--shadow-glass);
-  --shadow-glass-medium: 0 8rpx 24rpx var(--shadow-glass);
-  --shadow-lifted: 0 12rpx 32rpx rgba(26, 35, 50, 0.15);
-  --glow-amber: 0 0 24rpx var(--primary-amber-glow);
-
-  /* —— 字体 —— */
-  --font-display: 'Songti SC', 'STSong', 'Noto Serif SC', serif;
-  --font-body: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
-  --font-mono: 'Courier New', 'SF Mono', monospace;
-
-  background-color: var(--glass-white);
-  color: var(--midnight-blue);
+  background-color: var(--bg);
+  color: var(--text);
   font-family: var(--font-body);
   font-size: 28rpx;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-view, text, scroll-view, button, input, textarea, navigator {
+.theme-dark {
+  /* 主题令牌：深夜蓝调 */
+  --bg: #0A141B;
+  --bg-soft: #101E28;
+  --bg-deep: #060E14;
+  --surface: #162430;
+  --glass: rgba(255, 255, 255, 0.055);
+  --glass-strong: rgba(255, 255, 255, 0.095);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-hi: rgba(255, 255, 255, 0.20);
+  --frosted-glass: rgba(22, 36, 48, 0.72);
+  --ice-blue: rgba(255, 255, 255, 0.1);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --text: #F2ECE2;
+  --text-2: #A6B5BF;
+  --text-3: #96A6B2;
+  --accent: #D9AE7C;
+  --accent-2: #C08E77;
+  --accent-soft: rgba(217, 174, 124, 0.14);
+  --accent-glow: rgba(217, 174, 124, 0.30);
+  --primary-amber-light: #E5C6A0;
+  --orb-warm: rgba(217, 174, 124, 0.20);
+  --orb-cool: rgba(74, 134, 148, 0.22);
+  --divider: rgba(255, 255, 255, 0.09);
+  --shadow: 0 48rpx 120rpx rgba(0, 0, 0, 0.42);
+  --shadow-sm: 0 16rpx 56rpx rgba(0, 0, 0, 0.30);
+  --shadow-lifted: 0 32rpx 80rpx rgba(0, 0, 0, 0.5);
+  --success: #7ECFA0;
+  --warning: #D9AE7C;
+  --error: #C54B3D;
+  --card-veil: linear-gradient(180deg, transparent 32%, rgba(6, 14, 20, 0.18) 52%, rgba(6, 14, 20, 0.88) 100%);
+  --hero-veil: linear-gradient(180deg, rgba(10, 20, 27, 0.30) 0%, rgba(10, 20, 27, 0.58) 48%, #0A141B 100%);
+  --head-gradient: linear-gradient(160deg, rgba(26, 44, 56, 0.7), rgba(10, 20, 27, 0.2));
+  --hero-gradient: linear-gradient(172deg, rgba(26, 44, 56, 0.55) 0%, rgba(10, 20, 27, 0) 62%);
+  --conv-hero-gradient: linear-gradient(140deg, rgba(26, 44, 56, 0.7), rgba(10, 20, 27, 0.3));
+  --primary-amber: #D9AE7C;
+  --primary-amber-dark: #C08E77;
+  --primary-amber-glow: rgba(217, 174, 124, 0.30);
+  --midnight-blue: #F2ECE2;
+  --midnight-blue-light: #A6B5BF;
+  --slate-blue: #A6B5BF;
+  --mojito-mint: #7ECFA0;
+  --bloody-mary-red: #C54B3D;
+  --glass-white: #0A141B;
+  --shadow-glass: rgba(255, 255, 255, 0.14);
+}
+
+view, text, scroll-view, button, input, textarea, navigator, image {
   box-sizing: border-box;
 }
 
-/* —— 通用容器 —— */
+/* —— 页面容器：微醺光晕底 —— */
 .page-wrap {
+  position: relative;
   min-height: 100vh;
-  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
-  background: linear-gradient(180deg, #FBFCFD 0%, var(--glass-white) 100%);
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 600rpx 480rpx at 88% -6%, var(--orb-warm), transparent 70%),
+    radial-gradient(ellipse 520rpx 420rpx at -10% 32%, var(--orb-cool), transparent 70%);
 }
 
-.container {
-  padding: var(--content-margin);
-}
+.container { padding: var(--content-margin); }
 
-/* —— 区块标题 —— */
+/* —— 区块标题（诗意宋体） —— */
 .section-title {
   font-family: var(--font-display);
-  font-size: 36rpx;
-  font-weight: 600;
-  color: var(--midnight-blue);
-  letter-spacing: -0.01em;
+  font-size: 40rpx;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text);
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--spacing-xs);
 }
 .section-sub {
-  font-size: 24rpx;
-  color: var(--slate-blue);
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 26rpx;
+  color: var(--text-3);
   margin-top: 4rpx;
 }
 
 /* —— 玻璃卡片 —— */
 .card {
-  background: #FFFFFF;
+  background: var(--glass);
+  border: 1rpx solid var(--glass-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-glass-light);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+  box-shadow: inset 0 1rpx 0 var(--glass-hi), var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
 }
 .card--hover {
-  transform: translateY(-6rpx);
-  box-shadow: var(--shadow-lifted);
+  transform: translateY(-8rpx);
+  box-shadow: inset 0 1rpx 0 var(--glass-hi), var(--shadow-lifted);
 }
 
-/* —— 细分割线（酒液渐隐）—— */
+/* —— 细分割线 —— */
 .divider {
   height: 1rpx;
   background: linear-gradient(90deg, transparent, var(--primary-amber-light), transparent);
-  opacity: 0.35;
+  opacity: 0.4;
   margin: var(--spacing-sm) 0;
 }
 
-/* —— 标签 —— */
+/* —— 标签（胶囊玻璃） —— */
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 4rpx;
-  padding: 4rpx 14rpx;
-  border-radius: var(--radius-xs);
-  font-size: 20rpx;
-  font-weight: 500;
+  gap: 6rpx;
+  padding: 10rpx 24rpx;
+  border-radius: var(--radius-round);
+  font-size: 22rpx;
   line-height: 1.4;
+  background: var(--glass);
+  border: 1rpx solid var(--glass-border);
+  color: var(--text-2);
 }
-.tag--spirit {
-  background: var(--primary-amber-glow);
-  color: var(--primary-amber-dark);
-}
-.tag--taste {
-  background: var(--ice-blue);
-  color: var(--slate-blue);
-}
-.tag--ghost {
-  background: transparent;
-  border: 1rpx solid var(--ice-blue);
-  color: var(--slate-blue);
-}
+.tag--spirit { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.tag--taste { background: var(--glass); color: var(--text-2); }
+.tag--ghost { background: transparent; border: 1rpx solid var(--glass-border); color: var(--text-2); }
 
-/* —— 主按钮（琥珀金）—— */
+/* —— 液态玻璃主按钮 —— */
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-amber) 0%, var(--primary-amber-dark) 100%);
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
   color: #FFFFFF;
-  border-radius: var(--radius-sm);
-  font-size: 30rpx;
-  font-weight: 600;
+  border-radius: var(--radius-round);
+  font-family: var(--font-display);
+  font-size: 28rpx;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   text-align: center;
-  padding: 24rpx 0;
-  box-shadow: 0 8rpx 20rpx var(--primary-amber-glow);
-  transition: transform 0.1s, opacity 0.2s;
+  padding: 26rpx 0;
+  box-shadow: inset 0 1rpx 0 rgba(255, 255, 255, 0.5), 0 16rpx 44rpx var(--accent-glow);
+  transition: transform var(--dur) var(--ease), opacity 0.25s;
 }
 .btn-primary--hover { transform: scale(0.98); opacity: 0.92; }
 
 .btn-ghost {
-  background: #FFFFFF;
-  color: var(--slate-blue);
-  border: 1rpx solid var(--ice-blue);
-  border-radius: var(--radius-sm);
+  background: var(--glass-strong);
+  color: var(--text-2);
+  border: 1rpx solid var(--glass-border);
+  border-radius: var(--radius-round);
   font-size: 28rpx;
-  padding: 20rpx 0;
+  padding: 22rpx 0;
   text-align: center;
 }
 
+/* —— 图标 —— */
+.ico { width: 40rpx; height: 40rpx; display: block; }
+.ico-sm { width: 32rpx; height: 32rpx; display: block; }
+.ico-lg { width: 56rpx; height: 56rpx; display: block; }
+
 /* —— 文本工具 —— */
 .text-mono { font-family: var(--font-mono); }
-.text-amber { color: var(--primary-amber); }
-.text-muted { color: var(--slate-blue); }
+.text-amber { color: var(--accent); }
+.text-muted { color: var(--text-2); }
 .text-sm { font-size: 24rpx; }
 .text-xs { font-size: 20rpx; }
 .text-display { font-family: var(--font-display); }
 .fw-600 { font-weight: 600; }
-.ellipsis {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.ellipsis-2 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
+.ellipsis { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.ellipsis-2 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 
-/* —— 理性饮酒提示（全局通用）—— */
+/* —— 理性饮酒提示 —— */
 .drink-disclaimer {
   text-align: center;
+  font-family: var(--font-display);
   font-size: 22rpx;
-  color: #9AA7B5;
-  line-height: 1.6;
-  padding: 24rpx 32rpx 8rpx;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  line-height: 1.8;
+  padding: 48rpx 32rpx 8rpx;
 }
 
-/* —— 底部安全区占位（须大于自定义 tabBar 高度 110rpx，否则内容被盖）—— */
-.safe-bottom {
-  height: calc(160rpx + env(safe-area-inset-bottom));
-}
+.safe-bottom { height: calc(240rpx + env(safe-area-inset-bottom)); }
 
-/* —— 涟漪按钮（点击水波）—— */
-.ripple-btn {
-  position: relative;
-  overflow: hidden;
-}
+/* —— 涟漪按钮 —— */
+.ripple-btn { position: relative; overflow: hidden; }
 .ripple-dot {
   position: absolute;
-  width: 20rpx;
-  height: 20rpx;
+  width: 20rpx; height: 20rpx;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.6);
-  transform: scale(0);
-  opacity: 0;
+  transform: scale(0); opacity: 0;
   pointer-events: none;
 }
-.ripple-btn.rippling .ripple-dot {
-  animation: ripple 0.6s ease-out;
-}
+.ripple-btn.rippling .ripple-dot { animation: ripple 0.6s ease-out; }
 @keyframes ripple {
   0% { transform: scale(0); opacity: 0.6; }
   100% { transform: scale(20); opacity: 0; }
 }
 
-/* —— 减弱动效（可访问性）—— */
-/* 注意：WXSS 不支持 `*` 通配符选择器，需逐个列出元素 */
+/* —— 渐入动效（慢节奏，一次性） —— */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 0.9s var(--ease) both; }
+
 @media (prefers-reduced-motion: reduce) {
   view, text, scroll-view, button, input, textarea, image, navigator, swiper {
     animation-duration: 0.001ms;

@@ -34,6 +34,8 @@ function buildLiquid(selected) {
 
 Page({
   data: {
+    isDark: false,
+
     groups: [],
     selected: [],          // [{id, name, category, color}]
     selectedIds: {},
@@ -47,8 +49,9 @@ Page({
   },
 
   onShow() {
+    try { const app = getApp(); this.setData({ isDark: app.globalData.theme === 'dark' }); } catch (e) {}
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 1 });
+      this.getTabBar().setData({ isDark: (getApp().globalData.theme === "dark"), selected: 1 });
     }
   },
 

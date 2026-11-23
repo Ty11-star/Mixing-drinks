@@ -69,7 +69,7 @@ const MATERIALS = [
 const DRINKS = [
   {
     id: 1001, name: '咸柠七', nameEn: 'Salted Lemon Seven', emoji: '🍋',
-    gradient: 'linear-gradient(135deg,#FFF8E1,#FFECB3)',
+    gradient: 'linear-gradient(135deg,#F0E6D2,#E6D2A8)',
     cost: 6, steps: 3, tag: '3分钟', scenes: ['zero', 'dorm', 'camping'],
     materials: [{ name: '七喜', amount: '1罐' }, { name: '柠檬', amount: '1个' }, { name: '盐', amount: '少许' }, { name: '冰块', amount: '适量' }],
     instructions: ['柠檬切半，挤汁入杯，留一片装饰', '加少许盐和冰块', '倒入七喜，轻轻搅拌即可'],
@@ -77,7 +77,7 @@ const DRINKS = [
   },
   {
     id: 1002, name: '自由古巴', nameEn: 'Cuba Libre', emoji: '🥤',
-    gradient: 'linear-gradient(135deg,#FFECB3,#FFCC80)',
+    gradient: 'linear-gradient(135deg,#E6D2A8,#DCB88A)',
     cost: 12, steps: 3, tag: '经典', scenes: ['tipsy', 'camping'],
     materials: [{ name: '朗姆酒小瓶', amount: '1瓶' }, { name: '可乐', amount: '1罐' }, { name: '青柠', amount: '1块' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入朗姆酒和可乐', '挤入青柠汁，放一块青柠装饰'],
@@ -85,7 +85,7 @@ const DRINKS = [
   },
   {
     id: 1003, name: '乳酸气泡', nameEn: 'Yogurt Fizz', emoji: '🧫',
-    gradient: 'linear-gradient(135deg,#F1F8E9,#DCEDC8)',
+    gradient: 'linear-gradient(135deg,#E4EBDD,#CFDCC0)',
     cost: 7, steps: 2, tag: '2分钟', scenes: ['zero', 'tea', 'dorm'],
     materials: [{ name: '养乐多', amount: '1瓶' }, { name: '气泡水', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入养乐多', '缓缓注入气泡水，轻轻搅匀'],
@@ -93,7 +93,7 @@ const DRINKS = [
   },
   {
     id: 1004, name: '柠檬红茶', nameEn: 'Lemon Tea', emoji: '🍋',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FFE0B2)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#E3C9A6)',
     cost: 6, steps: 3, tag: '零失败', scenes: ['zero', 'tea', 'dorm'],
     materials: [{ name: '冰红茶', amount: '1瓶' }, { name: '柠檬', amount: '1片' }, { name: '蜂蜜', amount: '1勺' }, { name: '冰块', amount: '适量' }],
     instructions: ['柠檬切片放入杯中', '加蜂蜜和冰块', '倒入冰红茶摇匀'],
@@ -101,7 +101,7 @@ const DRINKS = [
   },
   {
     id: 1005, name: '西瓜气泡', nameEn: 'Watermelon Fizz', emoji: '🍉',
-    gradient: 'linear-gradient(135deg,#FFEBEE,#FFCDD2)',
+    gradient: 'linear-gradient(135deg,#EFDFD9,#E3C4BD)',
     cost: 8, steps: 2, tag: '3分钟', scenes: ['zero', 'camping', 'tea'],
     materials: [{ name: '西瓜汁', amount: '150ml' }, { name: '气泡水', amount: '150ml' }, { name: '青柠', amount: '1块' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入西瓜汁', '注入气泡水，挤入青柠汁'],
@@ -109,7 +109,7 @@ const DRINKS = [
   },
   {
     id: 1006, name: '伏特加橙汁', nameEn: 'Screwdriver', emoji: '🍊',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FFE082)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#DFC28F)',
     cost: 13, steps: 2, tag: '经典', scenes: ['tipsy', 'camping'],
     materials: [{ name: '伏特加小瓶', amount: '1瓶' }, { name: '橙汁', amount: '1盒' }, { name: '橙片', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入伏特加和橙汁搅匀，放橙片装饰'],
@@ -117,7 +117,7 @@ const DRINKS = [
   },
   {
     id: 1007, name: '椰奶冰咖', nameEn: 'Coconut Iced Coffee', emoji: '🥥',
-    gradient: 'linear-gradient(135deg,#F5F5F5,#E0E0E0)',
+    gradient: 'linear-gradient(135deg,#EDEEE9,#CFD3CC)',
     cost: 9, steps: 2, tag: '下午茶', scenes: ['zero', 'tea'],
     materials: [{ name: '椰汁', amount: '100ml' }, { name: '罐装咖啡', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '先倒椰汁再倒入咖啡，分层也好看'],
@@ -125,7 +125,7 @@ const DRINKS = [
   },
   {
     id: 1008, name: '葡萄气泡', nameEn: 'Grape Fizz', emoji: '🍇',
-    gradient: 'linear-gradient(135deg,#F3E5F5,#E1BEE7)',
+    gradient: 'linear-gradient(135deg,#E8E1E6,#CDBCC8)',
     cost: 7, steps: 2, tag: '2分钟', scenes: ['zero', 'dorm', 'tea'],
     materials: [{ name: '葡萄汁', amount: '150ml' }, { name: '苏打水', amount: '150ml' }, { name: '柠檬', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入葡萄汁', '注满苏打水，放柠檬片'],
@@ -133,7 +133,7 @@ const DRINKS = [
   },
   {
     id: 1009, name: '奶香咖啡冰', nameEn: 'Coffee Milk', emoji: '☕',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#D7CCC8)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#CDBFB4)',
     cost: 8, steps: 2, tag: '提神', scenes: ['zero', 'tea', 'dorm'],
     materials: [{ name: '牛奶', amount: '150ml' }, { name: '罐装咖啡', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入牛奶', '缓缓倒入咖啡，搅匀即可'],
@@ -141,7 +141,7 @@ const DRINKS = [
   },
   {
     id: 1010, name: '蜜桃乌龙气泡', nameEn: 'Peach Oolong Fizz', emoji: '🍑',
-    gradient: 'linear-gradient(135deg,#FCE4EC,#F8BBD0)',
+    gradient: 'linear-gradient(135deg,#EFDFE2,#DDB9C1)',
     cost: 8, steps: 3, tag: '清新', scenes: ['zero', 'tea', 'dorm'],
     materials: [{ name: '蜜桃汁', amount: '100ml' }, { name: '乌龙茶', amount: '100ml' }, { name: '气泡水', amount: '100ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入蜜桃汁和乌龙茶', '注满气泡水', '轻轻搅拌'],
@@ -149,7 +149,7 @@ const DRINKS = [
   },
   {
     id: 1011, name: '梅子苏打', nameEn: 'Plum Soda', emoji: '🍶',
-    gradient: 'linear-gradient(135deg,#F3E5F5,#CE93D8)',
+    gradient: 'linear-gradient(135deg,#E8E1E6,#BCA0BC)',
     cost: 12, steps: 2, tag: '微醺', scenes: ['tipsy', 'tea'],
     materials: [{ name: '梅子酒', amount: '45ml' }, { name: '苏打水', amount: '150ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入梅子酒', '注满苏打水搅匀'],
@@ -157,7 +157,7 @@ const DRINKS = [
   },
   {
     id: 1012, name: '话梅可乐', nameEn: 'Plum Cola', emoji: '🥤',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#BCAAA4)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#B3A297)',
     cost: 6, steps: 2, tag: '怀旧', scenes: ['zero', 'dorm', 'camping'],
     materials: [{ name: '可乐', amount: '1罐' }, { name: '话梅', amount: '2颗' }, { name: '柠檬', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['话梅放入杯底，加冰块', '倒入可乐，放柠檬片'],
@@ -165,7 +165,7 @@ const DRINKS = [
   },
   {
     id: 1013, name: '青柠梳打', nameEn: 'Lime Soda', emoji: '🍋',
-    gradient: 'linear-gradient(135deg,#F1F8E9,#C5E1A5)',
+    gradient: 'linear-gradient(135deg,#E4EBDD,#BFD0A8)',
     cost: 5, steps: 2, tag: '最省钱', scenes: ['zero', 'dorm', 'camping'],
     materials: [{ name: '青柠', amount: '1个' }, { name: '苏打水', amount: '1罐' }, { name: '盐', amount: '少许' }, { name: '冰块', amount: '适量' }],
     instructions: ['青柠切块挤汁入杯，加少许盐', '加冰，倒满苏打水'],
@@ -173,7 +173,7 @@ const DRINKS = [
   },
   {
     id: 1014, name: '酸奶水果杯', nameEn: 'Yogurt Fruit Cup', emoji: '🍓',
-    gradient: 'linear-gradient(135deg,#FCE4EC,#F8BBD0)',
+    gradient: 'linear-gradient(135deg,#EFDFE2,#DDB9C1)',
     cost: 9, steps: 2, tag: '健康', scenes: ['zero', 'tea'],
     materials: [{ name: '酸奶', amount: '1杯' }, { name: '蜜桃汁', amount: '50ml' }, { name: '柠檬', amount: '1片' }],
     instructions: ['酸奶倒入杯中', '淋上蜜桃汁，放柠檬片'],
@@ -181,7 +181,7 @@ const DRINKS = [
   },
   {
     id: 1015, name: '预调果酒气泡', nameEn: 'RTD Fizz', emoji: '🍸',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FFCCBC)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#E0C3B4)',
     cost: 11, steps: 2, tag: '超简单', scenes: ['tipsy', 'camping'],
     materials: [{ name: '预调酒', amount: '1罐' }, { name: '气泡水', amount: '100ml' }, { name: '柠檬', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入预调酒', '兑入气泡水，放柠檬片'],
@@ -189,7 +189,7 @@ const DRINKS = [
   },
   {
     id: 1016, name: '蜂蜜柠檬水', nameEn: 'Honey Lemon', emoji: '🍯',
-    gradient: 'linear-gradient(135deg,#FFFDE7,#FFF59D)',
+    gradient: 'linear-gradient(135deg,#F2EBD4,#E7D9A0)',
     cost: 5, steps: 3, tag: '零失败', scenes: ['zero', 'dorm', 'camping'],
     materials: [{ name: '柠檬', amount: '1个' }, { name: '蜂蜜', amount: '2勺' }, { name: '苏打水', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['柠檬切片，加蜂蜜腌5分钟', '加冰和苏打水', '搅匀即可'],
@@ -197,7 +197,7 @@ const DRINKS = [
   },
   {
     id: 1017, name: '咸味番茄杯', nameEn: 'Salty Tomato', emoji: '🍅',
-    gradient: 'linear-gradient(135deg,#FFEBEE,#FFCDD2)',
+    gradient: 'linear-gradient(135deg,#EFDFD9,#E3C4BD)',
     cost: 7, steps: 3, tag: '开胃', scenes: ['zero', 'camping'],
     materials: [{ name: '番茄汁', amount: '1盒' }, { name: '柠檬', amount: '1块' }, { name: '盐', amount: '少许' }, { name: '黑胡椒', amount: '少许' }, { name: '冰块', amount: '适量' }],
     instructions: ['番茄汁倒入杯中', '挤入柠檬汁，加盐和黑胡椒', '加冰搅匀'],
@@ -205,7 +205,7 @@ const DRINKS = [
   },
   {
     id: 1018, name: '桂花米酿气泡', nameEn: 'Osmanthus Fizz', emoji: '🌼',
-    gradient: 'linear-gradient(135deg,#FFFDE7,#FFE082)',
+    gradient: 'linear-gradient(135deg,#F2EBD4,#DFC28F)',
     cost: 9, steps: 2, tag: '国风', scenes: ['tipsy', 'tea'],
     materials: [{ name: '米酒', amount: '60ml' }, { name: '气泡水', amount: '150ml' }, { name: '蜂蜜', amount: '1勺' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入米酒和蜂蜜', '注满气泡水搅匀'],
@@ -213,7 +213,7 @@ const DRINKS = [
   },
   {
     id: 1019, name: '柠檬茶炸弹', nameEn: 'Vita Vodka Tea', emoji: '🍋',
-    gradient: 'linear-gradient(135deg,#FFF8E1,#FFE082)',
+    gradient: 'linear-gradient(135deg,#F0E6D2,#DFC28F)',
     cost: 14, steps: 3, tag: '人气', scenes: ['tipsy', 'dorm', 'camping'],
     materials: [{ name: '伏特加小瓶', amount: '1瓶' }, { name: '维他柠檬茶', amount: '1瓶' }, { name: '柠檬', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入伏特加和维他柠檬茶', '放上柠檬片，搅匀即可'],
@@ -221,7 +221,7 @@ const DRINKS = [
   },
   {
     id: 1020, name: '威士忌柠檬茶', nameEn: 'Whisky Lemon Tea', emoji: '🥃',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FFCC80)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#DCB88A)',
     cost: 15, steps: 2, tag: '简单', scenes: ['tipsy', 'camping'],
     materials: [{ name: '威士忌小瓶', amount: '1瓶' }, { name: '维他柠檬茶', amount: '1瓶' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入威士忌', '倒满维他柠檬茶，搅匀'],
@@ -229,7 +229,7 @@ const DRINKS = [
   },
   {
     id: 1021, name: '野格红牛', nameEn: 'Jägermeister & Red Bull', emoji: '⚡',
-    gradient: 'linear-gradient(135deg,#FFECB3,#FFB74D)',
+    gradient: 'linear-gradient(135deg,#E6D2A8,#D3AC77)',
     cost: 16, steps: 2, tag: '提神', scenes: ['tipsy', 'camping'],
     materials: [{ name: '野格', amount: '1瓶' }, { name: '红牛', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入野格和红牛，搅匀'],
@@ -237,7 +237,7 @@ const DRINKS = [
   },
   {
     id: 1022, name: '野格魔爪', nameEn: 'Jäger Monster', emoji: '🐉',
-    gradient: 'linear-gradient(135deg,#E8EAF6,#9FA8DA)',
+    gradient: 'linear-gradient(135deg,#E1E4EA,#A7AEC0)',
     cost: 16, steps: 2, tag: '劲爽', scenes: ['tipsy', 'camping'],
     materials: [{ name: '野格', amount: '1瓶' }, { name: '魔爪', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入野格和魔爪'],
@@ -245,7 +245,7 @@ const DRINKS = [
   },
   {
     id: 1023, name: '百利旺仔', nameEn: 'Baileys Wangzai', emoji: '🥛',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FFE0B2)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#E3C9A6)',
     cost: 15, steps: 2, tag: '甜党', scenes: ['tipsy', 'tea', 'dorm'],
     materials: [{ name: '百利甜', amount: '1瓶' }, { name: '旺仔牛奶', amount: '1盒' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入百利甜', '倒满旺仔牛奶，搅匀'],
@@ -253,7 +253,7 @@ const DRINKS = [
   },
   {
     id: 1024, name: '百利奶茶', nameEn: 'Baileys Milk Tea', emoji: '🧋',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#D7CCC8)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#CDBFB4)',
     cost: 14, steps: 2, tag: '丝滑', scenes: ['tipsy', 'tea'],
     materials: [{ name: '百利甜', amount: '1瓶' }, { name: '奶茶', amount: '1瓶' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入百利甜和奶茶，摇匀'],
@@ -261,7 +261,7 @@ const DRINKS = [
   },
   {
     id: 1025, name: '百利阿华田', nameEn: 'Baileys Ovaltine', emoji: '🍫',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#A1887F)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#A8988A)',
     cost: 15, steps: 3, tag: '巧克力', scenes: ['tipsy', 'tea'],
     materials: [{ name: '百利甜', amount: '1瓶' }, { name: '阿华田', amount: '1份' }, { name: '牛奶', amount: '100ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['阿华田粉用少量温水化开', '杯中加冰，倒入牛奶和阿华田', '缓缓倒入百利甜'],
@@ -269,7 +269,7 @@ const DRINKS = [
   },
   {
     id: 1026, name: '金汤力', nameEn: 'Gin & Tonic', emoji: '🍸',
-    gradient: 'linear-gradient(135deg,#E8F5E9,#B2DFDB)',
+    gradient: 'linear-gradient(135deg,#E2EADF,#B6D0C4)',
     cost: 14, steps: 3, tag: '经典', scenes: ['tipsy', 'camping'],
     materials: [{ name: '金酒小瓶', amount: '1瓶' }, { name: '汤力水', amount: '1罐' }, { name: '青柠', amount: '1块' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入金酒和汤力水', '挤入青柠汁，放青柠块'],
@@ -277,7 +277,7 @@ const DRINKS = [
   },
   {
     id: 1027, name: '金橙菲兹', nameEn: 'Orange Gin Fizz', emoji: '🍊',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FFB74D)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#D3AC77)',
     cost: 13, steps: 2, tag: '清爽', scenes: ['tipsy', 'camping'],
     materials: [{ name: '金酒小瓶', amount: '1瓶' }, { name: '橙汁', amount: '1盒' }, { name: '橙片', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入金酒', '倒满橙汁，放橙片'],
@@ -285,7 +285,7 @@ const DRINKS = [
   },
   {
     id: 1028, name: '葡萄茉莉金', nameEn: 'Grape Jasmine Gin', emoji: '🍇',
-    gradient: 'linear-gradient(135deg,#F3E5F5,#CE93D8)',
+    gradient: 'linear-gradient(135deg,#E8E1E6,#BCA0BC)',
     cost: 14, steps: 3, tag: '国风', scenes: ['tipsy', 'tea'],
     materials: [{ name: '金酒小瓶', amount: '1瓶' }, { name: '葡萄汁', amount: '100ml' }, { name: '茉莉茶', amount: '100ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入葡萄汁和茉莉茶', '倒入金酒', '轻轻搅匀'],
@@ -293,7 +293,7 @@ const DRINKS = [
   },
   {
     id: 1029, name: '薄荷朗姆', nameEn: 'Mint Rum', emoji: '🌿',
-    gradient: 'linear-gradient(135deg,#E8F5E9,#A5D6A7)',
+    gradient: 'linear-gradient(135deg,#E2EADF,#AFC9AE)',
     cost: 13, steps: 3, tag: '莫吉托平替', scenes: ['tipsy', 'camping'],
     materials: [{ name: '朗姆酒小瓶', amount: '1瓶' }, { name: '雪碧', amount: '1罐' }, { name: '薄荷糖', amount: '2颗' }, { name: '青柠', amount: '1块' }, { name: '冰块', amount: '适量' }],
     instructions: ['薄荷糖放杯底捣碎', '加冰，倒入朗姆酒和雪碧', '挤入青柠汁'],
@@ -301,7 +301,7 @@ const DRINKS = [
   },
   {
     id: 1030, name: '椰林漫步', nameEn: 'Coconut Rum', emoji: '🥥',
-    gradient: 'linear-gradient(135deg,#F1F8E9,#B2DFDB)',
+    gradient: 'linear-gradient(135deg,#E4EBDD,#B6D0C4)',
     cost: 14, steps: 2, tag: '海岛风', scenes: ['tipsy', 'camping'],
     materials: [{ name: '朗姆酒小瓶', amount: '1瓶' }, { name: '椰子水', amount: '1瓶' }, { name: '青柠', amount: '1块' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入朗姆酒和椰子水，挤青柠汁'],
@@ -309,7 +309,7 @@ const DRINKS = [
   },
   {
     id: 1031, name: '烧酒雪碧', nameEn: 'Soju & Sprite', emoji: '🍶',
-    gradient: 'linear-gradient(135deg,#FFFDE7,#FFF59D)',
+    gradient: 'linear-gradient(135deg,#F2EBD4,#E7D9A0)',
     cost: 12, steps: 2, tag: '韩剧同款', scenes: ['tipsy', 'dorm', 'camping'],
     materials: [{ name: '烧酒', amount: '1瓶' }, { name: '雪碧', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入烧酒和雪碧，1:1 兑匀'],
@@ -317,7 +317,7 @@ const DRINKS = [
   },
   {
     id: 1032, name: '果冻烧酒', nameEn: 'Jelly Soju', emoji: '🍮',
-    gradient: 'linear-gradient(135deg,#FCE4EC,#F48FB1)',
+    gradient: 'linear-gradient(135deg,#EFDFE2,#CE9FAC)',
     cost: 13, steps: 2, tag: '趣味', scenes: ['tipsy', 'dorm'],
     materials: [{ name: '烧酒', amount: '1瓶' }, { name: '果冻', amount: '1盒' }, { name: '冰块', amount: '适量' }],
     instructions: ['果冻切块放入杯中', '倒入烧酒，加冰，用勺子吃'],
@@ -325,7 +325,7 @@ const DRINKS = [
   },
   {
     id: 1033, name: '西柚盐边', nameEn: 'Grapefruit Rim', emoji: '🍊',
-    gradient: 'linear-gradient(135deg,#FFEBEE,#FFAB91)',
+    gradient: 'linear-gradient(135deg,#EFDFD9,#DDAE9B)',
     cost: 13, steps: 3, tag: '微苦', scenes: ['tipsy', 'camping'],
     materials: [{ name: '伏特加小瓶', amount: '1瓶' }, { name: '西柚汁', amount: '1盒' }, { name: '盐', amount: '少许' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯口抹一圈盐', '杯中加冰，倒入伏特加和西柚汁', '搅匀'],
@@ -333,7 +333,7 @@ const DRINKS = [
   },
   {
     id: 1034, name: '日落橙', nameEn: 'Sunset Orange', emoji: '🌅',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#FF8A65)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#CE9C82)',
     cost: 14, steps: 3, tag: '分层', scenes: ['tipsy', 'camping'],
     materials: [{ name: '伏特加小瓶', amount: '1瓶' }, { name: '红石榴汁', amount: '50ml' }, { name: '橙汁', amount: '100ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入橙汁和伏特加', '缓缓沿杯壁倒入红石榴汁', '不搅拌，看它沉底渐变'],
@@ -341,7 +341,7 @@ const DRINKS = [
   },
   {
     id: 1035, name: '话梅柠檬茶酒', nameEn: 'Plum Vodka Tea', emoji: '🫒',
-    gradient: 'linear-gradient(135deg,#FFF8E1,#FFCC80)',
+    gradient: 'linear-gradient(135deg,#F0E6D2,#DCB88A)',
     cost: 12, steps: 3, tag: '上头', scenes: ['tipsy', 'dorm'],
     materials: [{ name: '伏特加小瓶', amount: '1瓶' }, { name: '维他柠檬茶', amount: '1瓶' }, { name: '话梅', amount: '2颗' }, { name: '冰块', amount: '适量' }],
     instructions: ['话梅放杯底，加冰', '倒入伏特加', '倒满维他柠檬茶，摇匀'],
@@ -349,7 +349,7 @@ const DRINKS = [
   },
   {
     id: 1036, name: '威士忌可乐', nameEn: 'Whisky & Coke', emoji: '🥃',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#8D6E63)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#9C8577)',
     cost: 13, steps: 2, tag: '零失败', scenes: ['tipsy', 'camping'],
     materials: [{ name: '威士忌小瓶', amount: '1瓶' }, { name: '可乐', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入威士忌和可乐'],
@@ -357,7 +357,7 @@ const DRINKS = [
   },
   {
     id: 1037, name: '威士忌冰茶', nameEn: 'Whisky Iced Tea', emoji: '🧋',
-    gradient: 'linear-gradient(135deg,#FFF3E0,#BCAAA4)',
+    gradient: 'linear-gradient(135deg,#EFE4D5,#B3A297)',
     cost: 13, steps: 3, tag: '清爽', scenes: ['tipsy', 'camping'],
     materials: [{ name: '威士忌小瓶', amount: '1瓶' }, { name: '冰红茶', amount: '1瓶' }, { name: '柠檬', amount: '1片' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入威士忌', '倒满冰红茶', '放柠檬片'],
@@ -365,7 +365,7 @@ const DRINKS = [
   },
   {
     id: 1038, name: '百利咖啡', nameEn: 'Baileys Coffee', emoji: '☕',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#795548)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#8A7466)',
     cost: 14, steps: 2, tag: '提神', scenes: ['tipsy', 'tea', 'dorm'],
     materials: [{ name: '百利甜', amount: '1瓶' }, { name: '罐装咖啡', amount: '1罐' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加满冰块', '倒入百利甜和咖啡，搅匀'],
@@ -373,7 +373,7 @@ const DRINKS = [
   },
   {
     id: 1039, name: '野格阿华田', nameEn: 'Jäger Ovaltine', emoji: '🍫',
-    gradient: 'linear-gradient(135deg,#EFEBE9,#6D4C41)',
+    gradient: 'linear-gradient(135deg,#E7E2DA,#7E685C)',
     cost: 15, steps: 3, tag: '巧克力', scenes: ['tipsy', 'tea'],
     materials: [{ name: '野格', amount: '1瓶' }, { name: '阿华田', amount: '1份' }, { name: '牛奶', amount: '100ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['阿华田用温水化开', '杯中加冰，倒入牛奶和阿华田', '缓缓倒入野格'],
@@ -381,7 +381,7 @@ const DRINKS = [
   },
   {
     id: 1040, name: '蜜桃乌龙金', nameEn: 'Peach Oolong Gin', emoji: '🍑',
-    gradient: 'linear-gradient(135deg,#FCE4EC,#F48FB1)',
+    gradient: 'linear-gradient(135deg,#EFDFE2,#CE9FAC)',
     cost: 14, steps: 3, tag: '果茶', scenes: ['tipsy', 'tea'],
     materials: [{ name: '金酒小瓶', amount: '1瓶' }, { name: '蜜桃汁', amount: '100ml' }, { name: '乌龙茶', amount: '100ml' }, { name: '冰块', amount: '适量' }],
     instructions: ['杯中加冰，倒入蜜桃汁和乌龙茶', '倒入金酒', '摇匀即可'],

@@ -1,4 +1,4 @@
-<view class="page-wrap match-page">
+<view class="page-wrap match-page {{isDark ? 'theme-dark' : ''}}">
   <view class="match-intro">
     <view class="match-intro__title">🧺 勾一勾你手头的材料</view>
     <view class="match-intro__sub">选好后自动帮你找出能调的便利店酒</view>

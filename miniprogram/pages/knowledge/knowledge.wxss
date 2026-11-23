@@ -1,12 +1,14 @@
 .knowledge { padding: 0; }
 
 .know-hero {
-  background: linear-gradient(160deg, var(--midnight-blue, #1A2332), var(--slate-blue, #3D5A7B));
-  padding: 40rpx 32rpx 48rpx;
-  border-radius: 0 0 40rpx 40rpx;
+  background:
+    radial-gradient(ellipse 420rpx 320rpx at 86% 0%, var(--orb-warm), transparent 70%),
+    var(--head-gradient);
+  padding: calc(48rpx + env(safe-area-inset-top)) 48rpx 52rpx;
+  border-radius: 0 0 56rpx 56rpx;
 }
-.know-hero__title { font-family: var(--font-display, serif); font-size: 46rpx; font-weight: 700; color: #FFFFFF; }
-.know-hero__sub { font-size: 24rpx; color: rgba(255,255,255,0.75); margin-top: 8rpx; }
+.know-hero__title { font-family: var(--font-display); font-size: 52rpx; font-weight: 400; letter-spacing: 0.04em; color: var(--text); }
+.know-hero__sub { font-size: 24rpx; color: var(--text-2); margin-top: 10rpx; letter-spacing: 0.04em; }
 
 .tabs {
   margin-top: -24rpx;
@@ -17,34 +19,34 @@
   display: inline-block;
   margin: 0 8rpx;
   padding: 14rpx 36rpx;
-  background: #FFFFFF;
+  background: var(--glass-strong); border: 1rpx solid var(--glass-border);
   border-radius: var(--radius-round, 9999rpx);
   font-size: 27rpx;
-  color: var(--slate-blue, #3D5A7B);
-  box-shadow: var(--shadow-glass-light, 0 4rpx 12rpx rgba(26,35,50,0.08));
+  color: var(--text-2);
+  box-shadow: var(--shadow-sm);
   transition: all 0.2s;
 }
 .tab.on {
-  background: linear-gradient(135deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #FFFFFF;
 }
 
 .know-list { padding: 24rpx 32rpx 0; }
 .know-item { padding: 28rpx; margin-bottom: 20rpx; }
 .know-item__name {
-  font-family: var(--font-display, serif);
+  font-family: var(--font-display);
   font-size: 32rpx;
   font-weight: 600;
-  color: var(--midnight-blue, #1A2332);
+  color: var(--text);
   margin-bottom: 12rpx;
 }
 .know-item__name::before {
   content: '';
   display: inline-block;
   width: 10rpx; height: 28rpx;
-  background: var(--primary-amber, #D4A574);
-  border-radius: var(--radius-xs, 8rpx);
+  background: var(--accent);
+  border-radius: var(--radius-xs);
   margin-right: 14rpx;
   vertical-align: -3rpx;
 }
-.know-item__desc { font-size: 27rpx; color: var(--slate-blue, #3D5A7B); line-height: 1.75; }
+.know-item__desc { font-size: 27rpx; color: var(--text-2); line-height: 1.75; }

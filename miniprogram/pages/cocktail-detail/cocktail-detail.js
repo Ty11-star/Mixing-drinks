@@ -1,6 +1,8 @@
 // pages/cocktail-detail/cocktail-detail.js
 const cocktailApi = require('../../api/cocktail');
 const format = require('../../utils/format');
+const imageCache = require('../../utils/imageCache');
+const { icons } = require('../../utils/icons');
 const app = getApp();
 
 function parseAmountVal(amount) {
@@ -15,7 +17,17 @@ function parseAmountVal(amount) {
 }
 
 Page({
+  onShow() {
+    try {
+      const app = getApp();
+      this.setData({ isDark: app.globalData.theme === 'dark' });
+    } catch (e) {}
+  },
+
   data: {
+    isDark: false,
+
+    icons: icons,
     id: null,
     detail: null,
     loading: true,
@@ -46,12 +58,17 @@ Page({
         _ratio: Math.max(0.06, parseAmountVal(i.amount) / maxVal),
         _optional: i.isOptional === 1 || i.isOptional === '1'
       }));
+      const url = detail.image || '';
+      const page = this;
+      const resolvedImage = imageCache.resolve(url, {
+        onReady(localPath) { page.setData({ image: localPath }); }
+      });
       this.setData({
         detail,
         loading: false,
         gradient: format.getSpiritGradient(detail.baseSpirit),
         icon: format.getSpiritIcon(detail.baseSpirit),
-        image: detail.image || '',
+        image: resolvedImage,
         taste: format.parseTasteTags(detail.tasteTags),
         diff: format.getDifficulty(detail.difficulty),
         methodLabel: format.getMethodLabel(detail.method),
@@ -85,6 +102,12 @@ Page({
     this.setData({ isFav: added, favRipple: true });
     wx.showToast({ title: added ? '已收藏' : '已取消收藏', icon: 'none' });
     setTimeout(() => this.setData({ favRipple: false }), 600);
+  },
+
+  goBack() {
+    const pages = getCurrentPages();
+    if (pages.length > 1) wx.navigateBack();
+    else wx.switchTab({ url: '/pages/index/index' });
   },
 
   onShareAppMessage() {

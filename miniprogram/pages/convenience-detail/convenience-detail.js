@@ -1,9 +1,20 @@
 // pages/convenience-detail/convenience-detail.js
 const convenience = require('../../utils/convenience');
+const { icons } = require('../../utils/icons');
 const app = getApp();
 
 Page({
+  onShow() {
+    try {
+      const app = getApp();
+      this.setData({ isDark: app.globalData.theme === 'dark' });
+    } catch (e) {}
+  },
+
   data: {
+    icons: icons,
+    isDark: false,
+
     drink: null,
     materials: [],
     isFav: false

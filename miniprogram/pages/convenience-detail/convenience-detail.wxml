@@ -1,4 +1,4 @@
-<view class="page-wrap conv-detail" wx:if="{{drink}}">
+<view class="page-wrap conv-detail {{isDark ? 'theme-dark' : ''}}" wx:if="{{drink}}">
   <!-- 头部 -->
   <view class="cd-hero" style="background:{{drink.gradient}}">
     <text class="cd-hero__emoji">{{drink.emoji}}</text>
@@ -45,7 +45,8 @@
     <!-- 收藏 -->
     <view class="cd-actions">
       <view class="cd-fav {{isFav ? 'is-fav' : ''}}" bindtap="toggleFav">
-        <text>{{isFav ? '♥ 已收藏' : '♡ 收藏这杯'}}</text>
+        <image class="ico" src="{{isFav ? icons.heartFilled : icons.heartOutline}}" />
+        <text>{{isFav ? '已收藏' : '收藏这杯'}}</text>
       </view>
     </view>
   </view>

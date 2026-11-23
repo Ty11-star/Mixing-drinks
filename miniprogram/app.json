@@ -1,4 +1,6 @@
 {
+  "darkmode": true,
+  "themeLocation": "theme.json",
   "pages": [
     "pages/index/index",
     "pages/cocktail-detail/cocktail-detail",
@@ -14,19 +16,19 @@
     "pages/convenience-pitfalls/convenience-pitfalls"
   ],
   "window": {
-    "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#1A2332",
+    "backgroundTextStyle": "@backgroundTextStyle",
+    "navigationBarBackgroundColor": "@navBgColor",
     "navigationBarTitleText": "调一杯",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#F8FAFB",
+    "navigationBarTextStyle": "@navTextStyle",
+    "backgroundColor": "@windowBgColor",
     "enablePullDownRefresh": false
   },
   "tabBar": {
     "custom": true,
-    "color": "#3D5A7B",
-    "selectedColor": "#D4A574",
-    "backgroundColor": "#FFFFFF",
-    "borderStyle": "white",
+    "color": "@tabBarColor",
+    "selectedColor": "@tabBarSelectedColor",
+    "backgroundColor": "@tabBarBgColor",
+    "borderStyle": "@tabBarBorderStyle",
     "list": [
       { "pagePath": "pages/index/index", "text": "首页" },
       { "pagePath": "pages/shake/shake", "text": "调一杯" },

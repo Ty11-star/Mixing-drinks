@@ -18,7 +18,16 @@ const TIER_LABEL = {
 };
 
 Page({
+  onShow() {
+    try {
+      const app = getApp();
+      this.setData({ isDark: app.globalData.theme === 'dark' });
+    } catch (e) {}
+  },
+
   data: {
+    isDark: false,
+
     loading: true,
     results: [],
     total: 0

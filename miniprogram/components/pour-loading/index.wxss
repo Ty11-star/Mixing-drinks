@@ -11,7 +11,7 @@
   position: relative;
   width: 96rpx;
   height: 120rpx;
-  border: 4rpx solid var(--slate-blue, #3D5A7B);
+  border: 4rpx solid var(--text-3);
   border-top: none;
   border-radius: 0 0 40rpx 40rpx;
   overflow: hidden;
@@ -24,7 +24,7 @@
   right: 0;
   bottom: 0;
   height: 0;
-  background: linear-gradient(180deg, var(--primary-amber, #D4A574), var(--primary-amber-dark, #B8935E));
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
   animation: liquid-rise 1.4s ease-in-out infinite;
 }
 @keyframes liquid-rise {
@@ -40,7 +40,7 @@
   left: 50%;
   width: 4rpx;
   height: 24rpx;
-  background: linear-gradient(180deg, transparent, var(--primary-amber, #D4A574));
+  background: linear-gradient(180deg, transparent, var(--accent));
   transform: translateX(-50%);
   animation: stream-fall 1.4s ease-in-out infinite;
 }
@@ -51,6 +51,7 @@
 
 .pour-loading__text {
   font-size: 26rpx;
-  color: var(--slate-blue, #3D5A7B);
-  letter-spacing: 0.04em;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  font-family: var(--font-display);
 }

@@ -1,4 +1,4 @@
-<view class="page-wrap shake">
+<view class="page-wrap shake {{isDark ? 'theme-dark' : ''}}">
   <!-- 顶部固定区：标题 + 酒杯（不随原料滑动） -->
   <view class="shake__head">
     <view class="shake__title">调一杯</view>
