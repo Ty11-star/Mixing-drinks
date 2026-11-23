@@ -169,7 +169,7 @@
 
     <view class="toolbar">
       <view class="toolbar__count">共 <text class="fw-600 conv-accent">{{convDrinks.length}}</text> 款</view>
-      <view class="conv-toolbar__hint">低成本 · 好上手</view>
+      <view class="conv-toolbar__hint">好上手 · 零失败</view>
     </view>
 
     <view class="grid conv-grid">

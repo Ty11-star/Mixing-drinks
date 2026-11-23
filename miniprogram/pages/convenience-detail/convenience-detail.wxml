@@ -11,7 +11,6 @@
       bindload="onHeroImageLoad"
       binderror="onHeroImageError"
     ></image>
-    <view class="cd-hero__cost">约 ¥{{drink.cost}}</view>
   </view>
 
   <view class="cd-main">
@@ -21,7 +20,6 @@
       <view class="cd-title__tags">
         <text class="cd-title__tag">⏱ {{drink.tag}}</text>
         <text class="cd-title__tag">{{drink.steps}} 步搞定</text>
-        <text class="cd-title__tag">💰 低成本</text>
       </view>
     </view>
 

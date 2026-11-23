@@ -44,11 +44,6 @@
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
-.c-card.is-dark .c-card__cost {
-  background: rgba(255, 255, 255, 0.12);
-  color: #D9AE7C;
-  border-color: rgba(255, 255, 255, 0.14);
-}
 .c-card.is-dark .c-card__fav {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.16);
@@ -60,17 +55,6 @@
   opacity: 0; transition: opacity 0.4s ease;
 }
 .c-card__photo.is-loaded { opacity: 1; }
-.c-card__cost {
-  position: absolute; top: 24rpx; left: 24rpx;
-  font-family: var(--font-mono);
-  font-size: 26rpx;
-  color: var(--text);
-  background: var(--glass-strong);
-  border: 1rpx solid var(--glass-border);
-  padding: 8rpx 22rpx;
-  border-radius: 9999rpx;
-  box-shadow: var(--shadow-sm);
-}
 .c-card__fav {
   position: absolute; top: 24rpx; right: 24rpx;
   width: 60rpx; height: 60rpx;

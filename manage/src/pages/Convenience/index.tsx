@@ -188,7 +188,7 @@ const ConvenienceManage: React.FC = () => {
         instructions: JSON.stringify(record.instructions || [], null, 2),
       });
     } else {
-      drinkForm.setFieldsValue({ isActive: true, emoji: '🍹', cost: 0, steps: 0 });
+      drinkForm.setFieldsValue({ isActive: true, emoji: '🍹', steps: 0 });
     }
     setDrinkModalVisible(true);
   };
@@ -199,7 +199,6 @@ const ConvenienceManage: React.FC = () => {
       const payload: ConvenienceDrink = {
         name: values.name,
         emoji: values.emoji || '🍹',
-        cost: values.cost ?? 0,
         steps: values.steps ?? 0,
         nameEn: values.nameEn || '',
         gradient: values.gradient || '',
@@ -248,7 +247,6 @@ const ConvenienceManage: React.FC = () => {
     { title: '名称', dataIndex: 'name', width: 140 },
     { title: '英文名', dataIndex: 'nameEn', width: 140 },
     { title: 'Emoji', dataIndex: 'emoji', width: 70 },
-    { title: '成本', dataIndex: 'cost', width: 80, render: (v: number) => `¥${v}` },
     { title: '步骤', dataIndex: 'steps', width: 70 },
     { title: '标签', dataIndex: 'tag', width: 100 },
     { title: '状态', dataIndex: 'isActive', width: 80, render: (v: number) => v === 1 ? '启用' : '停用' },
@@ -467,7 +465,6 @@ const ConvenienceManage: React.FC = () => {
           <Form.Item name="gradient" label="渐变样式"><Input placeholder="linear-gradient(...)" /></Form.Item>
           <Form.Item name="tag" label="标签"><Input placeholder="如：经典" /></Form.Item>
           <div style={{ display: 'flex', gap: 16 }}>
-            <Form.Item name="cost" label="成本（元）" style={{ flex: 1 }}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item>
             <Form.Item name="steps" label="步骤数" style={{ flex: 1 }}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item>
             <Form.Item name="isActive" label="启用" valuePropName="checked" style={{ flex: 1 }}><Switch /></Form.Item>
           </div>

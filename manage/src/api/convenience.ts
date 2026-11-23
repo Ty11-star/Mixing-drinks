@@ -19,7 +19,7 @@ export interface ConvenienceDrink {
   emoji: string;
   gradient?: string;
   image?: string;
-  cost: number;
+  cost?: number;
   steps: number;
   tag?: string;
   scenes?: string[];

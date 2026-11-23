@@ -11,7 +11,6 @@
       bindload="onImageLoad"
       binderror="onImageError"
     ></image>
-    <view class="c-card__cost">约 ¥{{drink.cost}}</view>
     <view class="c-card__fav {{isFav ? 'is-fav' : ''}}" catchtap="toggleFav">
       <image class="ico ico-sm" src="{{isFav ? icons.heartFilled : icons.heartOutline}}" />
     </view>

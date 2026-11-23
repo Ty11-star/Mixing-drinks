@@ -40,7 +40,7 @@
       <view class="match-item__emoji" style="background:{{item.drink.gradient}}">{{item.drink.emoji}}</view>
       <view class="match-item__info">
         <view class="match-item__name">{{item.drink.name}}</view>
-        <view class="match-item__sub">材料齐 {{item.matched}}/{{item.total}} · 约 ¥{{item.drink.cost}}</view>
+        <view class="match-item__sub">材料齐 {{item.matched}}/{{item.total}}</view>
         <view class="match-item__bar">
           <view class="match-item__bar-fill" style="width:{{item.matched / item.total * 100}}%"></view>
         </view>
