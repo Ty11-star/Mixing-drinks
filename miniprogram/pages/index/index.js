@@ -26,13 +26,14 @@ Page({
     mode: 'pro',
     convScenes: convenience.SCENES,
     convScene: 'all',
-    convDrinks: convenience.DRINKS
+    convDrinks: convenience.getDrinks()
   },
 
   onLoad() {
     this.loadCategories();
     this.loadList(true);
     this.loadHeroImage();
+    this.loadConvenience();
   },
 
   loadHeroImage() {
@@ -163,6 +164,9 @@ Page({
 
   onPullDownRefresh() {
     this.loadList(true);
+    convenience.loadRemote(true).then(() => {
+      this.setData({ convDrinks: convenience.getDrinksByScene(this.data.convScene) });
+    });
   },
 
   selectSpirit(e) {
@@ -194,6 +198,12 @@ Page({
   },
 
   // ===== 便利店模式 =====
+  loadConvenience() {
+    convenience.loadRemote().then(() => {
+      this.setData({ convDrinks: convenience.getDrinksByScene(this.data.convScene) });
+    });
+  },
+
   switchMode(e) {
     const mode = e.currentTarget.dataset.mode;
     if (mode === this.data.mode) return;

@@ -403,14 +403,58 @@ const PITFALLS = [
   { emoji: '🍸', title: '小瓶酒别一次全倒', desc: '便利店小瓶酒度数不低，先倒一半试口味。兑饮料时酒和饮料按 1:3 起步最稳。' }
 ];
 
+// ========== 运行时数据：优先使用后端内容，失败时回退到本地静态数据 ==========
+const request = require('./request');
+
+let state = {
+  materials: MATERIALS.slice(),
+  drinks: DRINKS.slice(),
+  pitfalls: PITFALLS.slice()
+};
+let lastLoadAt = 0;
+let loadingPromise = null;
+
+function getMaterials() { return state.materials; }
+function getDrinks() { return state.drinks; }
+function getPitfalls() { return state.pitfalls; }
+
+/**
+ * 从后端拉取便利店内容；失败或数据为空时自动使用本地数据
+ * @param {boolean} force true 时忽略 1 分钟内的缓存
+ */
+function loadRemote(force) {
+  const now = Date.now();
+  if (!force && loadingPromise) return loadingPromise;
+  if (!force && now - lastLoadAt < 60000) return Promise.resolve(state);
+
+  lastLoadAt = now;
+  loadingPromise = request({ url: '/convenience', silent: true })
+    .then(data => {
+      if (data && Array.isArray(data.drinks) && data.drinks.length) {
+        state = {
+          drinks: data.drinks,
+          materials: Array.isArray(data.materials) ? data.materials : state.materials,
+          pitfalls: Array.isArray(data.pitfalls) ? data.pitfalls : state.pitfalls
+        };
+      }
+      loadingPromise = null;
+      return state;
+    })
+    .catch(() => {
+      loadingPromise = null;
+      return state;
+    });
+  return loadingPromise;
+}
+
 function getDrinksByScene(scene) {
-  if (scene === 'all') return DRINKS;
-  return DRINKS.filter(d => d.scenes.indexOf(scene) >= 0);
+  if (scene === 'all') return getDrinks();
+  return getDrinks().filter(d => (d.scenes || []).indexOf(scene) >= 0);
 }
 
 function getMaterialsByNames(names) {
   return names.map(n => {
-    const found = MATERIALS.find(m => m.name === n.name);
+    const found = getMaterials().find(m => m.name === n.name);
     return Object.assign({}, n, { emoji: found ? found.emoji : '🥤' });
   });
 }
@@ -419,8 +463,8 @@ function getMaterialsByNames(names) {
 function matchByMaterials(selected) {
   const set = {};
   selected.forEach(n => { set[n] = true; });
-  return DRINKS.map(d => {
-    const need = d.materials.map(m => m.name);
+  return getDrinks().map(d => {
+    const need = (d.materials || []).map(m => m.name);
     const matched = need.filter(n => set[n]);
     return { drink: d, matched: matched.length, total: need.length, missing: need.filter(n => !set[n]) };
   })
@@ -430,5 +474,6 @@ function matchByMaterials(selected) {
 
 module.exports = {
   SCENES, MATERIALS, DRINKS, PITFALLS,
+  getMaterials, getDrinks, getPitfalls, loadRemote,
   getDrinksByScene, getMaterialsByNames, matchByMaterials
 };

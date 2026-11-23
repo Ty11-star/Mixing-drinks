@@ -15,6 +15,7 @@ const CocktailCategory = require('./CocktailCategory');
 const User = require('./User');
 const Admin = require('./Admin');
 const Favorite = require('./Favorite');
+const { ConvenienceMaterial, ConvenienceDrink, ConveniencePitfall } = require('./convenience');
 
 // 初始化模型
 const models = {
@@ -26,7 +27,10 @@ const models = {
   CocktailCategory: CocktailCategory(sequelize, DataTypes),
   User: User(sequelize, DataTypes),
   Admin: Admin(sequelize, DataTypes),
-  Favorite: Favorite(sequelize, DataTypes)
+  Favorite: Favorite(sequelize, DataTypes),
+  ConvenienceMaterial: ConvenienceMaterial(sequelize, DataTypes),
+  ConvenienceDrink: ConvenienceDrink(sequelize, DataTypes),
+  ConveniencePitfall: ConveniencePitfall(sequelize, DataTypes)
 };
 
 // 定义关联关系

@@ -12,6 +12,11 @@ Page({
   data: {
     isDark: false,
 
-    pitfalls: convenience.PITFALLS
+    pitfalls: convenience.getPitfalls()
+  },
+
+  async onLoad() {
+    await convenience.loadRemote();
+    this.setData({ pitfalls: convenience.getPitfalls() });
   }
 });

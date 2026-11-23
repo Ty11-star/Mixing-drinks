@@ -5,6 +5,7 @@ import {
   MenuUnfoldOutlined,
   LogoutOutlined,
   TeamOutlined,
+  ShopOutlined,
 } from '@ant-design/icons';
 import { Layout as AntLayout, Menu, Button, Dropdown, Avatar } from 'antd';
 import { useAuthStore } from '../store/useAuthStore';
@@ -41,6 +42,7 @@ const Layout = () => {
         { key: '/cocktails', icon: <CocktailGlassIcon />, label: '酒谱管理' },
         { key: '/ingredients', icon: <JiggerIcon />, label: '材料管理' },
         { key: '/categories', icon: <CoasterIcon />, label: '分类管理' },
+        { key: '/convenience', icon: <ShopOutlined />, label: '便利店调酒' },
       ],
     },
     {

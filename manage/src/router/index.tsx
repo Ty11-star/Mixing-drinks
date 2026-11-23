@@ -7,6 +7,7 @@ import CocktailForm from '../pages/Cocktail/Form';
 import IngredientList from '../pages/Ingredient/List';
 import CategoryList from '../pages/Category/List';
 import UserList from '../pages/User/List';
+import ConvenienceManage from '../pages/Convenience';
 
 // 路由配置
 const router = createBrowserRouter([
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: 'users',
         element: <UserList />,
+      },
+      {
+        path: 'convenience',
+        element: <ConvenienceManage />,
       },
     ],
   },

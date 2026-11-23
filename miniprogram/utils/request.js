@@ -17,7 +17,7 @@ function request(options) {
     const query = method === 'GET' ? data : {};
     const body = method === 'POST' ? data : {};
     return mock.request(method, url, query, body).then(res => res).catch(err => {
-      wx.showToast({ title: err.message || '请求失败', icon: 'none' });
+      if (!options.silent) wx.showToast({ title: err.message || '请求失败', icon: 'none' });
       return Promise.reject(err);
     });
   }
@@ -40,14 +40,14 @@ function request(options) {
         } else {
           const msg = body && body.message ? body.message : ('网络错误 ' + res.statusCode);
           console.error('[request] 响应异常', fullUrl, res.statusCode, body);
-          wx.showToast({ title: msg, icon: 'none' });
+          if (!options.silent) wx.showToast({ title: msg, icon: 'none' });
           reject(new Error(msg));
         }
       },
       fail(err) {
         const msg = (err && err.errMsg) ? err.errMsg : '网络请求失败';
         console.error('[request] 请求失败', fullUrl, err);
-        wx.showToast({ title: msg, icon: 'none' });
+        if (!options.silent) wx.showToast({ title: msg, icon: 'none' });
         reject(new Error(msg));
       }
     });

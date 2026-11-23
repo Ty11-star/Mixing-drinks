@@ -4,6 +4,7 @@ const adminController = require('../controllers/adminController');
 const statsController = require('../controllers/statsController');
 const cocktailController = require('../controllers/cocktailController');
 const uploadController = require('../controllers/uploadController');
+const convenienceController = require('../controllers/convenienceController');
 const upload = require('../middlewares/upload');
 const { authenticateToken } = require('../middlewares/auth');
 
@@ -40,5 +41,22 @@ router.post('/ingredients/batch-delete', authenticateToken, adminController.batc
 router.post('/categories', authenticateToken, adminController.createCategory);
 router.put('/categories/:id', authenticateToken, adminController.updateCategory);
 router.delete('/categories/:id', authenticateToken, adminController.deleteCategory);
+
+// 便利店调酒管理
+router.get('/convenience/drinks', authenticateToken, convenienceController.drinks.list);
+router.post('/convenience/drinks', authenticateToken, convenienceController.drinks.create);
+router.put('/convenience/drinks/:id', authenticateToken, convenienceController.drinks.update);
+router.delete('/convenience/drinks/:id', authenticateToken, convenienceController.drinks.remove);
+router.put('/convenience/drinks/:id/status', authenticateToken, convenienceController.toggleDrinkStatus);
+
+router.get('/convenience/materials', authenticateToken, convenienceController.materials.list);
+router.post('/convenience/materials', authenticateToken, convenienceController.materials.create);
+router.put('/convenience/materials/:id', authenticateToken, convenienceController.materials.update);
+router.delete('/convenience/materials/:id', authenticateToken, convenienceController.materials.remove);
+
+router.get('/convenience/pitfalls', authenticateToken, convenienceController.pitfalls.list);
+router.post('/convenience/pitfalls', authenticateToken, convenienceController.pitfalls.create);
+router.put('/convenience/pitfalls/:id', authenticateToken, convenienceController.pitfalls.update);
+router.delete('/convenience/pitfalls/:id', authenticateToken, convenienceController.pitfalls.remove);
 
 module.exports = router;

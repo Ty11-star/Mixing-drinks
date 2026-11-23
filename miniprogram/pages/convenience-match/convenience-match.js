@@ -17,10 +17,11 @@ Page({
     results: []
   },
 
-  onLoad() {
+  async onLoad() {
+    await convenience.loadRemote();
     // 按 category 分组
     const cats = [];
-    convenience.MATERIALS.forEach(m => {
+    convenience.getMaterials().forEach(m => {
       let group = cats.find(g => g.category === m.category);
       if (!group) {
         group = { category: m.category, materials: [] };

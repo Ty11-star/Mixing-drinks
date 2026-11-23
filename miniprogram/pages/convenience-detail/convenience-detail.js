@@ -20,16 +20,17 @@ Page({
     isFav: false
   },
 
-  onLoad(options) {
+  async onLoad(options) {
+    await convenience.loadRemote();
     const id = Number(options.id);
-    const drink = convenience.DRINKS.find(d => d.id === id);
+    const drink = convenience.getDrinks().find(d => d.id === id);
     if (!drink) {
       wx.showToast({ title: '找不到这杯酒', icon: 'none' });
       return;
     }
     this.setData({
       drink,
-      materials: convenience.getMaterialsByNames(drink.materials),
+      materials: convenience.getMaterialsByNames(drink.materials || []),
       isFav: app.isFavorite(id)
     });
   },
