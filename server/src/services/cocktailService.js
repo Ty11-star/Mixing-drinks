@@ -270,7 +270,8 @@ class CocktailService {
       ],
       limit: parseInt(pageSize),
       offset,
-      order: [['sortOrder', 'DESC'], ['createTime', 'DESC']]
+      order: [['sortOrder', 'DESC'], ['createdAt', 'DESC'], [Sequelize.cast(Sequelize.col('Cocktail.id'), 'SIGNED'), 'ASC']],
+      distinct: true
     });
 
     return {
