@@ -1,26 +1,76 @@
 .shake {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 0 0 calc(180rpx + env(safe-area-inset-bottom));
+  padding: calc(24rpx + env(safe-area-inset-top)) 0 calc(180rpx + env(safe-area-inset-bottom));
   overflow: hidden;
 }
 
-.shake__head {
-  flex: none;
-  background:
-    radial-gradient(ellipse 400rpx 300rpx at 88% 0%, var(--orb-warm), transparent 70%),
-    var(--head-gradient);
-  padding: calc(48rpx + env(safe-area-inset-top)) 48rpx 32rpx;
-  border-radius: 0 0 56rpx 56rpx;
-}
-.shake__title { font-family: var(--font-display); font-size: 52rpx; font-weight: 400; letter-spacing: 0.04em; color: var(--text); }
-.shake__sub { font-size: 24rpx; color: var(--text-2); margin-top: 10rpx; letter-spacing: 0.04em; }
+/* 主体：左侧大类 + 右侧酒杯 */
+.shake-body { position: relative; flex: 1; min-height: 0; display: flex; }
 
-/* 酒杯舞台（固定，不随原料滑动） */
-.stage { flex: none; display: flex; flex-direction: column; align-items: center; padding: 32rpx 0 8rpx; }
+/* 左侧材料大类竖栏 */
+.cat-rail {
+  flex: 0 0 108rpx;
+  margin: 24rpx 0 24rpx 24rpx;
+  padding: 16rpx 10rpx;
+  display: flex; flex-direction: column; gap: 12rpx;
+  background: var(--glass-strong);
+  border: 1rpx solid var(--glass-border);
+  border-radius: 9999rpx;
+  box-shadow: inset 0 1rpx 0 var(--glass-hi), var(--shadow-sm);
+  z-index: 30;
+}
+.cat-rail__item {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26rpx; letter-spacing: 0.08em;
+  color: var(--text-2);
+  border-radius: 9999rpx;
+  transition: all 0.25s ease;
+}
+.cat-rail__item.on {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 20rpx var(--primary-amber-glow, rgba(212,165,116,0.28));
+}
+
+/* 二级菜单遮罩：覆盖酒杯区，点击关闭 */
+.cat-mask { position: absolute; inset: 0; z-index: 20; }
+
+/* 二级材料菜单：从左侧栏右侧展开 */
+.cat-panel {
+  position: absolute;
+  left: 156rpx; top: 24rpx; bottom: 24rpx;
+  width: 420rpx;
+  display: flex; flex-direction: column;
+  background: var(--glass-strong);
+  border: 1rpx solid var(--glass-border);
+  border-radius: 32rpx;
+  box-shadow: var(--shadow);
+  z-index: 40;
+  overflow: hidden;
+  animation: panelIn 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: translateX(-24rpx); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.cat-panel__head {
+  flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24rpx 28rpx 12rpx;
+}
+.cat-panel__title { font-size: 28rpx; font-weight: 600; color: var(--text); }
+.cat-panel__close { font-size: 26rpx; color: var(--text-3); padding: 8rpx 16rpx; }
+.cat-panel__scroll { flex: 1; min-height: 0; }
+.cat-panel__chips { display: flex; flex-wrap: wrap; gap: 14rpx; padding: 12rpx 28rpx 28rpx; }
+
+/* 酒杯舞台（占满剩余空间） */
+.stage { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16rpx 24rpx; }
 .glass {
-  width: 280rpx; height: 340rpx;
+  width: 380rpx; height: 500rpx;
   position: relative;
   border: 5rpx solid rgba(168, 120, 68, 0.38);
   border-top: none;
@@ -115,8 +165,14 @@
 }
 .stage__hint { font-size: 24rpx; color: var(--text-3); margin-top: 20rpx; letter-spacing: 0.06em; }
 
-/* 已选 */
-.picked { flex: none; display: flex; flex-wrap: wrap; gap: 14rpx; padding: 0 32rpx 10rpx; }
+/* 已选：浮在摇酒栏上方 */
+.picked {
+  position: absolute;
+  left: 40rpx; right: 40rpx;
+  bottom: calc(316rpx + env(safe-area-inset-bottom));
+  display: flex; flex-wrap: wrap; gap: 14rpx;
+  z-index: 55;
+}
 .picked__item {
   display: flex; align-items: center; gap: 8rpx;
   padding: 12rpx 24rpx; background: var(--glass-strong);
@@ -126,12 +182,7 @@
 .picked__x { color: var(--error); font-size: 20rpx; }
 .picked__clear { padding: 10rpx 20rpx; font-size: 24rpx; color: var(--text-2); }
 
-/* 可滚动材料区 */
-.groups-label { flex: none; font-family: var(--font-display); font-size: 30rpx; font-weight: 600; color: var(--text); padding: 16rpx 32rpx 4rpx; }
-.groups-scroll { flex: 1; height: 0; }
-.groups { padding: 8rpx 32rpx 32rpx; }
-.group__title { font-family: var(--font-display); font-size: 28rpx; font-weight: 600; color: var(--text); margin: 16rpx 0 14rpx; }
-.chips { display: flex; flex-wrap: wrap; gap: 16rpx; }
+/* 二级菜单材料 chip */
 .chip {
   padding: 14rpx 30rpx; background: var(--glass-strong);
   border: 1rpx solid var(--glass-border); border-radius: 9999rpx;
@@ -144,10 +195,11 @@
   transform: scale(1.03);
 }
 
-/* 底部摇酒栏：布局流内实底，不遮挡材料区 */
+/* 底部摇酒栏：悬浮在 tabBar 上方 */
 .shake-bar {
-  flex: none;
-  margin: 0 40rpx 16rpx;
+  position: absolute;
+  left: 40rpx; right: 40rpx;
+  bottom: calc(150rpx + env(safe-area-inset-bottom));
   display: flex; align-items: center; justify-content: space-between;
   padding: 16rpx 28rpx;
   height: 120rpx;

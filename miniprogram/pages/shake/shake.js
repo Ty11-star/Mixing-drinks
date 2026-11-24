@@ -5,6 +5,16 @@ const storage = require('../../utils/storage');
 
 const ORDER = ['base_spirit', 'liqueur', 'juice', 'syrup', 'garnish', 'other'];
 
+// 左侧大类竖栏的短标签
+const SHORT_LABEL = {
+  base_spirit: '基酒',
+  liqueur: '利口',
+  juice: '果汁',
+  syrup: '糖浆',
+  garnish: '辅料',
+  other: '其他'
+};
+
 // 每种材料按分类给一个酒液颜色，倒入后做分层渐变
 const PALETTE = {
   base_spirit: ['#E6B566', '#D9A441', '#C68A2E', '#EAD08A', '#B97E2E'],
@@ -37,6 +47,7 @@ Page({
     isDark: false,
 
     groups: [],
+    activeGroup: -1,       // 当前展开的大类索引，-1 表示收起
     selected: [],          // [{id, name, category, color}]
     selectedIds: {},
     fill: 0,
@@ -74,6 +85,7 @@ Page({
       const groups = ORDER.filter(c => grouped[c]).map(c => ({
         key: c,
         label: format.getIngredientCategoryLabel(c),
+        shortLabel: SHORT_LABEL[c] || format.getIngredientCategoryLabel(c),
         items: grouped[c]
       }));
       const ingMap = {};
@@ -81,6 +93,17 @@ Page({
       this.ingMap = ingMap;
       this.setData({ groups });
     } catch (e) { /* ignore */ }
+  },
+
+  // 点击左侧大类：展开/收起对应材料二级菜单
+  selectGroup(e) {
+    const index = Number(e.currentTarget.dataset.index);
+    this.setData({ activeGroup: this.data.activeGroup === index ? -1 : index });
+  },
+
+  // 点击空白处关闭二级菜单
+  closeGroup() {
+    if (this.data.activeGroup !== -1) this.setData({ activeGroup: -1 });
   },
 
   toggle(e) {

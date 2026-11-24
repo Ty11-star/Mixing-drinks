@@ -81,14 +81,14 @@
       </view>
     </view>
 
-    <!-- 列表视图 -->
+    <!-- 列表视图：横向大图卡片，风格对齐网格 -->
     <view class="list" wx:else>
-      <view class="list-row" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
-        <view class="list-row__img" style="background:{{item._gradient}}">
-          <text class="list-row__icon">{{item._icon}}</text>
+      <view class="list-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail" hover-class="list-card--hover">
+        <view class="list-card__image" style="background:{{item._gradient}}">
+          <text class="list-card__icon">{{item._icon}}</text>
           <image
             wx:if="{{item.image}}"
-            class="list-row__photo {{item._imgLoaded ? 'is-loaded' : ''}}"
+            class="list-card__photo {{item._imgLoaded ? 'is-loaded' : ''}}"
             src="{{item.image}}"
             mode="aspectFill"
             lazy-load="{{true}}"
@@ -96,16 +96,18 @@
             data-id="{{item.id}}"
             bindload="onListImageLoad"
           ></image>
-          <view class="list-row__fav {{item._isFav ? 'is-fav' : ''}}" data-id="{{item.id}}" catchtap="toggleFav">
+          <view class="list-card__veil"></view>
+          <view class="list-card__fav {{item._isFav ? 'is-fav' : ''}}" data-id="{{item.id}}" catchtap="toggleFav">
             <image class="ico ico-sm" src="{{item._isFav ? icons.heartFilled : icons.heartOutline}}" />
           </view>
-        </view>
-        <view class="list-row__info">
-          <view class="list-row__name ellipsis">{{item.name}}</view>
-          <view class="list-row__sub ellipsis">{{item.nameEn}}</view>
-          <view class="list-row__foot">
-            <text class="list-row__spirit">{{item.baseSpirit}}</text>
-            <text class="list-row__glass">{{item._diff.glass}} {{item._diff.label}}</text>
+          <view class="list-card__body">
+            <view class="list-card__title ellipsis">{{item.name}}</view>
+            <view class="list-card__subtitle ellipsis" wx:if="{{item.nameEn}}">{{item.nameEn}}</view>
+            <view class="list-card__desc">
+              <text class="list-card__spirit">{{item.baseSpirit}}</text>
+              <text class="list-card__dot">·</text>
+              <text>{{item._diff.label}}</text>
+            </view>
           </view>
         </view>
       </view>

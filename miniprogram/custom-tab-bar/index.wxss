@@ -1,6 +1,6 @@
 /* 组件样式隔离：TabBar 自带浅色令牌默认值（深夜由 .theme-dark 覆盖） */
 .tabbar {
-  --surface: #FFFFFF;
+  --surface: rgba(255, 255, 255, 0.62);
   --glass-edge: rgba(52, 68, 60, 0.08);
   --text-3: #6B7873;
   --accent: #96662F;
@@ -8,13 +8,15 @@
   position: fixed;
   left: 40rpx;
   right: 40rpx;
-  bottom: calc(40rpx + env(safe-area-inset-bottom));
+  bottom: 24rpx;
   height: 136rpx;
   border-radius: 9999rpx;
   display: flex;
   align-items: center;
   padding: 0 20rpx;
   background: var(--surface);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
   border: 1rpx solid var(--glass-edge);
   box-shadow: 0 12rpx 40rpx rgba(52, 68, 60, 0.12);
   z-index: 999;
@@ -88,4 +90,9 @@
   --slate-blue: #A6B5BF;
   --glass-white: #0A141B;
   --shadow-glass: rgba(255, 255, 255, 0.14);
+}
+
+/* 放在最后确保覆盖上面的不透明 surface */
+.tabbar.theme-dark {
+  --surface: rgba(22, 36, 48, 0.58);
 }

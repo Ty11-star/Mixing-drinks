@@ -208,50 +208,89 @@
 .grid { display: flex; flex-wrap: wrap; padding: 8rpx 24rpx; }
 .grid__col { width: 50%; box-sizing: border-box; padding: 12rpx; }
 
-/* —— 列表 —— */
-.list { padding: 16rpx 48rpx; }
-.list-row {
-  display: flex; gap: 28rpx;
-  background: var(--glass);
-  border: 1rpx solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 24rpx;
-  margin-bottom: 24rpx;
-  box-shadow: inset 0 1rpx 0 var(--glass-hi), var(--shadow-sm);
+/* —— 列表：横向大图卡片，风格对齐网格 —— */
+.list {
+  padding: 8rpx 24rpx;
+  --radius-lg: 32rpx;
+  --dur: 0.45s;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-.list-row:active { transform: scale(0.99); }
-.list-row__img {
+.list-card {
   position: relative;
-  flex: 0 0 176rpx; height: 176rpx;
-  border-radius: var(--radius-md);
+  height: 320rpx;
+  margin-bottom: 24rpx;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.list-card--hover {
+  transform: translateY(-8rpx);
+  box-shadow: var(--shadow-lifted);
+}
+.list-card__image {
+  position: absolute;
+  inset: 0;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
-.list-row__icon { font-size: 80rpx; line-height: 1; }
-.list-row__photo {
+.list-card__icon { font-size: 120rpx; line-height: 1; opacity: 0.85; }
+.list-card__photo {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%;
-  opacity: 0; transition: opacity 0.45s ease;
+  opacity: 0;
+  filter: saturate(0.9);
+  transition: opacity 0.45s ease, transform 0.8s var(--ease);
 }
-.list-row__photo.is-loaded { opacity: 1; }
-.list-row__fav {
-  position: absolute; right: 12rpx; bottom: 12rpx;
-  width: 56rpx; height: 56rpx;
+.list-card__photo.is-loaded { opacity: 1; }
+.list-card--hover .list-card__photo.is-loaded { transform: scale(1.04); }
+.list-card__veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(28, 38, 36, 0.82) 0%, rgba(28, 38, 36, 0.45) 45%, transparent 100%);
+}
+.list-card__fav {
+  position: absolute; top: 24rpx; right: 24rpx;
+  width: 64rpx; height: 64rpx;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   background: var(--surface);
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid var(--glass-border);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
 }
-.list-row__info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
-.list-row__name { font-family: var(--font-display); font-size: 36rpx; font-weight: 400; color: var(--text); }
-.list-row__sub { font-family: var(--font-mono); font-style: italic; font-size: 24rpx; color: var(--text-3); margin-top: 4rpx; }
-.list-row__foot { display: flex; align-items: center; gap: 16rpx; margin-top: 16rpx; }
-.list-row__spirit {
-  font-size: 22rpx; color: var(--accent);
-  background: var(--accent-soft);
-  padding: 6rpx 16rpx; border-radius: 9999rpx;
+.list-card__body {
+  position: absolute; left: 36rpx; right: 36rpx; bottom: 36rpx;
+  display: flex; flex-direction: column; gap: 4rpx;
 }
-.list-row__glass { font-size: 22rpx; color: var(--text-3); }
+.list-card__title {
+  font-family: var(--font-display);
+  font-weight: 400; font-size: 40rpx;
+  letter-spacing: 0.06em;
+  color: #FBF7EF;
+}
+.list-card__subtitle {
+  font-family: var(--font-mono);
+  font-style: italic; font-size: 26rpx;
+  color: rgba(251, 247, 239, 0.72);
+}
+.list-card__desc {
+  margin-top: 10rpx;
+  display: flex; align-items: center; gap: 12rpx;
+  font-size: 22rpx;
+  letter-spacing: 0.02em;
+  color: rgba(251, 247, 239, 0.82);
+}
+.list-card__spirit {
+  padding: 4rpx 16rpx;
+  border-radius: 9999rpx;
+  background: rgba(251, 247, 239, 0.18);
+  color: #FBF7EF;
+}
+.list-card__dot { opacity: 0.6; }
+
+/* 深色模式：遮罩改为深蓝调 */
+.theme-dark .list-card__veil {
+  background: linear-gradient(90deg, rgba(6, 14, 20, 0.88) 0%, rgba(6, 14, 20, 0.48) 45%, transparent 100%);
+}
 
 .load-more {
   text-align: center; color: var(--text-3);
