@@ -7,15 +7,31 @@ require('dotenv').config();
 const { sequelize, testConnection } = require('./config/database');
 const routes = require('./routes');
 const { errorHandler } = require('./middlewares/errorHandler');
+const { rateLimit } = require('./middlewares/rateLimit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 中间件
-app.use(cors());
+// 信任回环代理（Nginx 反代），使 req.ip 反映真实客户端 IP
+app.set('trust proxy', 'loopback');
+
+// 中间件：CORS 白名单（无 Origin 的非浏览器/小程序/同源请求放行，未知跨域源不返回 CORS 头）
+const CORS_ORIGINS = (process.env.CORS_ORIGINS || '')
+  .split(',').map((s) => s.trim()).filter(Boolean);
+app.use(cors((req, cb) => {
+  const origin = req.headers.origin;
+  if (!origin || CORS_ORIGINS.includes(origin)) {
+    return cb(null, { origin: true, credentials: true });
+  }
+  return cb(null, { origin: false });
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+// 登录接口限流（防暴力破解）
+app.use('/api/v1/auth', rateLimit({ windowMs: 60 * 1000, max: 20 }));
+app.use('/api/v1/admin/login', rateLimit({ windowMs: 60 * 1000, max: 10 }));
 
 // API 路由
 app.use('/api/v1', routes);
@@ -61,7 +77,7 @@ const startServer = async () => {
     }
 
     // 启动服务器
-    app.listen(PORT, () => {
+    app.listen(PORT, '127.0.0.1', () => {
       console.log(`
 ╔══════════════════════════════════════════╗
 ║   🍸 调酒小程序后端服务启动成功         ║

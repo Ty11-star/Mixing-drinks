@@ -1,5 +1,6 @@
 const { Admin, User } = require('../models');
 const { generateToken } = require('../config/jwt');
+const { hashPassword, isHashed, verifyPassword } = require('../utils/password');
 const axios = require('axios');
 
 class AuthService {
@@ -15,9 +16,14 @@ class AuthService {
       throw new Error('用户名或密码错误');
     }
 
-    // 简单的明文密码比对（一期开发）
-    if (admin.password !== password) {
+    // 校验密码（兼容旧明文，登录成功后自动迁移为哈希）
+    if (!verifyPassword(password, admin.password)) {
       throw new Error('用户名或密码错误');
+    }
+
+    // 旧明文密码迁移为哈希
+    if (!isHashed(admin.password)) {
+      await admin.update({ password: hashPassword(password) });
     }
 
     // 更新最后登录时间
@@ -46,42 +52,29 @@ class AuthService {
    */
   async wechatLogin(code, profile = {}) {
     const { appid, secret } = this.getWechatConfig();
-    const devMode = process.env.NODE_ENV !== 'production';
-    const invalidConfig = !appid || !secret || appid === 'your-wechat-appid';
 
-    // 开发模式且未配置真实 AppID：跳过微信接口，直接创建开发用户
-    if (devMode && invalidConfig) {
-      return this.devLogin(profile);
+    // 未配置真实微信凭据时一律拒绝，避免被无凭证绕过
+    if (!appid || !secret || appid === 'your-wechat-appid') {
+      throw new Error('服务端未配置微信小程序凭据');
     }
 
-    try {
-      // 调用微信接口获取 openid
-      const url = `https://api.weixin.qq.com/sns/jscode2session`;
-
-      const response = await axios.get(url, {
-        params: {
-          appid,
-          secret,
-          js_code: code,
-          grant_type: 'authorization_code'
-        }
-      });
-
-      const { openid, session_key, errcode, errmsg } = response.data;
-
-      if (errcode) {
-        throw new Error(errmsg || '微信登录失败');
+    // 调用微信接口获取 openid
+    const url = `https://api.weixin.qq.com/sns/jscode2session`;
+    const response = await axios.get(url, {
+      params: {
+        appid,
+        secret,
+        js_code: code,
+        grant_type: 'authorization_code'
       }
+    });
 
-      return await this.findOrCreateUser(openid, profile);
-    } catch (error) {
-      // 开发环境降级：游客模式/appid 不匹配时保证登录链路可用
-      if (devMode) {
-        console.warn('[auth] 微信登录失败，开发环境降级为开发用户：', error.message);
-        return this.devLogin(profile);
-      }
-      throw new Error('微信登录失败：' + error.message);
+    const { openid, errcode, errmsg } = response.data;
+    if (errcode) {
+      throw new Error(errmsg || '微信登录失败');
     }
+
+    return await this.findOrCreateUser(openid, profile);
   }
 
   /**
@@ -114,19 +107,6 @@ class AuthService {
         avatar: user.avatar
       }
     };
-  }
-
-  /**
-   * 开发模式登录：用 code 哈希生成稳定伪 openid，无需真实微信凭据
-   */
-  async devLogin(profile = {}) {
-    // 固定开发身份：同一次开发会话内重复登录对应同一用户，避免每次 wx.login（code 每次都变）都新建用户
-    // 昵称头像使用用户在授权弹窗中填写的信息，未填写时才回退默认昵称
-    const defaults = { nickname: profile.nickname || '调酒爱好者' };
-    if (profile.avatar) defaults.avatar = profile.avatar;
-    const result = await this.findOrCreateUser('dev_guest', defaults);
-    result.dev = true;
-    return result;
   }
 
   /**

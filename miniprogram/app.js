@@ -28,6 +28,20 @@ App({
   },
 
   /**
+   * 统一收藏结构：标记来源类型，便利店配方不能直接跳转到酒谱详情页
+   */
+  normalizeFavorite(item) {
+    return Object.assign({}, item, {
+      type: item.type === 'convenience' ? 'convenience' : 'cocktail',
+      image: item.image || ''
+    });
+  },
+
+  saveFavorites(list) {
+    storage.set(this.globalData.favoriteKey, list);
+  },
+
+  /**
    * 切换收藏状态
    */
   toggleFavorite(cocktail) {
@@ -39,7 +53,7 @@ App({
       storage.set(key, list);
       return false;
     }
-    list.unshift(cocktail);
+    list.unshift(this.normalizeFavorite(cocktail));
     storage.set(key, list);
     return true;
   },

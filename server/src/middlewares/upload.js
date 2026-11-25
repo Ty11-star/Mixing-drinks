@@ -11,16 +11,24 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
+const ALLOWED = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+// 保存扩展名由 MIME 类型决定，不信任原始文件名，防止上传可执行文件
+const MIME_EXT = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/gif': '.gif',
+  'image/webp': '.webp',
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
     const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    const ext = MIME_EXT[file.mimetype] || '.jpg';
     cb(null, unique + ext);
   },
 });
-
-const ALLOWED = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
 const upload = multer({
   storage,

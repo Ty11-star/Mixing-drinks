@@ -23,10 +23,13 @@ Component({
       const prev = this.data;
       const nextImage = c.image || '';
       const isLocal = nextImage && !/^https?:\/\//.test(nextImage);
+      const isConvenience = c.type === 'convenience';
       // 本地缓存图直接视为已加载；网络地址变化才重置，避免闪烁
       this.setData({
-        gradient: format.getSpiritGradient(c.baseSpirit),
-        icon: format.getSpiritIcon(c.baseSpirit),
+        gradient: isConvenience
+          ? (c.gradient || format.getSpiritGradient(c.baseSpirit))
+          : format.getSpiritGradient(c.baseSpirit),
+        icon: isConvenience ? (c.emoji || '🥤') : format.getSpiritIcon(c.baseSpirit),
         image: nextImage,
         imageLoaded: isLocal || (prev.image === nextImage ? prev.imageLoaded : false),
         isFav: app.isFavorite(c.id),
@@ -47,9 +50,12 @@ Component({
       wx.showToast({ title: added ? '已收藏' : '已取消收藏', icon: 'none' });
     },
     goDetail() {
-      const id = this.data.cocktail.id;
-      if (!id) return;
-      wx.navigateTo({ url: '/pages/cocktail-detail/cocktail-detail?id=' + id });
+      const c = this.data.cocktail;
+      if (!c || !c.id) return;
+      const path = c.type === 'convenience'
+        ? '/pages/convenience-detail/convenience-detail?id='
+        : '/pages/cocktail-detail/cocktail-detail?id=';
+      wx.navigateTo({ url: path + c.id });
     }
   }
 });

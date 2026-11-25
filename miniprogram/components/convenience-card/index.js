@@ -37,7 +37,13 @@ Component({
       if (!d || !d.id) return;
       const added = app.toggleFavorite({
         id: d.id, name: d.name, nameEn: d.nameEn,
-        image: '', tasteTags: d.tag, baseSpirit: '便利店'
+        type: 'convenience',
+        image: d.image || '',
+        emoji: d.emoji || '🥤',
+        gradient: d.gradient || '',
+        gradientDark: d.gradientDark || '',
+        tag: d.tag, steps: d.steps,
+        tasteTags: d.tag, baseSpirit: '便利店'
       });
       this.setData({ isFav: added });
       wx.showToast({ title: added ? '已收藏' : '已取消收藏', icon: 'none' });

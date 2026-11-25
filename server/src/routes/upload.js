@@ -7,7 +7,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-const { authenticateToken } = require('../middlewares/auth');
+const { requireAdmin } = require('../middlewares/auth');
 const { success, error } = require('../utils/response');
 
 const router = express.Router();
@@ -23,13 +23,20 @@ const ALLOWED_MIME = new Set([
   'image/jpeg',
   'image/webp',
   'image/gif',
-  'image/svg+xml',
 ]);
+
+// 保存扩展名由 MIME 类型决定，不信任原始文件名，防止上传可执行文件
+const MIME_EXT = {
+  'image/png': '.png',
+  'image/jpeg': '.jpg',
+  'image/webp': '.webp',
+  'image/gif': '.gif',
+};
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname || '').toLowerCase() || '.png';
+    const ext = MIME_EXT[file.mimetype] || '.png';
     cb(null, `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`);
   },
 });
@@ -47,7 +54,7 @@ const upload = multer({
 });
 
 // 所有上传接口均需管理员登录
-router.use(authenticateToken);
+router.use(requireAdmin);
 
 // 上传分类图标
 router.post('/icon', upload.single('file'), (req, res) => {

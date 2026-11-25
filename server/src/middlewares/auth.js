@@ -34,6 +34,34 @@ const authenticateToken = (req, res, next) => {
 };
 
 /**
+ * 管理员权限校验（自包含：先验证 token，再校验管理员角色）
+ * 防止普通用户 token 越权访问管理接口。
+ */
+const requireAdmin = (req, res, next) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+      return res.status(200).json(Response.error('未提供认证令牌', 401));
+    }
+
+    jwt.verify(token, jwtSecret, (err, user) => {
+      if (err) {
+        return res.status(200).json(Response.error('Token无效或已过期', 401));
+      }
+      if (!user || user.type !== 'admin') {
+        return res.status(200).json(Response.error('无管理员权限', 403));
+      }
+      req.user = user;
+      next();
+    });
+  } catch (error) {
+    return res.status(200).json(Response.error('认证失败', 401));
+  }
+};
+
+/**
  * 可选的 Token 验证（即使没有 token 也能通过）
  */
 const optionalAuth = (req, res, next) => {
@@ -57,5 +85,6 @@ const optionalAuth = (req, res, next) => {
 
 module.exports = {
   authenticateToken,
-  optionalAuth
+  optionalAuth,
+  requireAdmin
 };

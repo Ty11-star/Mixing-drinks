@@ -1,11 +1,16 @@
-const jwt = require('jsonwebtoken');
 const { Admin, Cocktail, CocktailIngredient, CocktailStep, CocktailCategory, Ingredient, Category } = require('../models');
 const { success, error } = require('../utils/response');
+const { generateToken } = require('../config/jwt');
+const { hashPassword, isHashed, verifyPassword } = require('../utils/password');
 
 // 管理员登录
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json(error('用户名和密码不能为空', 400));
+    }
 
     // 查找管理员
     const admin = await Admin.findOne({ where: { username, status: 1 } });
@@ -14,17 +19,18 @@ exports.login = async (req, res) => {
       return res.status(401).json(error('用户名或密码错误', 401));
     }
 
-    // 验证密码（明文比对）
-    if (admin.password !== password) {
+    // 校验密码（兼容旧明文，成功后自动迁移为哈希）
+    if (!verifyPassword(password, admin.password)) {
       return res.status(401).json(error('用户名或密码错误', 401));
     }
 
-    // 生成 token
-    const token = jwt.sign(
-      { id: admin.id, username: admin.username },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
+    // 旧明文密码迁移为哈希
+    if (!isHashed(admin.password)) {
+      await admin.update({ password: hashPassword(password) });
+    }
+
+    // 生成 token（type: admin 供 requireAdmin 校验）
+    const token = generateToken({ id: admin.id, username: admin.username, type: 'admin' });
 
     // 更新最后登录时间
     await admin.update({ lastLoginTime: new Date() });

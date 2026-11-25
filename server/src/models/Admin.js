@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      comment: '密码（明文存储，一期开发）'
+      comment: '密码（scrypt 哈希存储）'
     },
     nickname: {
       type: DataTypes.STRING(100),
