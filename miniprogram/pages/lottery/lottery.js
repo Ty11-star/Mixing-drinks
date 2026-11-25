@@ -2,6 +2,7 @@
 const cocktailApi = require('../../api/cocktail');
 const format = require('../../utils/format');
 const storage = require('../../utils/storage');
+const adapt = require('../../utils/adapt');
 
 function todayKey() {
   const d = new Date();
@@ -103,11 +104,12 @@ Page({
   },
 
   applyDrink(drink, revealed) {
+    const normalized = adapt.normalizeCocktail(drink);
     this.setData({
       today: todayKey(),
       drawn: true,
-      drink,
-      gradient: format.getSpiritGradient(drink.baseSpirit),
+      drink: normalized,
+      gradient: format.getSpiritGradient(normalized.baseSpirit),
       reveal: revealed
     });
   },

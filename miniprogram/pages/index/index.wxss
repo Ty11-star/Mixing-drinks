@@ -1,11 +1,32 @@
 .index { padding: 0; }
 
-/* —— 模式切换：玻璃胶囊 —— */
+/* —— 顶部连续表面：切换区与 Hero 共用背景 —— */
+.top-surface {
+  position: relative;
+  background:
+    var(--hero-gradient),
+    radial-gradient(ellipse 700rpx 500rpx at 92% 18%, var(--orb-warm), transparent 70%),
+    radial-gradient(ellipse 600rpx 500rpx at -12% 65%, var(--orb-cool), transparent 70%);
+}
+.index--conv .top-surface {
+  background:
+    radial-gradient(ellipse 500rpx 400rpx at 90% 20%, var(--orb-warm), transparent 70%),
+    var(--conv-hero-gradient);
+}
+
+/* —— 模式切换：悬浮在 Hero 上的玻璃胶囊 —— */
 .switch-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background: transparent;
-  padding: calc(24rpx + env(safe-area-inset-top)) 0 12rpx;
+  padding: calc(20rpx + env(safe-area-inset-top)) 0 0;
+  pointer-events: none;
 }
 .mode-switch {
+  pointer-events: auto;
   display: flex;
   margin: 0 48rpx;
   background: var(--glass-strong);
@@ -29,21 +50,17 @@
   color: #FFFFFF;
   box-shadow: inset 0 1rpx 0 rgba(255, 255, 255, 0.5), 0 8rpx 24rpx var(--accent-glow);
 }
-.index--conv .switch-wrap { padding-bottom: 0; }
 
 /* —— 沉浸 Hero —— */
 .hero {
   position: relative;
-  margin: 12rpx 0 0;
-  padding: 56rpx 48rpx 64rpx;
-  min-height: 880rpx;
+  margin: 0;
+  padding: calc(152rpx + env(safe-area-inset-top)) 48rpx 64rpx;
+  min-height: 944rpx;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background:
-    var(--hero-gradient),
-    radial-gradient(ellipse 700rpx 500rpx at 92% 8%, var(--orb-warm), transparent 70%),
-    radial-gradient(ellipse 600rpx 500rpx at -12% 60%, var(--orb-cool), transparent 70%);
+  background: transparent;
 }
 .hero__photo {
   position: absolute; top: 0; left: 0;
@@ -317,13 +334,11 @@
 /* ============ 便利店模式 ============ */
 .conv-hero {
   position: relative;
-  margin: 12rpx 32rpx 0;
-  padding: 48rpx 44rpx 52rpx;
-  border-radius: var(--radius-xl);
+  margin: 0;
+  padding: calc(144rpx + env(safe-area-inset-top)) 48rpx 52rpx;
+  border-radius: 0;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 500rpx 400rpx at 90% 0%, var(--orb-warm), transparent 70%),
-    var(--conv-hero-gradient);
+  background: transparent;
 }
 .conv-hero__glow {
   position: absolute; width: 400rpx; height: 400rpx;

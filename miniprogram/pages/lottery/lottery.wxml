@@ -61,7 +61,7 @@
       <view class="result__sec-title">步骤</view>
       <view class="result__step" wx:for="{{drink.steps}}" wx:key="stepNumber">
         <text class="result__step-no">{{item.stepNumber || index + 1}}</text>
-        <text class="result__step-txt">{{item.description || item}}</text>
+        <text class="result__step-txt">{{item.description}}</text>
       </view>
     </view>
     <view class="result__tips" wx:if="{{drink.tips}}">💡 {{drink.tips}}</view>

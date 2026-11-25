@@ -33,6 +33,25 @@ function normalizeIngredientItem(ing) {
   };
 }
 
+function stepText(step) {
+  if (typeof step === 'string') return step;
+  if (!step || typeof step !== 'object') return '';
+  const raw = step.description != null
+    ? step.description
+    : (step.content != null ? step.content : step.text);
+  if (typeof raw === 'string') return raw;
+  if (raw && typeof raw === 'object') return String(raw.text || raw.content || '');
+  return '';
+}
+
+function normalizeStep(step, index) {
+  const base = step && typeof step === 'object' ? step : {};
+  return Object.assign({}, base, {
+    stepNumber: Number(base.stepNumber) || index + 1,
+    description: stepText(step)
+  });
+}
+
 function normalizeCocktail(cocktail) {
   if (!cocktail) return cocktail;
   const next = Object.assign({}, cocktail);
@@ -52,7 +71,9 @@ function normalizeCocktail(cocktail) {
   }
 
   if (Array.isArray(next.steps)) {
-    next.steps = next.steps.slice().sort((a, b) => (a.stepNumber || 0) - (b.stepNumber || 0));
+    next.steps = next.steps
+      .map(normalizeStep)
+      .sort((a, b) => a.stepNumber - b.stepNumber);
   }
 
   return next;

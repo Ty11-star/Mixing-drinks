@@ -1,17 +1,18 @@
 <view class="page-wrap index {{mode === 'convenience' ? 'index--conv' : ''}} {{isDark ? 'theme-dark' : ''}}">
 
-  <!-- 模式切换：玻璃胶囊 -->
-  <view class="switch-wrap">
-    <view class="mode-switch">
-      <view class="mode-switch__item {{mode === 'pro' ? 'is-active' : ''}}" data-mode="pro" bindtap="switchMode">专业调酒</view>
-      <view class="mode-switch__item {{mode === 'convenience' ? 'is-active' : ''}}" data-mode="convenience" bindtap="switchMode">便利店调酒</view>
+  <view class="top-surface">
+    <!-- 模式切换：玻璃胶囊 -->
+    <view class="switch-wrap">
+      <view class="mode-switch">
+        <view class="mode-switch__item {{mode === 'pro' ? 'is-active' : ''}}" data-mode="pro" bindtap="switchMode">专业调酒</view>
+        <view class="mode-switch__item {{mode === 'convenience' ? 'is-active' : ''}}" data-mode="convenience" bindtap="switchMode">便利店调酒</view>
+      </view>
     </view>
-  </view>
 
-  <!-- ============ 专业调酒模式 ============ -->
-  <block wx:if="{{mode === 'pro'}}">
-    <!-- 沉浸 Hero -->
-    <view class="hero rise">
+    <!-- ============ 顶部沉浸区 ============ -->
+    <block wx:if="{{mode === 'pro'}}">
+      <!-- 沉浸 Hero -->
+      <view class="hero rise">
       <image wx:if="{{heroImage}}" class="hero__photo" src="{{heroImage}}" mode="aspectFill" />
       <view class="hero__photo-veil"></view>
       <view class="hero__glow"></view>
@@ -35,8 +36,34 @@
         </view>
         <view class="scroll-hint"><view class="scroll-hint__line"></view><text>往下，慢慢看</text></view>
       </view>
-    </view>
+      </view>
+    </block>
 
+    <block wx:else>
+      <view class="conv-hero rise">
+        <view class="conv-hero__glow"></view>
+        <view class="conv-hero__bar">
+          <view class="brandmark">
+            <text class="brandmark__zh">便利店调酒</text>
+            <text class="brandmark__en">Easy &amp; Anytime</text>
+          </view>
+          <image class="ico ico-lg" src="{{icons.basketAccent}}" />
+        </view>
+        <view class="conv-hero__slogan">不用买基酒，下楼就能调。</view>
+        <view class="conv-hero__match" bindtap="goConvenienceMatch">
+          <view class="conv-hero__match-icon"><image class="ico ico-lg" src="{{icons.basketAccent}}" /></view>
+          <view class="conv-hero__match-text">
+            <text class="conv-hero__match-title">我手边有什么？</text>
+            <text class="conv-hero__match-sub">勾勾材料，看看能调什么</text>
+          </view>
+          <image class="ico ico-sm" src="{{icons.arrowAccent}}" />
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- ============ 专业调酒模式（正文） ============ -->
+  <block wx:if="{{mode === 'pro'}}">
     <!-- 此刻推荐 -->
     <view class="section">
       <view class="section__head">
@@ -126,28 +153,8 @@
     </view>
   </block>
 
-  <!-- ============ 便利店调酒模式 ============ -->
+  <!-- ============ 便利店调酒模式（正文） ============ -->
   <block wx:else>
-    <view class="conv-hero rise">
-      <view class="conv-hero__glow"></view>
-      <view class="conv-hero__bar">
-        <view class="brandmark">
-          <text class="brandmark__zh">便利店调酒</text>
-          <text class="brandmark__en">Easy &amp; Anytime</text>
-        </view>
-        <image class="ico ico-lg" src="{{icons.basketAccent}}" />
-      </view>
-      <view class="conv-hero__slogan">不用买基酒，下楼就能调。</view>
-      <view class="conv-hero__match" bindtap="goConvenienceMatch">
-        <view class="conv-hero__match-icon"><image class="ico ico-lg" src="{{icons.basketAccent}}" /></view>
-        <view class="conv-hero__match-text">
-          <text class="conv-hero__match-title">我手边有什么？</text>
-          <text class="conv-hero__match-sub">勾勾材料，看看能调什么</text>
-        </view>
-        <image class="ico ico-sm" src="{{icons.arrowAccent}}" />
-      </view>
-    </view>
-
     <view class="conv-scenes">
       <scroll-view scroll-x class="conv-scenes__scroll" enhanced show-scrollbar="{{false}}">
         <view
